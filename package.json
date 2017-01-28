@@ -20,5 +20,8 @@
     "bugs": {
         "url": "https://github.com/riebschlager/neobrush-p5js/issues"
     },
-    "homepage": "https://github.com/riebschlager/neobrush-p5js#readme"
+    "homepage": "https://github.com/riebschlager/neobrush-p5js#readme",
+    "dependencies": {
+        "p5": "^0.5.6"
+    }
 }
