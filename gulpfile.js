@@ -9,7 +9,8 @@ const vendorScripts = [
 ];
 
 gulp.task('vendor-scripts', function() {
-    return gulp.src(vendorScripts)
+    return gulp
+        .src(vendorScripts)
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest('./docs/js'));
 });
