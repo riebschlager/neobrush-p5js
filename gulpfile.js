@@ -11,25 +11,25 @@ const vendorScripts = [
 gulp.task('vendor-scripts', function() {
     return gulp.src(vendorScripts)
         .pipe(concat('vendor.js'))
-        .pipe(gulp.dest('./app/js'));
+        .pipe(gulp.dest('./docs/js'));
 });
 
 gulp.task('styles', function() {
     return gulp
-        .src(['./app/scss/main.scss'])
+        .src(['./docs/scss/main.scss'])
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('./app/css/'));
+        .pipe(gulp.dest('./docs/css/'));
 });
 
 gulp.task('serve', function() {
     browserSync({
         server: {
-            baseDir: 'app'
+            baseDir: 'docs'
         }
     });
-    gulp.watch('./app/scss/**/*.scss', ['styles']);
+    gulp.watch('./docs/scss/**/*.scss', ['styles']);
     gulp.watch(['*.html', 'styles/**/*.css', 'js/**/*.js'], {
-        cwd: 'app'
+        cwd: 'docs'
     }, reload);
 });
 
