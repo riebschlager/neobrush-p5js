@@ -1,0 +1,24 @@
+{
+    "name": "neobrush-p5js",
+    "version": "0.0.1",
+    "description": "Drag your mouse around and make something pretty.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/riebschlager/neobrush-p5js.git"
+    },
+    "keywords": [
+        "p5js",
+        "art",
+        "generative"
+    ],
+    "author": "Chris Riebschlager",
+    "license": "CC-BY-4.0",
+    "bugs": {
+        "url": "https://github.com/riebschlager/neobrush-p5js/issues"
+    },
+    "homepage": "https://github.com/riebschlager/neobrush-p5js#readme"
+}
