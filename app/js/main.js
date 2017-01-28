@@ -5,21 +5,23 @@ const s = function(_p5) {
 
     const ui = {
         numberOfLines: 100,
-        easing: 0.25,
-        easingJitter: 0.1,
-        speed: 0.3,
-        speedJitter: 0.1,
-        vertices: 8,
-        verticesJitter: 1
+        easeFactor: 0.25,
+        easeFactorJitter: 0.1,
+        speedFactor: 0.3,
+        speedFactorJitter: 0.1,
+        numberOfVertices: 8,
+        numberOfVerticesJitter: 1
     };
 
     _p5.mousePressed = function() {
         for (let i = 0; i < ui.numberOfLines; i++) {
-            const easing = ui.easing + _p5.random(-ui.easingJitter, ui.easingJitter);
-            const speed = ui.speed + _p5.random(-ui.speedJitter, ui.speedJitter);
-            const vertices = ui.vertices + _p5.random(-ui.verticesJitter, ui.verticesJitter);
-            const line = new SketchLine(vertices, easing, speed, _p5, art);
-            sketchLines.push(line);
+            sketchLines.push(new SketchLine({
+                easeFactor: ui.easeFactor + _p5.random(-ui.easeFactorJitter, ui.easeFactorJitter),
+                speedFactor: ui.speedFactor + _p5.random(-ui.speedFactorJitter, ui.speedFactorJitter),
+                numberOfVertices: ui.numberOfVertices + _p5.random(-ui.numberOfVerticesJitter, ui.numberOfVerticesJitter),
+                _p5,
+                art
+            }));
         }
     };
 

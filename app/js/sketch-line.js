@@ -1,35 +1,45 @@
-function SketchLine(numberOfVertices, easeFactor, speedFactor, p, art) {
+function SketchLine({
+    easeFactor,
+    speedFactor,
+    numberOfVertices,
+    _p5,
+    art
+}) {
+    this.curveVertices = [];
+    this.distances = [];
+    this.endPoints = [];
+    this.numberOfVertices = numberOfVertices;
+    this.p = _p5;
+    this.easeFactor = easeFactor;
+    this.speedFactor = speedFactor;
+    this.art = art;
 
-    let curveVertices = [];
-    let distances = [];
-    let endPoints = [];
-
-    for (let i = 0; i < numberOfVertices; i++) {
-        curveVertices[i] = p.createVector(p.mouseX, p.mouseY);
-        distances[i] = p.createVector(0, 0);
-        endPoints[i] = p.createVector(0, 0);
+    for (let i = 0; i < this.numberOfVertices; i++) {
+        this.curveVertices[i] = this.p.createVector(this.p.mouseX, this.p.mouseY);
+        this.distances[i] = this.p.createVector(0, 0);
+        this.endPoints[i] = this.p.createVector(0, 0);
     }
-
-    this.update = function() {
-        for (let i = 0; i < numberOfVertices; i++) {
-            distances[i].x = (i === 0) ? p.mouseX - curveVertices[0].x : curveVertices[i - 1].x - curveVertices[i].x;
-            distances[i].y = (i === 0) ? p.mouseY - curveVertices[0].y : curveVertices[i - 1].y - curveVertices[i].y;
-            distances[i].mult(easeFactor);
-            endPoints[i].add(distances[i]);
-            curveVertices[i].add(endPoints[i]);
-            endPoints[i].mult(speedFactor);
-        }
-    };
-
-    this.render = function() {
-        art.beginShape();
-        for (let i = 0; i < numberOfVertices; i++) {
-            art.noFill();
-            art.strokeWeight(0.5);
-            art.blendMode(art.ADD);
-            art.stroke(255, 4);
-            art.curveVertex(curveVertices[i].x, curveVertices[i].y);
-        }
-        art.endShape();
-    };
 }
+
+SketchLine.prototype.update = function() {
+    for (let i = 0; i < this.numberOfVertices; i++) {
+        this.distances[i].x = (i === 0) ? this.p.mouseX - this.curveVertices[0].x : this.curveVertices[i - 1].x - this.curveVertices[i].x;
+        this.distances[i].y = (i === 0) ? this.p.mouseY - this.curveVertices[0].y : this.curveVertices[i - 1].y - this.curveVertices[i].y;
+        this.distances[i].mult(this.easeFactor);
+        this.endPoints[i].add(this.distances[i]);
+        this.curveVertices[i].add(this.endPoints[i]);
+        this.endPoints[i].mult(this.speedFactor);
+    }
+};
+
+SketchLine.prototype.render = function() {
+    this.art.beginShape();
+    for (let i = 0; i < this.numberOfVertices; i++) {
+        this.art.noFill();
+        this.art.strokeWeight(0.5);
+        this.art.blendMode(this.art.ADD);
+        this.art.stroke(255, 1);
+        this.art.curveVertex(this.curveVertices[i].x, this.curveVertices[i].y);
+    }
+    this.art.endShape();
+};
