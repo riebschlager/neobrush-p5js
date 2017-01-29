@@ -7,3 +7,2208 @@ b===!1&&a.preventDefault()):"function"==typeof c.touchMoved&&(b=c.touchMoved(a),
 for(var d=arguments.length,e=[],f=0,g=0;d>g;g++){var h=arguments[g];if(h=+h,h===1/0||h===-(1/0))return 1/0;h=Math.abs(h),h>f&&(f=h),e[g]=h}0===f&&(f=1);for(var i=0,j=0,k=0;d>k;k++){var l=e[k]/f,m=l*l-j,n=i+m;j=n-i-m,i=n}return Math.sqrt(i)*f}var e=a("../core/core");e.prototype.abs=Math.abs,e.prototype.ceil=Math.ceil,e.prototype.constrain=function(a,b,c){return Math.max(Math.min(a,c),b)},e.prototype.dist=function(a,b,c,e,f,g){return 4===arguments.length?d(c-a,e-b):6===arguments.length?d(e-a,f-b,g-c):void 0},e.prototype.exp=Math.exp,e.prototype.floor=Math.floor,e.prototype.lerp=function(a,b,c){return c*(b-a)+a},e.prototype.log=Math.log,e.prototype.mag=function(a,b){return d(a,b)},e.prototype.map=function(a,b,c,d,e){return(a-b)/(c-b)*(e-d)+d},e.prototype.max=function(){return arguments[0]instanceof Array?Math.max.apply(null,arguments[0]):Math.max.apply(null,arguments)},e.prototype.min=function(){return arguments[0]instanceof Array?Math.min.apply(null,arguments[0]):Math.min.apply(null,arguments)},e.prototype.norm=function(a,b,c){return this.map(a,b,c,0,1)},e.prototype.pow=Math.pow,e.prototype.round=Math.round,e.prototype.sq=function(a){return a*a},e.prototype.sqrt=Math.sqrt,b.exports=e},{"../core/core":37}],64:[function(a,b,c){"use strict";var d=a("../core/core");d.prototype.createVector=function(a,b,c){return this instanceof d?new d.Vector(this,arguments):new d.Vector(a,b,c)},b.exports=d},{"../core/core":37}],65:[function(a,b,c){"use strict";var d,e=a("../core/core"),f=4,g=1<<f,h=8,i=1<<h,j=4095,k=4,l=.5,m=function(a){return.5*(1-Math.cos(a*Math.PI))};e.prototype.noise=function(a,b,c){if(b=b||0,c=c||0,null==d){d=new Array(j+1);for(var e=0;j+1>e;e++)d[e]=Math.random()}0>a&&(a=-a),0>b&&(b=-b),0>c&&(c=-c);for(var n,o,p,q,r,s=Math.floor(a),t=Math.floor(b),u=Math.floor(c),v=a-s,w=b-t,x=c-u,y=0,z=.5,A=0;k>A;A++){var B=s+(t<<f)+(u<<h);n=m(v),o=m(w),p=d[B&j],p+=n*(d[B+1&j]-p),q=d[B+g&j],q+=n*(d[B+g+1&j]-q),p+=o*(q-p),B+=i,q=d[B&j],q+=n*(d[B+1&j]-q),r=d[B+g&j],r+=n*(d[B+g+1&j]-r),q+=o*(r-q),p+=m(x)*(q-p),y+=p*z,z*=l,s<<=1,v*=2,t<<=1,w*=2,u<<=1,x*=2,v>=1&&(s++,v--),w>=1&&(t++,w--),x>=1&&(u++,x--)}return y},e.prototype.noiseDetail=function(a,b){a>0&&(k=a),b>0&&(l=b)},e.prototype.noiseSeed=function(a){var b=function(){var a,b,c=4294967296,d=1664525,e=1013904223;return{setSeed:function(d){b=a=(null==d?Math.random()*c:d)>>>0},getSeed:function(){return a},rand:function(){return b=(d*b+e)%c,b/c}}}();b.setSeed(a),d=new Array(j+1);for(var c=0;j+1>c;c++)d[c]=b.rand()},b.exports=e},{"../core/core":37}],66:[function(a,b,c){"use strict";var d=a("../core/core"),e=a("./polargeometry"),f=a("../core/constants");d.Vector=function(){var a,b,c;arguments[0]instanceof d?(this.p5=arguments[0],a=arguments[1][0]||0,b=arguments[1][1]||0,c=arguments[1][2]||0):(a=arguments[0]||0,b=arguments[1]||0,c=arguments[2]||0),this.x=a,this.y=b,this.z=c},d.Vector.prototype.toString=function(){return"p5.Vector Object : ["+this.x+", "+this.y+", "+this.z+"]"},d.Vector.prototype.set=function(a,b,c){return a instanceof d.Vector?(this.x=a.x||0,this.y=a.y||0,this.z=a.z||0,this):a instanceof Array?(this.x=a[0]||0,this.y=a[1]||0,this.z=a[2]||0,this):(this.x=a||0,this.y=b||0,this.z=c||0,this)},d.Vector.prototype.copy=function(){return this.p5?new d.Vector(this.p5,[this.x,this.y,this.z]):new d.Vector(this.x,this.y,this.z)},d.Vector.prototype.add=function(a,b,c){return a instanceof d.Vector?(this.x+=a.x||0,this.y+=a.y||0,this.z+=a.z||0,this):a instanceof Array?(this.x+=a[0]||0,this.y+=a[1]||0,this.z+=a[2]||0,this):(this.x+=a||0,this.y+=b||0,this.z+=c||0,this)},d.Vector.prototype.sub=function(a,b,c){return a instanceof d.Vector?(this.x-=a.x||0,this.y-=a.y||0,this.z-=a.z||0,this):a instanceof Array?(this.x-=a[0]||0,this.y-=a[1]||0,this.z-=a[2]||0,this):(this.x-=a||0,this.y-=b||0,this.z-=c||0,this)},d.Vector.prototype.mult=function(a){return this.x*=a||0,this.y*=a||0,this.z*=a||0,this},d.Vector.prototype.div=function(a){return this.x/=a,this.y/=a,this.z/=a,this},d.Vector.prototype.mag=function(){return Math.sqrt(this.magSq())},d.Vector.prototype.magSq=function(){var a=this.x,b=this.y,c=this.z;return a*a+b*b+c*c},d.Vector.prototype.dot=function(a,b,c){return a instanceof d.Vector?this.dot(a.x,a.y,a.z):this.x*(a||0)+this.y*(b||0)+this.z*(c||0)},d.Vector.prototype.cross=function(a){var b=this.y*a.z-this.z*a.y,c=this.z*a.x-this.x*a.z,e=this.x*a.y-this.y*a.x;return this.p5?new d.Vector(this.p5,[b,c,e]):new d.Vector(b,c,e)},d.Vector.prototype.dist=function(a){var b=a.copy().sub(this);return b.mag()},d.Vector.prototype.normalize=function(){return 0===this.mag()?this:this.div(this.mag())},d.Vector.prototype.limit=function(a){var b=this.magSq();return b>a*a&&(this.div(Math.sqrt(b)),this.mult(a)),this},d.Vector.prototype.setMag=function(a){return this.normalize().mult(a)},d.Vector.prototype.heading=function(){var a=Math.atan2(this.y,this.x);return this.p5?this.p5._angleMode===f.RADIANS?a:e.radiansToDegrees(a):a},d.Vector.prototype.rotate=function(a){var b=this.heading()+a;this.p5&&this.p5._angleMode===f.DEGREES&&(b=e.degreesToRadians(b));var c=this.mag();return this.x=Math.cos(b)*c,this.y=Math.sin(b)*c,this},d.Vector.prototype.lerp=function(a,b,c,e){return a instanceof d.Vector?this.lerp(a.x,a.y,a.z,b):(this.x+=(a-this.x)*e||0,this.y+=(b-this.y)*e||0,this.z+=(c-this.z)*e||0,this)},d.Vector.prototype.array=function(){return[this.x||0,this.y||0,this.z||0]},d.Vector.prototype.equals=function(a,b,c){var e,f,g;return a instanceof d.Vector?(e=a.x||0,f=a.y||0,g=a.z||0):a instanceof Array?(e=a[0]||0,f=a[1]||0,g=a[2]||0):(e=a||0,f=b||0,g=c||0),this.x===e&&this.y===f&&this.z===g},d.Vector.fromAngle=function(a){return this.p5&&this.p5._angleMode===f.DEGREES&&(a=e.degreesToRadians(a)),this.p5?new d.Vector(this.p5,[Math.cos(a),Math.sin(a),0]):new d.Vector(Math.cos(a),Math.sin(a),0)},d.Vector.random2D=function(){var a;return a=this.p5?this.p5._angleMode===f.DEGREES?this.p5.random(360):this.p5.random(f.TWO_PI):Math.random()*Math.PI*2,this.fromAngle(a)},d.Vector.random3D=function(){var a,b;this.p5?(a=this.p5.random(0,f.TWO_PI),b=this.p5.random(-1,1)):(a=Math.random()*Math.PI*2,b=2*Math.random()-1);var c=Math.sqrt(1-b*b)*Math.cos(a),e=Math.sqrt(1-b*b)*Math.sin(a);return this.p5?new d.Vector(this.p5,[c,e,b]):new d.Vector(c,e,b)},d.Vector.add=function(a,b,c){return c?c.set(a):c=a.copy(),c.add(b),c},d.Vector.sub=function(a,b,c){return c?c.set(a):c=a.copy(),c.sub(b),c},d.Vector.mult=function(a,b,c){return c?c.set(a):c=a.copy(),c.mult(b),c},d.Vector.div=function(a,b,c){return c?c.set(a):c=a.copy(),c.div(b),c},d.Vector.dot=function(a,b){return a.dot(b)},d.Vector.cross=function(a,b){return a.cross(b)},d.Vector.dist=function(a,b){return a.dist(b)},d.Vector.lerp=function(a,b,c,d){return d?d.set(a):d=a.copy(),d.lerp(b,c),d},d.Vector.angleBetween=function(a,b){var c=Math.acos(a.dot(b)/(a.mag()*b.mag()));return this.p5&&this.p5._angleMode===f.DEGREES&&(c=e.radiansToDegrees(c)),c},d.Vector.mag=function(a){var b=a.x,c=a.y,d=a.z,e=b*b+c*c+d*d;return Math.sqrt(e)},b.exports=d.Vector},{"../core/constants":36,"../core/core":37,"./polargeometry":67}],67:[function(a,b,c){b.exports={degreesToRadians:function(a){return 2*Math.PI*a/360},radiansToDegrees:function(a){return 360*a/(2*Math.PI)}}},{}],68:[function(a,b,c){"use strict";var d=a("../core/core"),e=!1,f=!1,g=0,h=function(){var a,b,c=4294967296,d=1664525,e=1013904223;return{setSeed:function(d){b=a=(null==d?Math.random()*c:d)>>>0},getSeed:function(){return a},rand:function(){return b=(d*b+e)%c,b/c}}}();d.prototype.randomSeed=function(a){h.setSeed(a),e=!0,f=!1},d.prototype.random=function(a,b){var c;if(c=e?h.rand():Math.random(),"undefined"==typeof a)return c;if("undefined"==typeof b)return a instanceof Array?a[Math.floor(c*a.length)]:c*a;if(a>b){var d=a;a=b,b=d}return c*(b-a)+a},d.prototype.randomGaussian=function(a,b){var c,d,e,h;if(f)c=g,f=!1;else{do d=this.random(2)-1,e=this.random(2)-1,h=d*d+e*e;while(h>=1);h=Math.sqrt(-2*Math.log(h)/h),c=d*h,g=e*h,f=!0}var i=a||0,j=b||1;return c*j+i},b.exports=d},{"../core/core":37}],69:[function(a,b,c){"use strict";var d=a("../core/core"),e=a("./polargeometry"),f=a("../core/constants");d.prototype._angleMode=f.RADIANS,d.prototype.acos=function(a){return this._angleMode===f.RADIANS?Math.acos(a):e.radiansToDegrees(Math.acos(a))},d.prototype.asin=function(a){return this._angleMode===f.RADIANS?Math.asin(a):e.radiansToDegrees(Math.asin(a))},d.prototype.atan=function(a){return this._angleMode===f.RADIANS?Math.atan(a):e.radiansToDegrees(Math.atan(a))},d.prototype.atan2=function(a,b){return this._angleMode===f.RADIANS?Math.atan2(a,b):e.radiansToDegrees(Math.atan2(a,b))},d.prototype.cos=function(a){return this._angleMode===f.RADIANS?Math.cos(a):Math.cos(this.radians(a))},d.prototype.sin=function(a){return this._angleMode===f.RADIANS?Math.sin(a):Math.sin(this.radians(a))},d.prototype.tan=function(a){return this._angleMode===f.RADIANS?Math.tan(a):Math.tan(this.radians(a))},d.prototype.degrees=function(a){return e.radiansToDegrees(a)},d.prototype.radians=function(a){return e.degreesToRadians(a)},d.prototype.angleMode=function(a){(a===f.DEGREES||a===f.RADIANS)&&(this._angleMode=a)},b.exports=d},{"../core/constants":36,"../core/core":37,"./polargeometry":67}],70:[function(a,b,c){"use strict";var d=a("../core/core");d.prototype.textAlign=function(a,b){return this._renderer.textAlign.apply(this._renderer,arguments)},d.prototype.textLeading=function(a){return this._renderer.textLeading.apply(this._renderer,arguments)},d.prototype.textSize=function(a){return this._renderer.textSize.apply(this._renderer,arguments)},d.prototype.textStyle=function(a){return this._renderer.textStyle.apply(this._renderer,arguments)},d.prototype.textWidth=function(a){return 0===a.length?0:this._renderer.textWidth.apply(this._renderer,arguments)},d.prototype.textAscent=function(){return this._renderer.textAscent()},d.prototype.textDescent=function(){return this._renderer.textDescent()},d.prototype._updateTextMetrics=function(){return this._renderer._updateTextMetrics()},b.exports=d},{"../core/core":37}],71:[function(a,b,c){"use strict";var d=a("../core/core"),e=a("../core/constants");a("../core/error_helpers"),d.prototype.text=function(a,b,c,d,e){return this._renderer._doFill||this._renderer._doStroke?this._renderer.text.apply(this._renderer,arguments):this},d.prototype.textFont=function(a,b){if(arguments.length){if(!a)throw Error("null font passed to textFont");return this._renderer._setProperty("_textFont",a),b&&(this._renderer._setProperty("_textSize",b),this._renderer._setProperty("_textLeading",b*e._DEFAULT_LEADMULT)),this._renderer._applyTextProperties()}return this},b.exports=d},{"../core/constants":36,"../core/core":37,"../core/error_helpers":40}],72:[function(a,b,c){"use strict";function d(a,b){for(var c=h(b,{sampleFactor:.1,simplifyThreshold:0}),d=n(a,0,1),f=d/(d*c.sampleFactor),g=[],i=0;d>i;i+=f)g.push(n(a,i));return c.simplifyThreshold&&e(g,c.simplifyThreshold),g}function e(a,b){b="undefined"==typeof b?0:b;for(var c=0,d=a.length-1;a.length>3&&d>=0;--d)j(i(a,d-1),i(a,d),i(a,d+1),b)&&(a.splice(d%a.length,1),c++);return c}function f(a){for(var b,c=[],d=0;d<a.length;d++)"M"===a[d].type&&(b&&c.push(b),b=[]),b.push(g(a[d]));return c.push(b),c}function g(a){var b=[a.type];return"M"===a.type||"L"===a.type?b.push(a.x,a.y):"C"===a.type?b.push(a.x1,a.y1,a.x2,a.y2,a.x,a.y):"Q"===a.type&&b.push(a.x1,a.y1,a.x,a.y),b}function h(a,b){if("object"!=typeof a)a=b;else for(var c in b)"undefined"==typeof a[c]&&(a[c]=b[c]);return a}function i(a,b){var c=a.length;return a[0>b?b%c+c:b%c]}function j(a,b,c,d){if(!d)return 0===k(a,b,c);"undefined"==typeof j.tmpPoint1&&(j.tmpPoint1=[],j.tmpPoint2=[]);var e=j.tmpPoint1,f=j.tmpPoint2;e.x=b.x-a.x,e.y=b.y-a.y,f.x=c.x-b.x,f.y=c.y-b.y;var g=e.x*f.x+e.y*f.y,h=Math.sqrt(e.x*e.x+e.y*e.y),i=Math.sqrt(f.x*f.x+f.y*f.y),l=Math.acos(g/(h*i));return d>l}function k(a,b,c){return(b[0]-a[0])*(c[1]-a[1])-(c[0]-a[0])*(b[1]-a[1])}function l(a,b,c,d,e,f,g,h,i){var j=1-i,k=Math.pow(j,3),l=Math.pow(j,2),m=i*i,n=m*i,o=k*a+3*l*i*c+3*j*i*i*e+n*g,p=k*b+3*l*i*d+3*j*i*i*f+n*h,q=a+2*i*(c-a)+m*(e-2*c+a),r=b+2*i*(d-b)+m*(f-2*d+b),s=c+2*i*(e-c)+m*(g-2*e+c),t=d+2*i*(f-d)+m*(h-2*f+d),u=j*a+i*c,v=j*b+i*d,w=j*e+i*g,x=j*f+i*h,y=90-180*Math.atan2(q-s,r-t)/Math.PI;return(q>s||t>r)&&(y+=180),{x:o,y:p,m:{x:q,y:r},n:{x:s,y:t},start:{x:u,y:v},end:{x:w,y:x},alpha:y}}function m(a,b,c,d,e,f,g,h,i){return null==i?u(a,b,c,d,e,f,g,h):l(a,b,c,d,e,f,g,h,v(a,b,c,d,e,f,g,h,i))}function n(a,b,c){a=p(a);for(var d,e,f,g,h,i="",j={},k=0,n=0,o=a.length;o>n;n++){if(f=a[n],"M"===f[0])d=+f[1],e=+f[2];else{if(g=m(d,e,f[1],f[2],f[3],f[4],f[5],f[6]),k+g>b&&!c)return h=m(d,e,f[1],f[2],f[3],f[4],f[5],f[6],b-k),{x:h.x,y:h.y,alpha:h.alpha};k+=g,d=+f[5],e=+f[6]}i+=f.shift()+f}return j.end=i,h=c?k:l(d,e,f[0],f[1],f[2],f[3],f[4],f[5],1),h.alpha&&(h={x:h.x,y:h.y,alpha:h.alpha}),h}function o(a){var b=[],c=0,d=0,e=0,f=0,g=0;"M"===a[0][0]&&(c=+a[0][1],d=+a[0][2],e=c,f=d,g++,b[0]=["M",c,d]);for(var h,i,j,k=3===a.length&&"M"===a[0][0]&&"R"===a[1][0].toUpperCase()&&"Z"===a[2][0].toUpperCase(),l=g,m=a.length;m>l;l++){if(b.push(i=[]),j=a[l],j[0]!==String.prototype.toUpperCase.call(j[0]))switch(i[0]=String.prototype.toUpperCase.call(j[0]),i[0]){case"A":i[1]=j[1],i[2]=j[2],i[3]=j[3],i[4]=j[4],i[5]=j[5],i[6]=+(j[6]+c),i[7]=+(j[7]+d);break;case"V":i[1]=+j[1]+d;break;case"H":i[1]=+j[1]+c;break;case"R":h=[c,d].concat(j.slice(1));for(var n=2,o=h.length;o>n;n++)h[n]=+h[n]+c,h[++n]=+h[n]+d;b.pop(),b=b.concat(r(h,k));break;case"M":e=+j[1]+c,f=+j[2]+d;break;default:for(n=1,o=j.length;o>n;n++)i[n]=+j[n]+(n%2?c:d)}else if("R"===j[0])h=[c,d].concat(j.slice(1)),b.pop(),b=b.concat(r(h,k)),i=["R"].concat(j.slice(-2));else for(var p=0,q=j.length;q>p;p++)i[p]=j[p];switch(i[0]){case"Z":c=e,d=f;break;case"H":c=i[1];break;case"V":d=i[1];break;case"M":e=i[i.length-2],f=i[i.length-1];break;default:c=i[i.length-2],d=i[i.length-1]}}return b}function p(a,b){for(var c=o(a),d=b&&o(b),e={x:0,y:0,bx:0,by:0,X:0,Y:0,qx:null,qy:null},f={x:0,y:0,bx:0,by:0,X:0,Y:0,qx:null,qy:null},g=(function(a,b,c){var d,e,f={T:1,Q:1};if(!a)return["C",b.x,b.y,b.x,b.y,b.x,b.y];switch(a[0]in f||(b.qx=b.qy=null),a[0]){case"M":b.X=a[1],b.Y=a[2];break;case"A":a=["C"].concat(q.apply(0,[b.x,b.y].concat(a.slice(1))));break;case"S":"C"===c||"S"===c?(d=2*b.x-b.bx,e=2*b.y-b.by):(d=b.x,e=b.y),a=["C",d,e].concat(a.slice(1));break;case"T":"Q"===c||"T"===c?(b.qx=2*b.x-b.qx,b.qy=2*b.y-b.qy):(b.qx=b.x,b.qy=b.y),a=["C"].concat(t(b.x,b.y,b.qx,b.qy,a[1],a[2]));break;case"Q":b.qx=a[1],b.qy=a[2],a=["C"].concat(t(b.x,b.y,a[1],a[2],a[3],a[4]));break;case"L":a=["C"].concat(s(b.x,b.y,a[1],a[2]));break;case"H":a=["C"].concat(s(b.x,b.y,a[1],b.y));break;case"V":a=["C"].concat(s(b.x,b.y,b.x,a[1]));break;case"Z":a=["C"].concat(s(b.x,b.y,b.X,b.Y))}return a}),h=function(a,b){if(a[b].length>7){a[b].shift();for(var e=a[b];e.length;)j[b]="A",d&&(k[b]="A"),a.splice(b++,0,["C"].concat(e.splice(0,6)));a.splice(b,1),p=Math.max(c.length,d&&d.length||0)}},i=function(a,b,e,f,g){a&&b&&"M"===a[g][0]&&"M"!==b[g][0]&&(b.splice(g,0,["M",f.x,f.y]),e.bx=0,e.by=0,e.x=a[g][1],e.y=a[g][2],p=Math.max(c.length,d&&d.length||0))},j=[],k=[],l="",m="",n=0,p=Math.max(c.length,d&&d.length||0);p>n;n++){c[n]&&(l=c[n][0]),"C"!==l&&(j[n]=l,n&&(m=j[n-1])),c[n]=g(c[n],e,m),"A"!==j[n]&&"C"===l&&(j[n]="C"),h(c,n),d&&(d[n]&&(l=d[n][0]),"C"!==l&&(k[n]=l,n&&(m=k[n-1])),d[n]=g(d[n],f,m),"A"!==k[n]&&"C"===l&&(k[n]="C"),h(d,n)),i(c,d,e,f,n),i(d,c,f,e,n);var r=c[n],u=d&&d[n],v=r.length,w=d&&u.length;e.x=r[v-2],e.y=r[v-1],e.bx=parseFloat(r[v-4])||e.x,e.by=parseFloat(r[v-3])||e.y,f.bx=d&&(parseFloat(u[w-4])||f.x),f.by=d&&(parseFloat(u[w-3])||f.y),f.x=d&&u[w-2],f.y=d&&u[w-1]}return d?[c,d]:c}function q(a,b,c,d,e,f,g,h,i,j){var k,l,m,n,o,p=Math.PI,r=120*p/180,s=p/180*(+e||0),t=[],u=function(a,b,c){var d=a*Math.cos(c)-b*Math.sin(c),e=a*Math.sin(c)+b*Math.cos(c);return{x:d,y:e}};if(j)k=j[0],l=j[1],m=j[2],n=j[3];else{o=u(a,b,-s),a=o.x,b=o.y,o=u(h,i,-s),h=o.x,i=o.y;var v=(a-h)/2,w=(b-i)/2,x=v*v/(c*c)+w*w/(d*d);x>1&&(x=Math.sqrt(x),c=x*c,d=x*d);var y=c*c,z=d*d,A=(f===g?-1:1)*Math.sqrt(Math.abs((y*z-y*w*w-z*v*v)/(y*w*w+z*v*v)));m=A*c*w/d+(a+h)/2,n=A*-d*v/c+(b+i)/2,k=Math.asin(((b-n)/d).toFixed(9)),l=Math.asin(((i-n)/d).toFixed(9)),k=m>a?p-k:k,l=m>h?p-l:l,0>k&&(k=2*p+k),0>l&&(l=2*p+l),g&&k>l&&(k-=2*p),!g&&l>k&&(l-=2*p)}var B=l-k;if(Math.abs(B)>r){var C=l,D=h,E=i;l=k+r*(g&&l>k?1:-1),h=m+c*Math.cos(l),i=n+d*Math.sin(l),t=q(h,i,c,d,e,0,g,D,E,[l,C,m,n])}B=l-k;var F=Math.cos(k),G=Math.sin(k),H=Math.cos(l),I=Math.sin(l),J=Math.tan(B/4),K=4/3*c*J,L=4/3*d*J,M=[a,b],N=[a+K*G,b-L*F],O=[h+K*I,i-L*H],P=[h,i];if(N[0]=2*M[0]-N[0],N[1]=2*M[1]-N[1],j)return[N,O,P].concat(t);t=[N,O,P].concat(t).join().split(",");for(var Q=[],R=0,S=t.length;S>R;R++)Q[R]=R%2?u(t[R-1],t[R],s).y:u(t[R],t[R+1],s).x;return Q}function r(a,b){for(var c=[],d=0,e=a.length;e-2*!b>d;d+=2){var f=[{x:+a[d-2],y:+a[d-1]},{x:+a[d],y:+a[d+1]},{x:+a[d+2],y:+a[d+3]},{x:+a[d+4],y:+a[d+5]}];b?d?e-4===d?f[3]={x:+a[0],y:+a[1]}:e-2===d&&(f[2]={x:+a[0],y:+a[1]},f[3]={x:+a[2],y:+a[3]}):f[0]={x:+a[e-2],y:+a[e-1]}:e-4===d?f[3]=f[2]:d||(f[0]={x:+a[d],y:+a[d+1]}),c.push(["C",(-f[0].x+6*f[1].x+f[2].x)/6,(-f[0].y+6*f[1].y+f[2].y)/6,(f[1].x+6*f[2].x-f[3].x)/6,(f[1].y+6*f[2].y-f[3].y)/6,f[2].x,f[2].y])}return c}function s(a,b,c,d){return[a,b,c,d,c,d]}function t(a,b,c,d,e,f){var g=1/3,h=2/3;return[g*a+h*c,g*b+h*d,g*e+h*c,g*f+h*d,e,f]}function u(a,b,c,d,e,f,g,h,i){null==i&&(i=1),i=i>1?1:0>i?0:i;for(var j=i/2,k=12,l=[-.1252,.1252,-.3678,.3678,-.5873,.5873,-.7699,.7699,-.9041,.9041,-.9816,.9816],m=0,n=[.2491,.2491,.2335,.2335,.2032,.2032,.1601,.1601,.1069,.1069,.0472,.0472],o=0;k>o;o++){var p=j*l[o]+j,q=w(p,a,c,e,g),r=w(p,b,d,f,h),s=q*q+r*r;m+=n[o]*Math.sqrt(s)}return j*m}function v(a,b,c,d,e,f,g,h,i){if(!(0>i||u(a,b,c,d,e,f,g,h)<i)){var j,k=1,l=k/2,m=k-l,n=.01;for(j=u(a,b,c,d,e,f,g,h,m);Math.abs(j-i)>n;)l/=2,m+=(i>j?1:-1)*l,j=u(a,b,c,d,e,f,g,h,m);return m}}function w(a,b,c,d,e){var f=-3*b+9*c-9*d+3*e,g=a*f+6*b-12*c+6*d;return a*g-3*b+3*c}function x(){for(var a=new Array(arguments.length),b=0;b<a.length;++b)a[b]=arguments[b];b=a.length;for(var c="";b--;)c+=a[b]===Object(a[b])?JSON.stringify(a[b]):a[b];return c}var y=a("../core/core"),z=a("../core/constants");y.Font=function(a){this.parent=a,this.cache={},this.font=void 0},y.Font.prototype.list=function(){throw"not yet implemented"},y.Font.prototype.textBounds=function(a,b,c,d,e){b=void 0!==b?b:0,c=void 0!==c?c:0,d=d||this.parent._renderer._textSize;var f=e&&e.renderer&&e.renderer._pInst||this.parent,g=f._renderer.drawingContext,h=g.textAlign||z.LEFT,i=g.textBaseline||z.BASELINE,j=this.cache[x("textBounds",a,b,c,d,h,i)];if(!j){var k,l,m,n,o=[],p=[],q=this,r=this._scale(d);this.font.forEachGlyph(a,b,c,d,e,function(a,b,c,e){o.push(b),p.push(c);var f=a.getMetrics();"space"!==a.name?(o.push(b+f.xMax*r),p.push(c+-f.yMin*r),p.push(c+-f.yMax*r)):o.push(b+q.font.charToGlyph(" ").advanceWidth*q._scale(d))}),k=Math.min.apply(null,o),l=Math.min.apply(null,p),m=Math.max.apply(null,o),n=Math.max.apply(null,p),j={x:k,y:l,h:n-l,w:m-k,advance:k-b};var s=j.w+j.advance,t=this._handleAlignment(f,g,a,j.x,j.y,s);j.x=t.x,j.y=t.y,this.cache[x("textBounds",a,b,c,d,h,i)]=j}return j},y.Font.prototype.textToPoints=function(a,b,c,e,g){var h=0,i=[],j=this._getGlyphs(a);e=e||this.parent._renderer._textSize;for(var k=0;k<j.length;k++){for(var l=j[k].getPath(b,c,e),m=f(l.commands),n=0;n<m.length;n++)for(var o=d(m[n],g),p=0;p<o.length;p++)o[p].x+=h,i.push(o[p]);h+=j[k].advanceWidth*this._scale(e)}return i},y.Font.prototype._getGlyphs=function(a){return this.font.stringToGlyphs(a)},y.Font.prototype._getPath=function(a,b,c,d){var e=d&&d.renderer&&d.renderer._pInst||this.parent,f=e._renderer.drawingContext,g=this._handleAlignment(e,f,a,b,c);return this.font.getPath(a,g.x,g.y,e._renderer._textSize,d)},y.Font.prototype._getPathData=function(a,b,c,d){var e=3;return"string"==typeof a&&arguments.length>2?a=this._getPath(a,b,c,d):"object"==typeof b&&(d=b),d&&"number"==typeof d.decimals&&(e=d.decimals),a.toPathData(e)},y.Font.prototype._getSVG=function(a,b,c,d){var e=3;return"string"==typeof a&&arguments.length>2?a=this._getPath(a,b,c,d):"object"==typeof b&&(d=b),d&&("number"==typeof d.decimals&&(e=d.decimals),"number"==typeof d.strokeWidth&&(a.strokeWidth=d.strokeWidth),"undefined"!=typeof d.fill&&(a.fill=d.fill),"undefined"!=typeof d.stroke&&(a.stroke=d.stroke)),a.toSVG(e)},y.Font.prototype._renderPath=function(a,b,c,d){var e,f=d&&d.renderer||this.parent._renderer,g=f.drawingContext;e="object"==typeof a&&a.commands?a.commands:this._getPath(a,b,c,d).commands,g.beginPath();for(var h=0;h<e.length;h+=1){var i=e[h];"M"===i.type?g.moveTo(i.x,i.y):"L"===i.type?g.lineTo(i.x,i.y):"C"===i.type?g.bezierCurveTo(i.x1,i.y1,i.x2,i.y2,i.x,i.y):"Q"===i.type?g.quadraticCurveTo(i.x1,i.y1,i.x,i.y):"Z"===i.type&&g.closePath()}return f._doStroke&&f._strokeSet&&g.stroke(),f._doFill&&(g.fillStyle=f._fillSet?g.fillStyle:z._DEFAULT_TEXT_FILL,g.fill()),this},y.Font.prototype._textWidth=function(a,b){if(" "===a)return this.font.charToGlyph(" ").advanceWidth*this._scale(b);var c=this.textBounds(a,0,0,b);return c.w+c.advance},y.Font.prototype._textAscent=function(a){return this.font.ascender*this._scale(a)},y.Font.prototype._textDescent=function(a){return-this.font.descender*this._scale(a)},y.Font.prototype._scale=function(a){return 1/this.font.unitsPerEm*(a||this.parent._renderer._textSize)},y.Font.prototype._handleAlignment=function(a,b,c,d,e,f){var g=a._renderer._textSize,h=this._textAscent(g),i=this._textDescent(g);return f=void 0!==f?f:this._textWidth(c,g),b.textAlign===z.CENTER?d-=f/2:b.textAlign===z.RIGHT&&(d-=f),b.textBaseline===z.TOP?e+=h:b.textBaseline===z._CTX_MIDDLE?e+=h/2:b.textBaseline===z.BOTTOM&&(e-=i),{x:d,y:e}},b.exports=y.Font},{"../core/constants":36,"../core/core":37}],73:[function(a,b,c){"use strict";var d=a("../core/core");d.prototype.append=function(a,b){return a.push(b),a},d.prototype.arrayCopy=function(a,b,c,d,e){var f,g;"undefined"!=typeof e?(g=Math.min(e,a.length),f=d,a=a.slice(b,g+b)):("undefined"!=typeof c?(g=c,g=Math.min(g,a.length)):g=a.length,f=0,c=b,a=a.slice(0,g)),Array.prototype.splice.apply(c,[f,g].concat(a))},d.prototype.concat=function(a,b){return a.concat(b)},d.prototype.reverse=function(a){return a.reverse()},d.prototype.shorten=function(a){return a.pop(),a},d.prototype.shuffle=function(a,b){var c=ArrayBuffer&&ArrayBuffer.isView&&ArrayBuffer.isView(a);a=b||c?a:a.slice();for(var d,e,f=a.length;f>1;)d=Math.random()*f|0,e=a[--f],a[f]=a[d],a[d]=e;return a},d.prototype.sort=function(a,b){var c=b?a.slice(0,Math.min(b,a.length)):a,d=b?a.slice(Math.min(b,a.length)):[];return c="string"==typeof c[0]?c.sort():c.sort(function(a,b){return a-b}),c.concat(d)},d.prototype.splice=function(a,b,c){return Array.prototype.splice.apply(a,[c,0].concat(b)),a},d.prototype.subset=function(a,b,c){return"undefined"!=typeof c?a.slice(b,b+c):a.slice(b,a.length)},b.exports=d},{"../core/core":37}],74:[function(a,b,c){"use strict";var d=a("../core/core");d.prototype["float"]=function(a){return a instanceof Array?a.map(parseFloat):parseFloat(a)},d.prototype["int"]=function(a,b){return b=b||10,"string"==typeof a?parseInt(a,b):"number"==typeof a?0|a:"boolean"==typeof a?a?1:0:a instanceof Array?a.map(function(a){return d.prototype["int"](a,b)}):void 0},d.prototype.str=function(a){return a instanceof Array?a.map(d.prototype.str):String(a)},d.prototype["boolean"]=function(a){return"number"==typeof a?0!==a:"string"==typeof a?"true"===a.toLowerCase():"boolean"==typeof a?a:a instanceof Array?a.map(d.prototype["boolean"]):void 0},d.prototype["byte"]=function(a){var b=d.prototype["int"](a,10);return"number"==typeof b?(b+128)%256-128:b instanceof Array?b.map(d.prototype["byte"]):void 0},d.prototype["char"]=function(a){return"number"!=typeof a||isNaN(a)?a instanceof Array?a.map(d.prototype["char"]):"string"==typeof a?d.prototype["char"](parseInt(a,10)):void 0:String.fromCharCode(a)},d.prototype.unchar=function(a){return"string"==typeof a&&1===a.length?a.charCodeAt(0):a instanceof Array?a.map(d.prototype.unchar):void 0},d.prototype.hex=function(a,b){if(b=void 0===b||null===b?b=8:b,a instanceof Array)return a.map(function(a){return d.prototype.hex(a,b)});if("number"==typeof a){0>a&&(a=4294967295+a+1);for(var c=Number(a).toString(16).toUpperCase();c.length<b;)c="0"+c;return c.length>=b&&(c=c.substring(c.length-b,c.length)),c}},d.prototype.unhex=function(a){return a instanceof Array?a.map(d.prototype.unhex):parseInt("0x"+a,16)},b.exports=d},{"../core/core":37}],75:[function(a,b,c){"use strict";function d(){var a=arguments[0],b=0>a,c=b?a.toString().substring(1):a.toString(),d=c.indexOf("."),e=-1!==d?c.substring(0,d):c,f=-1!==d?c.substring(d+1):"",g=b?"-":"";if(3===arguments.length){var h="";(-1!==d||arguments[2]-f.length>0)&&(h="."),f.length>arguments[2]&&(f=f.substring(0,arguments[2]));for(var i=0;i<arguments[1]-e.length;i++)g+="0";g+=e,g+=h,g+=f;for(var j=0;j<arguments[2]-f.length;j++)g+="0";return g}for(var k=0;k<Math.max(arguments[1]-e.length,0);k++)g+="0";return g+=c}function e(){var a=arguments[0].toString(),b=a.indexOf("."),c=-1!==b?a.substring(b):"",d=-1!==b?a.substring(0,b):a;if(d=d.toString().replace(/\B(?=(\d{3})+(?!\d))/g,","),0===arguments[1])c="";else if(void 0!==arguments[1])if(arguments[1]>c.length){c+=-1===b?".":"";for(var e=arguments[1]-c.length+1,f=0;e>f;f++)c+="0"}else c=c.substring(0,arguments[1]+1);return d+c}function f(){return parseFloat(arguments[0])>0?"+"+arguments[0].toString():arguments[0].toString()}function g(){return parseFloat(arguments[0])>0?" "+arguments[0].toString():arguments[0].toString()}var h=a("../core/core");h.prototype.join=function(a,b){return a.join(b)},h.prototype.match=function(a,b){return a.match(b)},h.prototype.matchAll=function(a,b){for(var c=new RegExp(b,"g"),d=c.exec(a),e=[];null!==d;)e.push(d),d=c.exec(a);return e},h.prototype.nf=function(){if(arguments[0]instanceof Array){var a=arguments[1],b=arguments[2];return arguments[0].map(function(c){return d(c,a,b)})}var c=Object.prototype.toString.call(arguments[0]);return"[object Arguments]"===c?3===arguments[0].length?this.nf(arguments[0][0],arguments[0][1],arguments[0][2]):2===arguments[0].length?this.nf(arguments[0][0],arguments[0][1]):this.nf(arguments[0][0]):d.apply(this,arguments)},h.prototype.nfc=function(){if(arguments[0]instanceof Array){var a=arguments[1];return arguments[0].map(function(b){return e(b,a)})}return e.apply(this,arguments)},h.prototype.nfp=function(){var a=this.nf.apply(this,arguments);return a instanceof Array?a.map(f):f(a)},h.prototype.nfs=function(){var a=this.nf.apply(this,arguments);return a instanceof Array?a.map(g):g(a)},h.prototype.split=function(a,b){return a.split(b)},h.prototype.splitTokens=function(){var a,b,c,d;return d=arguments[1],arguments.length>1?(c=/\]/g.exec(d),b=/\[/g.exec(d),b&&c?(d=d.slice(0,c.index)+d.slice(c.index+1),b=/\[/g.exec(d),d=d.slice(0,b.index)+d.slice(b.index+1),a=new RegExp("[\\["+d+"\\]]","g")):c?(d=d.slice(0,c.index)+d.slice(c.index+1),a=new RegExp("["+d+"\\]]","g")):b?(d=d.slice(0,b.index)+d.slice(b.index+1),a=new RegExp("["+d+"\\[]","g")):a=new RegExp("["+d+"]","g")):a=/\s/g,arguments[0].split(a).filter(function(a){return a})},h.prototype.trim=function(a){return a instanceof Array?a.map(this.trim):a.trim()},b.exports=h},{"../core/core":37}],76:[function(a,b,c){"use strict";var d=a("../core/core");d.prototype.day=function(){return(new Date).getDate()},d.prototype.hour=function(){return(new Date).getHours()},d.prototype.minute=function(){return(new Date).getMinutes()},d.prototype.millis=function(){return window.performance.now()},d.prototype.month=function(){return(new Date).getMonth()+1},d.prototype.second=function(){return(new Date).getSeconds()},d.prototype.year=function(){return(new Date).getFullYear()},b.exports=d},{"../core/core":37}],77:[function(a,b,c){"use strict";var d=a("../core/core");d.prototype.camera=function(a,b,c){this._renderer.translate(-a,-b,-c)},d.prototype.perspective=function(a,b,c,e){this._renderer.uPMatrix=d.Matrix.identity(),this._renderer.uPMatrix.perspective(a,b,c,e),this._renderer._curCamera="custom"},d.prototype.ortho=function(a,b,c,e,f,g){a=a||-this.width/2,b=b||this.width/2,c=c||-this.height/2,e=e||this.height/2,f=f||0,g=g||Math.max(this.width,this.height),this._renderer.uPMatrix=d.Matrix.identity(),this._renderer.uPMatrix.ortho(a,b,c,e,f,g),this._renderer._curCamera="custom"},b.exports=d},{"../core/core":37}],78:[function(a,b,c){"use strict";var d=a("../core/core");d.prototype.orbitControl=function(){return this.mouseIsPressed&&(this.rotateY((this.mouseX-this.width/2)/(this.width/2)),this.rotateX((this.mouseY-this.height/2)/(this.width/2))),this},b.exports=d},{"../core/core":37}],79:[function(a,b,c){"use strict";var d=a("../core/core");d.prototype.ambientLight=function(a,b,c,d){var e=this._renderer.GL,f=this._renderer._getShader("lightVert","lightTextureFrag");e.useProgram(f),f.uAmbientColor=e.getUniformLocation(f,"uAmbientColor["+this._renderer.ambientLightCount+"]");var g=this._renderer._pInst.color.apply(this._renderer._pInst,arguments),h=g._array;return e.uniform3f(f.uAmbientColor,h[0],h[1],h[2]),f.uMaterialColor=e.getUniformLocation(f,"uMaterialColor"),e.uniform4f(f.uMaterialColor,1,1,1,1),this._renderer.ambientLightCount++,f.uAmbientLightCount=e.getUniformLocation(f,"uAmbientLightCount"),e.uniform1i(f.uAmbientLightCount,this._renderer.ambientLightCount),this},d.prototype.directionalLight=function(a,b,c,d,e,f,g){var h=this._renderer.GL,i=this._renderer._getShader("lightVert","lightTextureFrag");h.useProgram(i),i.uDirectionalColor=h.getUniformLocation(i,"uDirectionalColor["+this._renderer.directionalLightCount+"]");var j=this._renderer._pInst.color.apply(this._renderer._pInst,[a,b,c]),k=j._array;h.uniform3f(i.uDirectionalColor,k[0],k[1],k[2]);for(var l,m,n,o=new Array(arguments.length),p=0;p<o.length;++p)o[p]=arguments[p];if("number"==typeof o[o.length-1])l=o[o.length-3],m=o[o.length-2],n=o[o.length-1];else try{l=o[o.length-1].x,m=o[o.length-1].y,n=o[o.length-1].z}catch(q){throw q}return i.uLightingDirection=h.getUniformLocation(i,"uLightingDirection["+this._renderer.directionalLightCount+"]"),h.uniform3f(i.uLightingDirection,l,m,n),i.uMaterialColor=h.getUniformLocation(i,"uMaterialColor"),h.uniform4f(i.uMaterialColor,1,1,1,1),this._renderer.directionalLightCount++,i.uDirectionalLightCount=h.getUniformLocation(i,"uDirectionalLightCount"),h.uniform1i(i.uDirectionalLightCount,this._renderer.directionalLightCount),this},d.prototype.pointLight=function(a,b,c,d,e,f,g){var h=this._renderer.GL,i=this._renderer._getShader("lightVert","lightTextureFrag");h.useProgram(i),i.uPointLightColor=h.getUniformLocation(i,"uPointLightColor["+this._renderer.pointLightCount+"]");var j=this._renderer._pInst.color.apply(this._renderer._pInst,[a,b,c]),k=j._array;h.uniform3f(i.uPointLightColor,k[0],k[1],k[2]);for(var l,m,n,o=new Array(arguments.length),p=0;p<o.length;++p)o[p]=arguments[p];if("number"==typeof o[o.length-1])l=o[o.length-3],m=o[o.length-2],n=o[o.length-1];else try{l=o[o.length-1].x,m=o[o.length-1].y,n=o[o.length-1].z}catch(q){throw q}return i.uPointLightLocation=h.getUniformLocation(i,"uPointLightLocation["+this._renderer.pointLightCount+"]"),h.uniform3f(i.uPointLightLocation,l,m,n),i.uMaterialColor=h.getUniformLocation(i,"uMaterialColor"),h.uniform4f(i.uMaterialColor,1,1,1,1),this._renderer.pointLightCount++,i.uPointLightCount=h.getUniformLocation(i,"uPointLightCount"),h.uniform1i(i.uPointLightCount,this._renderer.pointLightCount),this},b.exports=d},{"../core/core":37}],80:[function(a,b,c){"use strict";function d(a,b){for(var c={v:[],vt:[],vn:[]},d={},f=0;f<b.length;++f){var g=b[f].trim().split(/\b\s+/);if(g.length>0)if("v"===g[0]||"vn"===g[0]){var h=new e.Vector(parseFloat(g[1]),parseFloat(g[2]),parseFloat(g[3]));c[g[0]].push(h)}else if("vt"===g[0]){var i=[parseFloat(g[1]),parseFloat(g[2])];c[g[0]].push(i)}else if("f"===g[0])for(var j=3;j<g.length;++j){for(var k=[],l=[1,j-1,j],m=0;m<l.length;++m){var n=g[l[m]],o=0;if(void 0!==d[n])o=d[n];else{
 for(var p=n.split("/"),q=0;q<p.length;q++)p[q]=parseInt(p[q])-1;o=d[n]=a.vertices.length,a.vertices.push(c.v[p[0]].copy()),c.vt[p[1]]?a.uvs.push(c.vt[p[1]].slice()):a.uvs.push([0,0]),c.vn[p[2]]&&a.vertexNormals.push(c.vn[p[2]].copy())}k.push(o)}a.faces.push(k)}}return 0===a.vertexNormals.length&&a.computeNormals(),a}var e=a("../core/core");a("./p5.Geometry"),e.prototype.loadModel=function(){var a,b,c,f=arguments[0];"boolean"==typeof arguments[1]?(a=arguments[1],b=arguments[2],c=arguments[3]):(a=!1,b=arguments[1],c=arguments[2]);var g=new e.Geometry;return g.gid=f+"|"+a,this.loadStrings(f,function(c){d(g,c),a&&g.normalize(),"function"==typeof b&&b(g)}.bind(this),c),g},e.prototype.model=function(a){a.vertices.length>0&&(this._renderer.geometryInHash(a.gid)||this._renderer.createBuffers(a.gid,a),this._renderer.drawBuffers(a.gid))},b.exports=e},{"../core/core":37,"./p5.Geometry":82}],81:[function(a,b,c){"use strict";var d=a("../core/core");d.prototype.normalMaterial=function(){return this._renderer._getShader("normalVert","normalFrag"),this},d.prototype.texture=function(){for(var a=new Array(arguments.length),b=0;b<a.length;++b)a[b]=arguments[b];var c=this._renderer.GL,e=this._renderer._getShader("lightVert","lightTextureFrag");c.useProgram(e);var f;if(a[0].isTexture)a[0]instanceof d.Graphics||"undefined"!=typeof d.MediaElement&&a[0]instanceof d.MediaElement?f=a[0].elt:a[0]instanceof d.Image&&(f=a[0].canvas),this._renderer._bind.call(this,a[0].tex,f);else{if(a[0]instanceof d.Image)f=a[0].canvas;else if("undefined"!=typeof d.MediaElement&&a[0]instanceof d.MediaElement){if(!a[0].loadedmetadata)return;f=a[0].elt}else a[0]instanceof d.Graphics&&(f=a[0].elt);var g=c.createTexture();a[0]._setProperty("tex",g),a[0]._setProperty("isTexture",!0),this._renderer._bind.call(this,g,f)}return c.activeTexture(c.TEXTURE0),c.bindTexture(c.TEXTURE_2D,a[0].tex),c.uniform1i(c.getUniformLocation(e,"isTexture"),!0),c.uniform1i(c.getUniformLocation(e,"uSampler"),0),this},d.RendererGL.prototype._bind=function(a,b){var c=this._renderer.GL;c.bindTexture(c.TEXTURE_2D,a),c.pixelStorei(c.UNPACK_FLIP_Y_WEBGL,!0),c.texImage2D(c.TEXTURE_2D,0,c.RGBA,c.RGBA,c.UNSIGNED_BYTE,b),c.pixelStorei(c.UNPACK_FLIP_Y_WEBGL,!0),c.texParameteri(c.TEXTURE_2D,c.TEXTURE_MAG_FILTER,c.LINEAR),c.texParameteri(c.TEXTURE_2D,c.TEXTURE_MIN_FILTER,c.LINEAR),c.texParameteri(c.TEXTURE_2D,c.TEXTURE_WRAP_S,c.CLAMP_TO_EDGE),c.texParameteri(c.TEXTURE_2D,c.TEXTURE_WRAP_T,c.CLAMP_TO_EDGE),c.bindTexture(c.TEXTURE_2D,null)},d.prototype.ambientMaterial=function(a,b,c,d){var e=this._renderer.GL,f=this._renderer._getShader("lightVert","lightTextureFrag");e.useProgram(f),f.uMaterialColor=e.getUniformLocation(f,"uMaterialColor");var g=this._renderer._applyColorBlend.apply(this._renderer,arguments);return e.uniform4f(f.uMaterialColor,g[0],g[1],g[2],g[3]),f.uSpecular=e.getUniformLocation(f,"uSpecular"),e.uniform1i(f.uSpecular,!1),e.uniform1i(e.getUniformLocation(f,"isTexture"),!1),this},d.prototype.specularMaterial=function(a,b,c,d){var e=this._renderer.GL,f=this._renderer._getShader("lightVert","lightTextureFrag");e.useProgram(f),e.uniform1i(e.getUniformLocation(f,"isTexture"),!1),f.uMaterialColor=e.getUniformLocation(f,"uMaterialColor");var g=this._renderer._applyColorBlend.apply(this._renderer,arguments);return e.uniform4f(f.uMaterialColor,g[0],g[1],g[2],g[3]),f.uSpecular=e.getUniformLocation(f,"uSpecular"),e.uniform1i(f.uSpecular,!0),this},d.RendererGL.prototype._applyColorBlend=function(a,b,c,d){var e=this.GL,f=this._pInst.color.apply(this._pInst,arguments),g=f._array;return g[g.length-1]<1?(e.depthMask(!1),e.enable(e.BLEND),e.blendEquation(e.FUNC_ADD),e.blendFunc(e.SRC_ALPHA,e.ONE_MINUS_SRC_ALPHA)):(e.depthMask(!0),e.disable(e.BLEND)),g},b.exports=d},{"../core/core":37}],82:[function(a,b,c){"use strict";var d=a("../core/core");d.Geometry=function(a,b,c){return this.vertices=[],this.vertexNormals=[],this.faces=[],this.uvs=[],this.detailX=void 0!==a?a:1,this.detailY=void 0!==b?b:1,c instanceof Function&&c.call(this),this},d.Geometry.prototype.computeFaces=function(){for(var a,b,c,d,e=this.detailX+1,f=0;f<this.detailY;f++)for(var g=0;g<this.detailX;g++)a=f*e+g,b=f*e+g+1,c=(f+1)*e+g+1,d=(f+1)*e+g,this.faces.push([a,b,d]),this.faces.push([d,b,c]);return this},d.Geometry.prototype._getFaceNormal=function(a,b){var c=this.faces[a],e=this.vertices[c[b%3]],f=this.vertices[c[(b+1)%3]],g=this.vertices[c[(b+2)%3]],h=d.Vector.cross(d.Vector.sub(f,e),d.Vector.sub(g,e)),i=d.Vector.mag(h)/(d.Vector.mag(d.Vector.sub(f,e))*d.Vector.mag(d.Vector.sub(g,e)));return h=h.normalize(),h.mult(Math.asin(i))},d.Geometry.prototype.computeNormals=function(){for(var a=0;a<this.vertices.length;a++){for(var b=new d.Vector,c=0;c<this.faces.length;c++)(this.faces[c][0]===a||this.faces[c][1]===a||this.faces[c][2]===a)&&(b=b.add(this._getFaceNormal(c,a)));b=b.normalize(),this.vertexNormals.push(b)}return this},d.Geometry.prototype.averageNormals=function(){for(var a=0;a<=this.detailY;a++){var b=this.detailX+1,c=d.Vector.add(this.vertexNormals[a*b],this.vertexNormals[a*b+this.detailX]);c=d.Vector.div(c,2),this.vertexNormals[a*b]=c,this.vertexNormals[a*b+this.detailX]=c}return this},d.Geometry.prototype.averagePoleNormals=function(){for(var a=new d.Vector(0,0,0),b=0;b<this.detailX;b++)a.add(this.vertexNormals[b]);for(a=d.Vector.div(a,this.detailX),b=0;b<this.detailX;b++)this.vertexNormals[b]=a;for(a=new d.Vector(0,0,0),b=this.vertices.length-1;b>this.vertices.length-1-this.detailX;b--)a.add(this.vertexNormals[b]);for(a=d.Vector.div(a,this.detailX),b=this.vertices.length-1;b>this.vertices.length-1-this.detailX;b--)this.vertexNormals[b]=a;return this},d.Geometry.prototype.normalize=function(){if(this.vertices.length>0){for(var a=this.vertices[0].copy(),b=this.vertices[0].copy(),c=0;c<this.vertices.length;c++)a.x=Math.max(a.x,this.vertices[c].x),b.x=Math.min(b.x,this.vertices[c].x),a.y=Math.max(a.y,this.vertices[c].y),b.y=Math.min(b.y,this.vertices[c].y),a.z=Math.max(a.z,this.vertices[c].z),b.z=Math.min(b.z,this.vertices[c].z);var e=d.Vector.lerp(a,b,.5),f=d.Vector.sub(a,b),g=Math.max(Math.max(f.x,f.y),f.z),h=200/g;for(c=0;c<this.vertices.length;c++)this.vertices[c].sub(e),this.vertices[c].mult(h)}return this},b.exports=d.Geometry},{"../core/core":37}],83:[function(a,b,c){"use strict";var d=a("../core/core"),e=a("../math/polargeometry"),f=a("../core/constants"),g="undefined"!=typeof Float32Array?Float32Array:Array;d.Matrix=function(){for(var a=new Array(arguments.length),b=0;b<a.length;++b)a[b]=arguments[b];return a[0]instanceof d?(this.p5=a[0],"mat3"===a[1]?this.mat3=a[2]||new g([1,0,0,0,1,0,0,0,1]):this.mat4=a[1]||new g([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1])):"mat3"===a[0]?this.mat3=a[1]||new g([1,0,0,0,1,0,0,0,1]):this.mat4=a[0]||new g([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]),this},d.Matrix.prototype.set=function(a){return a instanceof d.Matrix?(this.mat4=a.mat4,this):a instanceof g?(this.mat4=a,this):this},d.Matrix.prototype.get=function(){return new d.Matrix(this.mat4)},d.Matrix.prototype.copy=function(){var a=new d.Matrix;return a.mat4[0]=this.mat4[0],a.mat4[1]=this.mat4[1],a.mat4[2]=this.mat4[2],a.mat4[3]=this.mat4[3],a.mat4[4]=this.mat4[4],a.mat4[5]=this.mat4[5],a.mat4[6]=this.mat4[6],a.mat4[7]=this.mat4[7],a.mat4[8]=this.mat4[8],a.mat4[9]=this.mat4[9],a.mat4[10]=this.mat4[10],a.mat4[11]=this.mat4[11],a.mat4[12]=this.mat4[12],a.mat4[13]=this.mat4[13],a.mat4[14]=this.mat4[14],a.mat4[15]=this.mat4[15],a},d.Matrix.identity=function(){return new d.Matrix},d.Matrix.prototype.transpose=function(a){var b,c,e,f,h,i;return a instanceof d.Matrix?(b=a.mat4[1],c=a.mat4[2],e=a.mat4[3],f=a.mat4[6],h=a.mat4[7],i=a.mat4[11],this.mat4[0]=a.mat4[0],this.mat4[1]=a.mat4[4],this.mat4[2]=a.mat4[8],this.mat4[3]=a.mat4[12],this.mat4[4]=b,this.mat4[5]=a.mat4[5],this.mat4[6]=a.mat4[9],this.mat4[7]=a.mat4[13],this.mat4[8]=c,this.mat4[9]=f,this.mat4[10]=a.mat4[10],this.mat4[11]=a.mat4[14],this.mat4[12]=e,this.mat4[13]=h,this.mat4[14]=i,this.mat4[15]=a.mat4[15]):a instanceof g&&(b=a[1],c=a[2],e=a[3],f=a[6],h=a[7],i=a[11],this.mat4[0]=a[0],this.mat4[1]=a[4],this.mat4[2]=a[8],this.mat4[3]=a[12],this.mat4[4]=b,this.mat4[5]=a[5],this.mat4[6]=a[9],this.mat4[7]=a[13],this.mat4[8]=c,this.mat4[9]=f,this.mat4[10]=a[10],this.mat4[11]=a[14],this.mat4[12]=e,this.mat4[13]=h,this.mat4[14]=i,this.mat4[15]=a[15]),this},d.Matrix.prototype.invert=function(a){var b,c,e,f,h,i,j,k,l,m,n,o,p,q,r,s;a instanceof d.Matrix?(b=a.mat4[0],c=a.mat4[1],e=a.mat4[2],f=a.mat4[3],h=a.mat4[4],i=a.mat4[5],j=a.mat4[6],k=a.mat4[7],l=a.mat4[8],m=a.mat4[9],n=a.mat4[10],o=a.mat4[11],p=a.mat4[12],q=a.mat4[13],r=a.mat4[14],s=a.mat4[15]):a instanceof g&&(b=a[0],c=a[1],e=a[2],f=a[3],h=a[4],i=a[5],j=a[6],k=a[7],l=a[8],m=a[9],n=a[10],o=a[11],p=a[12],q=a[13],r=a[14],s=a[15]);var t=b*i-c*h,u=b*j-e*h,v=b*k-f*h,w=c*j-e*i,x=c*k-f*i,y=e*k-f*j,z=l*q-m*p,A=l*r-n*p,B=l*s-o*p,C=m*r-n*q,D=m*s-o*q,E=n*s-o*r,F=t*E-u*D+v*C+w*B-x*A+y*z;return F?(F=1/F,this.mat4[0]=(i*E-j*D+k*C)*F,this.mat4[1]=(e*D-c*E-f*C)*F,this.mat4[2]=(q*y-r*x+s*w)*F,this.mat4[3]=(n*x-m*y-o*w)*F,this.mat4[4]=(j*B-h*E-k*A)*F,this.mat4[5]=(b*E-e*B+f*A)*F,this.mat4[6]=(r*v-p*y-s*u)*F,this.mat4[7]=(l*y-n*v+o*u)*F,this.mat4[8]=(h*D-i*B+k*z)*F,this.mat4[9]=(c*B-b*D-f*z)*F,this.mat4[10]=(p*x-q*v+s*t)*F,this.mat4[11]=(m*v-l*x-o*t)*F,this.mat4[12]=(i*A-h*C-j*z)*F,this.mat4[13]=(b*C-c*A+e*z)*F,this.mat4[14]=(q*u-p*w-r*t)*F,this.mat4[15]=(l*w-m*u+n*t)*F,this):null},d.Matrix.prototype.invert3x3=function(){var a=this.mat3[0],b=this.mat3[1],c=this.mat3[2],d=this.mat3[3],e=this.mat3[4],f=this.mat3[5],g=this.mat3[6],h=this.mat3[7],i=this.mat3[8],j=i*e-f*h,k=-i*d+f*g,l=h*d-e*g,m=a*j+b*k+c*l;return m?(m=1/m,this.mat3[0]=j*m,this.mat3[1]=(-i*b+c*h)*m,this.mat3[2]=(f*b-c*e)*m,this.mat3[3]=k*m,this.mat3[4]=(i*a-c*g)*m,this.mat3[5]=(-f*a+c*d)*m,this.mat3[6]=l*m,this.mat3[7]=(-h*a+b*g)*m,this.mat3[8]=(e*a-b*d)*m,this):null},d.Matrix.prototype.transpose3x3=function(a){var b=a[1],c=a[2],d=a[5];return this.mat3[1]=a[3],this.mat3[2]=a[6],this.mat3[3]=b,this.mat3[5]=a[7],this.mat3[6]=c,this.mat3[7]=d,this},d.Matrix.prototype.inverseTranspose=function(a){return void 0===this.mat3?console.error("sorry, this function only works with mat3"):(this.mat3[0]=a.mat4[0],this.mat3[1]=a.mat4[1],this.mat3[2]=a.mat4[2],this.mat3[3]=a.mat4[4],this.mat3[4]=a.mat4[5],this.mat3[5]=a.mat4[6],this.mat3[6]=a.mat4[8],this.mat3[7]=a.mat4[9],this.mat3[8]=a.mat4[10]),this.invert3x3().transpose3x3(this.mat3),this},d.Matrix.prototype.determinant=function(){var a=this.mat4[0]*this.mat4[5]-this.mat4[1]*this.mat4[4],b=this.mat4[0]*this.mat4[6]-this.mat4[2]*this.mat4[4],c=this.mat4[0]*this.mat4[7]-this.mat4[3]*this.mat4[4],d=this.mat4[1]*this.mat4[6]-this.mat4[2]*this.mat4[5],e=this.mat4[1]*this.mat4[7]-this.mat4[3]*this.mat4[5],f=this.mat4[2]*this.mat4[7]-this.mat4[3]*this.mat4[6],g=this.mat4[8]*this.mat4[13]-this.mat4[9]*this.mat4[12],h=this.mat4[8]*this.mat4[14]-this.mat4[10]*this.mat4[12],i=this.mat4[8]*this.mat4[15]-this.mat4[11]*this.mat4[12],j=this.mat4[9]*this.mat4[14]-this.mat4[10]*this.mat4[13],k=this.mat4[9]*this.mat4[15]-this.mat4[11]*this.mat4[13],l=this.mat4[10]*this.mat4[15]-this.mat4[11]*this.mat4[14];return a*l-b*k+c*j+d*i-e*h+f*g},d.Matrix.prototype.mult=function(a){var b=new g(16),c=new g(16);a instanceof d.Matrix?c=a.mat4:a instanceof g&&(c=a);var e=this.mat4[0],f=this.mat4[1],h=this.mat4[2],i=this.mat4[3];return b[0]=e*c[0]+f*c[4]+h*c[8]+i*c[12],b[1]=e*c[1]+f*c[5]+h*c[9]+i*c[13],b[2]=e*c[2]+f*c[6]+h*c[10]+i*c[14],b[3]=e*c[3]+f*c[7]+h*c[11]+i*c[15],e=this.mat4[4],f=this.mat4[5],h=this.mat4[6],i=this.mat4[7],b[4]=e*c[0]+f*c[4]+h*c[8]+i*c[12],b[5]=e*c[1]+f*c[5]+h*c[9]+i*c[13],b[6]=e*c[2]+f*c[6]+h*c[10]+i*c[14],b[7]=e*c[3]+f*c[7]+h*c[11]+i*c[15],e=this.mat4[8],f=this.mat4[9],h=this.mat4[10],i=this.mat4[11],b[8]=e*c[0]+f*c[4]+h*c[8]+i*c[12],b[9]=e*c[1]+f*c[5]+h*c[9]+i*c[13],b[10]=e*c[2]+f*c[6]+h*c[10]+i*c[14],b[11]=e*c[3]+f*c[7]+h*c[11]+i*c[15],e=this.mat4[12],f=this.mat4[13],h=this.mat4[14],i=this.mat4[15],b[12]=e*c[0]+f*c[4]+h*c[8]+i*c[12],b[13]=e*c[1]+f*c[5]+h*c[9]+i*c[13],b[14]=e*c[2]+f*c[6]+h*c[10]+i*c[14],b[15]=e*c[3]+f*c[7]+h*c[11]+i*c[15],this.mat4=b,this},d.Matrix.prototype.scale=function(){for(var a,b,c,e=new Array(arguments.length),f=0;f<e.length;++f)e[f]=arguments[f];e[0]instanceof d.Vector?(a=e[0].x,b=e[0].y,c=e[0].z):e[0]instanceof Array&&(a=e[0][0],b=e[0][1],c=e[0][2]);var h=new g(16);return h[0]=this.mat4[0]*a,h[1]=this.mat4[1]*a,h[2]=this.mat4[2]*a,h[3]=this.mat4[3]*a,h[4]=this.mat4[4]*b,h[5]=this.mat4[5]*b,h[6]=this.mat4[6]*b,h[7]=this.mat4[7]*b,h[8]=this.mat4[8]*c,h[9]=this.mat4[9]*c,h[10]=this.mat4[10]*c,h[11]=this.mat4[11]*c,h[12]=this.mat4[12],h[13]=this.mat4[13],h[14]=this.mat4[14],h[15]=this.mat4[15],this.mat4=h,this},d.Matrix.prototype.rotate=function(a,b){var c,g,h,i,j;this.p5?this.p5._angleMode===f.DEGREES&&(i=e.degreesToRadians(a)):i=a,b instanceof d.Vector?(c=b.x,g=b.y,h=b.z):b instanceof Array&&(c=b[0],g=b[1],h=b[2]),j=Math.sqrt(c*c+g*g+h*h),c*=1/j,g*=1/j,h*=1/j;var k=this.mat4[0],l=this.mat4[1],m=this.mat4[2],n=this.mat4[3],o=this.mat4[4],p=this.mat4[5],q=this.mat4[6],r=this.mat4[7],s=this.mat4[8],t=this.mat4[9],u=this.mat4[10],v=this.mat4[11],w=Math.sin(i),x=Math.cos(i),y=1-x,z=c*c*y+x,A=g*c*y+h*w,B=h*c*y-g*w,C=c*g*y-h*w,D=g*g*y+x,E=h*g*y+c*w,F=c*h*y+g*w,G=g*h*y-c*w,H=h*h*y+x;return this.mat4[0]=k*z+o*A+s*B,this.mat4[1]=l*z+p*A+t*B,this.mat4[2]=m*z+q*A+u*B,this.mat4[3]=n*z+r*A+v*B,this.mat4[4]=k*C+o*D+s*E,this.mat4[5]=l*C+p*D+t*E,this.mat4[6]=m*C+q*D+u*E,this.mat4[7]=n*C+r*D+v*E,this.mat4[8]=k*F+o*G+s*H,this.mat4[9]=l*F+p*G+t*H,this.mat4[10]=m*F+q*G+u*H,this.mat4[11]=n*F+r*G+v*H,this},d.Matrix.prototype.translate=function(a){var b=a[0],c=a[1],d=a[2]||0;this.mat4[12]=this.mat4[0]*b+this.mat4[4]*c+this.mat4[8]*d+this.mat4[12],this.mat4[13]=this.mat4[1]*b+this.mat4[5]*c+this.mat4[9]*d+this.mat4[13],this.mat4[14]=this.mat4[2]*b+this.mat4[6]*c+this.mat4[10]*d+this.mat4[14],this.mat4[15]=this.mat4[3]*b+this.mat4[7]*c+this.mat4[11]*d+this.mat4[15]},d.Matrix.prototype.rotateX=function(a){this.rotate(a,[1,0,0])},d.Matrix.prototype.rotateY=function(a){this.rotate(a,[0,1,0])},d.Matrix.prototype.rotateZ=function(a){this.rotate(a,[0,0,1])},d.Matrix.prototype.perspective=function(a,b,c,d){var e=1/Math.tan(a/2),f=1/(c-d);return this.mat4[0]=e/b,this.mat4[1]=0,this.mat4[2]=0,this.mat4[3]=0,this.mat4[4]=0,this.mat4[5]=e,this.mat4[6]=0,this.mat4[7]=0,this.mat4[8]=0,this.mat4[9]=0,this.mat4[10]=(d+c)*f,this.mat4[11]=-1,this.mat4[12]=0,this.mat4[13]=0,this.mat4[14]=2*d*c*f,this.mat4[15]=0,this},d.Matrix.prototype.ortho=function(a,b,c,d,e,f){var g=1/(a-b),h=1/(c-d),i=1/(e-f);return this.mat4[0]=-2*g,this.mat4[1]=0,this.mat4[2]=0,this.mat4[3]=0,this.mat4[4]=0,this.mat4[5]=-2*h,this.mat4[6]=0,this.mat4[7]=0,this.mat4[8]=0,this.mat4[9]=0,this.mat4[10]=2*i,this.mat4[11]=0,this.mat4[12]=(a+b)*g,this.mat4[13]=(d+c)*h,this.mat4[14]=(f+e)*i,this.mat4[15]=1,this},b.exports=d.Matrix},{"../core/constants":36,"../core/core":37,"../math/polargeometry":67}],84:[function(a,b,c){"use strict";var d=a("../core/core"),e=a("../core/constants");d.RendererGL.prototype.beginShape=function(a){return this.immediateMode.shapeMode=void 0!==a?a:e.LINE_STRIP,void 0===this.immediateMode.vertexPositions?(this.immediateMode.vertexPositions=[],this.immediateMode.vertexColors=[],this.immediateMode.vertexBuffer=this.GL.createBuffer(),this.immediateMode.colorBuffer=this.GL.createBuffer()):(this.immediateMode.vertexPositions.length=0,this.immediateMode.vertexColors.length=0),this.isImmediateDrawing=!0,this},d.RendererGL.prototype.vertex=function(a,b,c){this.immediateMode.vertexPositions.push(a,b,c);var d=this.curFillColor||[.5,.5,.5,1];return this.immediateMode.vertexColors.push(d[0],d[1],d[2],d[3]),this},d.RendererGL.prototype.endShape=function(a,b,c,d,f,g){var h=this.GL;if(this._bindImmediateBuffers(this.immediateMode.vertexPositions,this.immediateMode.vertexColors),a)if("fill"===this.drawMode)switch(this.immediateMode.shapeMode){case e.LINE_STRIP:this.immediateMode.shapeMode=e.TRIANGLE_FAN;break;case e.LINES:this.immediateMode.shapeMode=e.TRIANGLE_FAN;break;case e.TRIANGLES:this.immediateMode.shapeMode=e.TRIANGLE_FAN}else switch(this.immediateMode.shapeMode){case e.LINE_STRIP:this.immediateMode.shapeMode=e.LINE_LOOP;break;case e.LINES:this.immediateMode.shapeMode=e.LINE_LOOP}if(this.immediateMode.shapeMode===e.QUADS||this.immediateMode.shapeMode===e.QUAD_STRIP)throw new Error("sorry, "+this.immediateMode.shapeMode+" not yet implemented in webgl mode.");return h.enable(h.BLEND),h.drawArrays(this.immediateMode.shapeMode,0,this.immediateMode.vertexPositions.length/3),this.immediateMode.vertexPositions.length=0,this.immediateMode.vertexColors.length=0,this.isImmediateDrawing=!1,this},d.RendererGL.prototype._bindImmediateBuffers=function(a,b){this._setDefaultCamera();var c=this.GL,d=this._getCurShaderId(),e=this.mHash[d];return e.vertexPositionAttribute=c.getAttribLocation(e,"aPosition"),c.enableVertexAttribArray(e.vertexPositionAttribute),c.bindBuffer(c.ARRAY_BUFFER,this.immediateMode.vertexBuffer),c.bufferData(c.ARRAY_BUFFER,new Float32Array(a),c.DYNAMIC_DRAW),c.vertexAttribPointer(e.vertexPositionAttribute,3,c.FLOAT,!1,0,0),e.vertexColorAttribute=c.getAttribLocation(e,"aVertexColor"),c.enableVertexAttribArray(e.vertexColorAttribute),c.bindBuffer(c.ARRAY_BUFFER,this.immediateMode.colorBuffer),c.bufferData(c.ARRAY_BUFFER,new Float32Array(b),c.DYNAMIC_DRAW),c.vertexAttribPointer(e.vertexColorAttribute,4,c.FLOAT,!1,0,0),this._setMatrixUniforms(d),this},d.RendererGL.prototype._getColorVertexShader=function(){var a,b=this.GL,c="immediateVert|vertexColorFrag";return this.materialInHash(c)?a=this.mHash[c]:(a=this._initShaders("immediateVert","vertexColorFrag",!0),this.mHash[c]=a,a.vertexColorAttribute=b.getAttribLocation(a,"aVertexColor"),b.enableVertexAttribArray(a.vertexColorAttribute)),a},b.exports=d.RendererGL},{"../core/constants":36,"../core/core":37}],85:[function(a,b,c){"use strict";function d(a){return a.length>0?a.reduce(function(a,b){return a.concat(b)}):[]}function e(a){return d(a.map(function(a){return[a.x,a.y,a.z]}))}var f=a("../core/core"),g=0;f.RendererGL.prototype._initBufferDefaults=function(a){if(g++,g>1e3){var b=Object.keys(this.gHash)[0];delete this.gHash[b],g--}var c=this.GL;this.gHash[a]={},this.gHash[a].vertexBuffer=c.createBuffer(),this.gHash[a].normalBuffer=c.createBuffer(),this.gHash[a].uvBuffer=c.createBuffer(),this.gHash[a].indexBuffer=c.createBuffer()},f.RendererGL.prototype.createBuffers=function(a,b){var c=this.GL;this._setDefaultCamera(),this._initBufferDefaults(a);var f=this.mHash[this._getCurShaderId()];this.gHash[a].numberOfItems=3*b.faces.length,c.bindBuffer(c.ARRAY_BUFFER,this.gHash[a].vertexBuffer),c.bufferData(c.ARRAY_BUFFER,new Float32Array(e(b.vertices)),c.STATIC_DRAW),f.vertexPositionAttribute=c.getAttribLocation(f,"aPosition"),c.enableVertexAttribArray(f.vertexPositionAttribute),c.vertexAttribPointer(f.vertexPositionAttribute,3,c.FLOAT,!1,0,0),c.bindBuffer(c.ARRAY_BUFFER,this.gHash[a].normalBuffer),c.bufferData(c.ARRAY_BUFFER,new Float32Array(e(b.vertexNormals)),c.STATIC_DRAW),f.vertexNormalAttribute=c.getAttribLocation(f,"aNormal"),c.enableVertexAttribArray(f.vertexNormalAttribute),c.vertexAttribPointer(f.vertexNormalAttribute,3,c.FLOAT,!1,0,0),c.bindBuffer(c.ARRAY_BUFFER,this.gHash[a].uvBuffer),c.bufferData(c.ARRAY_BUFFER,new Float32Array(d(b.uvs)),c.STATIC_DRAW),f.textureCoordAttribute=c.getAttribLocation(f,"aTexCoord"),c.enableVertexAttribArray(f.textureCoordAttribute),c.vertexAttribPointer(f.textureCoordAttribute,2,c.FLOAT,!1,0,0),c.bindBuffer(c.ELEMENT_ARRAY_BUFFER,this.gHash[a].indexBuffer),c.bufferData(c.ELEMENT_ARRAY_BUFFER,new Uint16Array(d(b.faces)),c.STATIC_DRAW)},f.RendererGL.prototype.drawBuffers=function(a){this._setDefaultCamera();var b=this.GL,c=this._getCurShaderId(),d=this.mHash[c];return b.bindBuffer(b.ARRAY_BUFFER,this.gHash[a].vertexBuffer),b.vertexAttribPointer(d.vertexPositionAttribute,3,b.FLOAT,!1,0,0),b.bindBuffer(b.ARRAY_BUFFER,this.gHash[a].normalBuffer),b.vertexAttribPointer(d.vertexNormalAttribute,3,b.FLOAT,!1,0,0),b.bindBuffer(b.ARRAY_BUFFER,this.gHash[a].uvBuffer),b.vertexAttribPointer(d.textureCoordAttribute,2,b.FLOAT,!1,0,0),b.bindBuffer(b.ELEMENT_ARRAY_BUFFER,this.gHash[a].indexBuffer),this._setMatrixUniforms(c),b.drawElements(b.TRIANGLES,this.gHash[a].numberOfItems,b.UNSIGNED_SHORT,0),this},b.exports=f.RendererGL},{"../core/core":37}],86:[function(a,b,c){"use strict";var d=a("../core/core"),e=a("./shader");a("../core/p5.Renderer"),a("./p5.Matrix");var f=[],g={alpha:!0,depth:!0,stencil:!0,antialias:!1,premultipliedAlpha:!1,preserveDrawingBuffer:!1};d.RendererGL=function(a,b,c){return d.Renderer.call(this,a,b,c),this._initContext(),this.isP3D=!0,this.GL=this.drawingContext,this.ambientLightCount=0,this.directionalLightCount=0,this.pointLightCount=0,this._curCamera=null,this.uMVMatrix=new d.Matrix,this.uPMatrix=new d.Matrix,this.uNMatrix=new d.Matrix("mat3"),this.gHash={},this.mHash={},this.isImmediateDrawing=!1,this.immediateMode={},this.curFillColor=[.5,.5,.5,1],this.curStrokeColor=[.5,.5,.5,1],this.pointSize=5,this},d.RendererGL.prototype=Object.create(d.Renderer.prototype),d.RendererGL.prototype._initContext=function(){try{if(this.drawingContext=this.canvas.getContext("webgl",g)||this.canvas.getContext("experimental-webgl",g),null===this.drawingContext)throw new Error("Error creating webgl context");console.log("p5.RendererGL: enabled webgl context");var a=this.drawingContext;a.enable(a.DEPTH_TEST),a.depthFunc(a.LEQUAL),a.viewport(0,0,a.drawingBufferWidth,a.drawingBufferHeight)}catch(b){throw new Error(b)}},d.RendererGL.prototype._setDefaultCamera=function(){if(null===this._curCamera){var a=this.width,b=this.height;this.uPMatrix=d.Matrix.identity();var c=this.height/2/Math.tan(30*Math.PI/180);this.uPMatrix.perspective(60/180*Math.PI,a/b,.1*c,10*c),this._curCamera="default"}},d.RendererGL.prototype._update=function(){this.uMVMatrix=d.Matrix.identity(),this.translate(0,0,-(this.height/2)/Math.tan(30*Math.PI/180)),this.ambientLightCount=0,this.directionalLightCount=0,this.pointLightCount=0},d.RendererGL.prototype.background=function(){var a=this.GL,b=this._pInst.color.apply(this._pInst,arguments),c=b.levels[0]/255,d=b.levels[1]/255,e=b.levels[2]/255,f=b.levels[3]/255;a.clearColor(c,d,e,f),a.clear(a.COLOR_BUFFER_BIT|a.DEPTH_BUFFER_BIT)},d.RendererGL.prototype._initShaders=function(a,b,c){var d=this.GL,f=d.createShader(d.VERTEX_SHADER);if(d.shaderSource(f,e[a]),d.compileShader(f),!d.getShaderParameter(f,d.COMPILE_STATUS))return alert("Yikes! An error occurred compiling the shaders:"+d.getShaderInfoLog(f)),null;var g=d.createShader(d.FRAGMENT_SHADER);if(d.shaderSource(g,e[b]),d.compileShader(g),!d.getShaderParameter(g,d.COMPILE_STATUS))return alert("Darn! An error occurred compiling the shaders:"+d.getShaderInfoLog(g)),null;var h=d.createProgram();return d.attachShader(h,f),d.attachShader(h,g),d.linkProgram(h),d.getProgramParameter(h,d.LINK_STATUS)||alert("Snap! Error linking shader program"),this._getLocation(h,c),h},d.RendererGL.prototype._getLocation=function(a,b){var c=this.GL;c.useProgram(a),a.uPMatrixUniform=c.getUniformLocation(a,"uProjectionMatrix"),a.uMVMatrixUniform=c.getUniformLocation(a,"uModelViewMatrix"),void 0===b&&(a.uNMatrixUniform=c.getUniformLocation(a,"uNormalMatrix"),a.samplerUniform=c.getUniformLocation(a,"uSampler"))},d.RendererGL.prototype._setUniform1f=function(a,b,c){var d=this.GL,e=this.mHash[a];return d.useProgram(e),e[b]=d.getUniformLocation(e,b),d.uniform1f(e[b],c),this},d.RendererGL.prototype._setMatrixUniforms=function(a){var b=this.GL,c=this.mHash[a];b.useProgram(c),b.uniformMatrix4fv(c.uPMatrixUniform,!1,this.uPMatrix.mat4),b.uniformMatrix4fv(c.uMVMatrixUniform,!1,this.uMVMatrix.mat4),this.uNMatrix.inverseTranspose(this.uMVMatrix),b.uniformMatrix3fv(c.uNMatrixUniform,!1,this.uNMatrix.mat3)},d.RendererGL.prototype._getShader=function(a,b,c){var d=a+"|"+b;if(!this.materialInHash(d)){var e=this._initShaders(a,b,c);this.mHash[d]=e}return this.curShaderId=d,this.mHash[this.curShaderId]},d.RendererGL.prototype._getCurShaderId=function(){var a,b;return"fill"!==this.drawMode&&void 0===this.curShaderId?(a="normalVert|normalFrag",b=this._initShaders("normalVert","normalFrag"),this.mHash[a]=b,this.curShaderId=a):this.isImmediateDrawing&&"fill"===this.drawMode&&(a="immediateVert|vertexColorFrag",b=this._initShaders("immediateVert","vertexColorFrag"),this.mHash[a]=b,this.curShaderId=a),this.curShaderId},d.RendererGL.prototype.fill=function(a,b,c,d){var e,f=this.GL,g=this._applyColorBlend.apply(this,arguments);return this.curFillColor=g,this.drawMode="fill",this.isImmediateDrawing?(e=this._getShader("immediateVert","vertexColorFrag"),f.useProgram(e)):(e=this._getShader("normalVert","basicFrag"),f.useProgram(e),e.uMaterialColor=f.getUniformLocation(e,"uMaterialColor"),f.uniform4f(e.uMaterialColor,g[0],g[1],g[2],g[3])),this},d.RendererGL.prototype.stroke=function(a,b,c,d){var e=this._pInst.color.apply(this._pInst,arguments),f=e._array;return this.curStrokeColor=f,this.drawMode="stroke",this},d.RendererGL.prototype._strokeCheck=function(){if("stroke"===this.drawMode)throw new Error("stroke for shapes in 3D not yet implemented, use fill for now :(")},d.RendererGL.prototype.strokeWeight=function(a){return this.pointSize=a,this},d.RendererGL.prototype.geometryInHash=function(a){return void 0!==this.gHash[a]},d.RendererGL.prototype.materialInHash=function(a){return void 0!==this.mHash[a]},d.RendererGL.prototype.resize=function(a,b){var c=this.GL;d.Renderer.prototype.resize.call(this,a,b),c.viewport(0,0,c.drawingBufferWidth,c.drawingBufferHeight),"default"===this._curCamera&&(this._curCamera=null,this._setDefaultCamera())},d.RendererGL.prototype.clear=function(){var a=this.GL;a.clearColor(arguments[0],arguments[1],arguments[2],arguments[3]),a.clear(a.COLOR_BUFFER_BIT|a.DEPTH_BUFFER_BIT)},d.RendererGL.prototype.translate=function(a,b,c){return this.uMVMatrix.translate([a,-b,c]),this},d.RendererGL.prototype.scale=function(a,b,c){return this.uMVMatrix.scale([a,b,c]),this},d.RendererGL.prototype.rotate=function(a,b){return this.uMVMatrix.rotate(a,b),this},d.RendererGL.prototype.rotateX=function(a){return this.rotate(a,[1,0,0]),this},d.RendererGL.prototype.rotateY=function(a){return this.rotate(a,[0,1,0]),this},d.RendererGL.prototype.rotateZ=function(a){return this.rotate(a,[0,0,1]),this},d.RendererGL.prototype.push=function(){f.push(this.uMVMatrix.copy())},d.RendererGL.prototype.pop=function(){if(0===f.length)throw new Error("Invalid popMatrix!");this.uMVMatrix=f.pop()},d.RendererGL.prototype.resetMatrix=function(){return this.uMVMatrix=d.Matrix.identity(),this.translate(0,0,-800),this},d.RendererGL.prototype._applyTextProperties=function(){console.error("text commands not yet implemented in webgl")},b.exports=d.RendererGL},{"../core/core":37,"../core/p5.Renderer":43,"./p5.Matrix":83,"./shader":88}],87:[function(a,b,c){"use strict";var d=a("../core/core");a("./p5.Geometry"),d.prototype.plane=function(){for(var a=new Array(arguments.length),b=0;b<a.length;++b)a[b]=arguments[b];var c=a[0]||50,e=a[1]||c,f="number"==typeof a[2]?a[2]:1,g="number"==typeof a[3]?a[3]:1,h="plane|"+c+"|"+e+"|"+f+"|"+g;if(!this._renderer.geometryInHash(h)){var i=function(){for(var a,b,f,g=0;g<=this.detailY;g++){b=g/this.detailY;for(var h=0;h<=this.detailX;h++)a=h/this.detailX,f=new d.Vector(c*a-c/2,e*b-e/2,0),this.vertices.push(f),this.uvs.push([a,b])}},j=new d.Geometry(f,g,i);j.computeFaces().computeNormals(),this._renderer.createBuffers(h,j)}this._renderer.drawBuffers(h)},d.prototype.box=function(){for(var a=new Array(arguments.length),b=0;b<a.length;++b)a[b]=arguments[b];var c=a[0]||50,e=a[1]||c,f=a[2]||c,g="number"==typeof a[3]?a[3]:4,h="number"==typeof a[4]?a[4]:4,i="box|"+c+"|"+e+"|"+f+"|"+g+"|"+h;if(!this._renderer.geometryInHash(i)){var j=function(){for(var a=[[0,4,2,6],[1,3,5,7],[0,1,4,5],[2,6,3,7],[0,2,1,3],[4,5,6,7]],b=0,g=0;g<a.length;g++){for(var h=a[g],i=4*g,j=0;4>j;j++){var k=h[j],l=new d.Vector((2*(1&k)-1)*c/2,((2&k)-1)*e/2,((4&k)/2-1)*f/2);this.vertices.push(l),this.uvs.push([1&j,(2&j)/2]),b++}this.faces.push([i,i+1,i+2]),this.faces.push([i+2,i+1,i+3])}},k=new d.Geometry(g,h,j);k.computeNormals(),this._renderer.createBuffers(i,k)}return this._renderer.drawBuffers(i),this},d.prototype.sphere=function(){for(var a=new Array(arguments.length),b=0;b<a.length;++b)a[b]=arguments[b];var c=a[0]||50,e="number"==typeof a[1]?a[1]:24,f="number"==typeof a[2]?a[2]:16,g="sphere|"+c+"|"+e+"|"+f;if(!this._renderer.geometryInHash(g)){var h=function(){for(var a,b,e,f=0;f<=this.detailY;f++){b=f/this.detailY;for(var g=0;g<=this.detailX;g++){a=g/this.detailX;var h=2*Math.PI*a,i=Math.PI*b-Math.PI/2;e=new d.Vector(c*Math.cos(i)*Math.sin(h),c*Math.sin(i),c*Math.cos(i)*Math.cos(h)),this.vertices.push(e),this.uvs.push([a,b])}}},i=new d.Geometry(e,f,h);i.computeFaces().computeNormals().averageNormals().averagePoleNormals(),this._renderer.createBuffers(g,i)}return this._renderer.drawBuffers(g),this};var e=function(a,b,c,e,f,g,h){e=3>e?3:e,f=1>f?1:f,g=void 0===g?!0:g,h=void 0===h?!0:h;var i,j,k=(g?2:0)+(h?2:0),l=e+1,m=Math.atan2(a-b,c),n=g?-2:0,o=f+(h?2:0);for(i=n;o>=i;++i){var p,q=i/f,r=c*q;for(0>i?(r=0,q=1,p=a):i>f?(r=c,q=1,p=b):p=a+(b-a)*(i/f),(-2===i||i===f+2)&&(p=0,q=0),r-=c/2,j=0;l>j;++j)this.vertices.push(new d.Vector(Math.sin(j*Math.PI*2/e)*p,r,Math.cos(j*Math.PI*2/e)*p)),this.vertexNormals.push(new d.Vector(0>i||i>f?0:Math.sin(j*Math.PI*2/e)*Math.cos(m),0>i?-1:i>f?1:Math.sin(m),0>i||i>f?0:Math.cos(j*Math.PI*2/e)*Math.cos(m))),this.uvs.push([j/e,q])}for(i=0;f+k>i;++i)for(j=0;e>j;++j)this.faces.push([l*(i+0)+0+j,l*(i+0)+1+j,l*(i+1)+1+j]),this.faces.push([l*(i+0)+0+j,l*(i+1)+1+j,l*(i+1)+0+j])};d.prototype.cylinder=function(){for(var a=new Array(arguments.length),b=0;b<a.length;++b)a[b]=arguments[b];var c=a[0]||50,f=a[1]||c,g="number"==typeof a[2]?a[2]:24,h="number"==typeof a[3]?a[3]:16,i="cylinder|"+c+"|"+f+"|"+g+"|"+h;if(!this._renderer.geometryInHash(i)){var j=new d.Geometry(g,h);e.call(j,c,c,f,g,h,!0,!0),j.computeNormals(),this._renderer.createBuffers(i,j)}return this._renderer.drawBuffers(i),this},d.prototype.cone=function(){for(var a=new Array(arguments.length),b=0;b<a.length;++b)a[b]=arguments[b];var c=a[0]||50,f=a[1]||c,g="number"==typeof a[2]?a[2]:24,h="number"==typeof a[3]?a[3]:16,i="cone|"+c+"|"+f+"|"+g+"|"+h;if(!this._renderer.geometryInHash(i)){var j=new d.Geometry(g,h);e.call(j,c,0,f,g,h,!0,!0),j.computeNormals(),this._renderer.createBuffers(i,j)}return this._renderer.drawBuffers(i),this},d.prototype.ellipsoid=function(){for(var a=new Array(arguments.length),b=0;b<a.length;++b)a[b]=arguments[b];var c="number"==typeof a[3]?a[3]:24,e="number"==typeof a[4]?a[4]:24,f=a[0]||50,g=a[1]||f,h=a[2]||f,i="ellipsoid|"+f+"|"+g+"|"+h+"|"+c+"|"+e;if(!this._renderer.geometryInHash(i)){var j=function(){for(var a,b,c,e=0;e<=this.detailY;e++){b=e/this.detailY;for(var i=0;i<=this.detailX;i++){a=i/this.detailX;var j=2*Math.PI*a,k=Math.PI*b-Math.PI/2;c=new d.Vector(f*Math.cos(k)*Math.sin(j),g*Math.sin(k),h*Math.cos(k)*Math.cos(j)),this.vertices.push(c),this.uvs.push([a,b])}}},k=new d.Geometry(c,e,j);k.computeFaces().computeNormals(),this._renderer.createBuffers(i,k)}return this._renderer.drawBuffers(i),this},d.prototype.torus=function(){for(var a=new Array(arguments.length),b=0;b<a.length;++b)a[b]=arguments[b];var c="number"==typeof a[2]?a[2]:24,e="number"==typeof a[3]?a[3]:16,f=a[0]||50,g=a[1]||10,h="torus|"+f+"|"+g+"|"+c+"|"+e;if(!this._renderer.geometryInHash(h)){var i=function(){for(var a,b,c,e=0;e<=this.detailY;e++){b=e/this.detailY;for(var h=0;h<=this.detailX;h++){a=h/this.detailX;var i=2*Math.PI*a,j=2*Math.PI*b;c=new d.Vector((f+g*Math.cos(j))*Math.cos(i),(f+g*Math.cos(j))*Math.sin(i),g*Math.sin(j)),this.vertices.push(c),this.uvs.push([a,b])}}},j=new d.Geometry(c,e,i);j.computeFaces().computeNormals().averageNormals(),this._renderer.createBuffers(h,j)}return this._renderer.drawBuffers(h),this},d.RendererGL.prototype.point=function(a,b,c){return console.log("point not yet implemented in webgl"),
 this},d.RendererGL.prototype.triangle=function(a){var b=a[0],c=a[1],e=a[2],f=a[3],g=a[4],h=a[5],i="tri|"+b+"|"+c+"|"+e+"|"+f+"|"+g+"|"+h;if(!this.geometryInHash(i)){var j=function(){var a=[];a.push(new d.Vector(b,c,0)),a.push(new d.Vector(e,f,0)),a.push(new d.Vector(g,h,0)),this.vertices=a,this.faces=[[0,1,2]],this.uvs=[[0,0],[0,1],[1,1]]},k=new d.Geometry(1,1,j);k.computeNormals(),this.createBuffers(i,k)}return this.drawBuffers(i),this},d.RendererGL.prototype.ellipse=function(a){var b=a[0],c=a[1],e=a[2],f=a[3],g=a[4]||24,h=a[5]||16,i="ellipse|"+a[0]+"|"+a[1]+"|"+a[2]+"|"+a[3];if(!this.geometryInHash(i)){var j=function(){for(var a,g,h,i=b+.5*e,j=c+.5*f,k=0;k<=this.detailY;k++){g=k/this.detailY;for(var l=0;l<=this.detailX;l++){a=l/this.detailX;var m=2*Math.PI*a;if(0===g)h=new d.Vector(i,j,0);else{var n=i+.5*e*Math.cos(m),o=j+.5*f*Math.sin(m);h=new d.Vector(n,o,0)}this.vertices.push(h),this.uvs.push([a,g])}}},k=new d.Geometry(g,h,j);k.computeFaces().computeNormals(),this.createBuffers(i,k)}return this.drawBuffers(i),this},d.RendererGL.prototype.rect=function(a){var b="rect|"+a[0]+"|"+a[1]+"|"+a[2]+"|"+a[3],c=a[0],e=a[1],f=a[2],g=a[3],h=a[4]||24,i=a[5]||16;if(!this.geometryInHash(b)){var j=function(){for(var a,b,h,i=0;i<=this.detailY;i++){b=i/this.detailY;for(var j=0;j<=this.detailX;j++)a=j/this.detailX,h=new d.Vector(c+f*a,e+g*b,0),this.vertices.push(h),this.uvs.push([a,b])}},k=new d.Geometry(h,i,j);k.computeFaces().computeNormals(),this.createBuffers(b,k)}return this.drawBuffers(b),this},d.RendererGL.prototype.quad=function(){for(var a=new Array(arguments.length),b=0;b<a.length;++b)a[b]=arguments[b];var c=a[0],e=a[1],f=a[2],g=a[3],h=a[4],i=a[5],j=a[6],k=a[7],l="quad|"+c+"|"+e+"|"+f+"|"+g+"|"+h+"|"+i+"|"+j+"|"+k;if(!this.geometryInHash(l)){var m=function(){this.vertices.push(new d.Vector(c,e,0)),this.vertices.push(new d.Vector(f,g,0)),this.vertices.push(new d.Vector(h,i,0)),this.vertices.push(new d.Vector(j,k,0)),this.uvs.push([0,0],[1,0],[1,1],[0,1])},n=new d.Geometry(2,2,m);n.computeNormals(),n.faces=[[0,1,2],[2,3,0]],this.createBuffers(l,n)}return this.drawBuffers(l),this},d.RendererGL.prototype.bezier=function(a){var b=a[12]||20;this.beginShape();for(var c=[0,0,0,0],d=[0,0,0],e=0;b>=e;e++)c[0]=Math.pow(1-e/b,3),c[1]=3*(e/b)*Math.pow(1-e/b,2),c[2]=3*Math.pow(e/b,2)*(1-e/b),c[3]=Math.pow(e/b,3),d[0]=a[0]*c[0]+a[3]*c[1]+a[6]*c[2]+a[9]*c[3],d[1]=a[1]*c[0]+a[4]*c[1]+a[7]*c[2]+a[10]*c[3],d[2]=a[2]*c[0]+a[5]*c[1]+a[8]*c[2]+a[11]*c[3],this.vertex(d[0],d[1],d[2]);return this.endShape(),this},d.RendererGL.prototype.curve=function(a){var b=a[12];this.beginShape();for(var c=[0,0,0,0],d=[0,0,0],e=0;b>=e;e++)c[0]=.5*Math.pow(e/b,3),c[1]=.5*Math.pow(e/b,2),c[2]=e/b*.5,c[3]=.5,d[0]=c[0]*(-a[0]+3*a[3]-3*a[6]+a[9])+c[1]*(2*a[0]-5*a[3]+4*a[6]-a[9])+c[2]*(-a[0]+a[6])+2*c[3]*a[3],d[1]=c[0]*(-a[1]+3*a[4]-3*a[7]+a[10])+c[1]*(2*a[1]-5*a[4]+4*a[7]-a[10])+c[2]*(-a[1]+a[7])+2*c[3]*a[4],d[2]=c[0]*(-a[2]+3*a[5]-3*a[8]+a[11])+c[1]*(2*a[2]-5*a[5]+4*a[8]-a[11])+c[2]*(-a[2]+a[8])+2*c[3]*a[5],this.vertex(d[0],d[1],d[2]);return this.endShape(),this},b.exports=d},{"../core/core":37,"./p5.Geometry":82}],88:[function(a,b,c){b.exports={immediateVert:"attribute vec3 aPosition;\nattribute vec4 aVertexColor;\n\nuniform mat4 uModelViewMatrix;\nuniform mat4 uProjectionMatrix;\nuniform float uResolution;\nuniform float uPointSize;\n\nvarying vec4 vColor;\nvoid main(void) {\n  vec4 positionVec4 = vec4(aPosition * vec3(1.0, -1.0, 1.0), 1.0);\n  gl_Position = uProjectionMatrix * uModelViewMatrix * positionVec4;\n  vColor = aVertexColor;\n  gl_PointSize = uPointSize;\n}\n",vertexColorVert:"attribute vec3 aPosition;\nattribute vec4 aVertexColor;\n\nuniform mat4 uModelViewMatrix;\nuniform mat4 uProjectionMatrix;\n\nvarying vec4 vColor;\n\nvoid main(void) {\n  vec4 positionVec4 = vec4(aPosition * vec3(1.0, -1.0, 1.0), 1.0);\n  gl_Position = uProjectionMatrix * uModelViewMatrix * positionVec4;\n  vColor = aVertexColor;\n}\n",vertexColorFrag:"precision mediump float;\nvarying vec4 vColor;\nvoid main(void) {\n  gl_FragColor = vColor;\n}",normalVert:"attribute vec3 aPosition;\nattribute vec3 aNormal;\nattribute vec2 aTexCoord;\n\nuniform mat4 uModelViewMatrix;\nuniform mat4 uProjectionMatrix;\nuniform mat3 uNormalMatrix;\n\nvarying vec3 vVertexNormal;\nvarying highp vec2 vVertTexCoord;\n\nvoid main(void) {\n  vec4 positionVec4 = vec4(aPosition * vec3(1.0, -1.0, 1.0), 1.0);\n  gl_Position = uProjectionMatrix * uModelViewMatrix * positionVec4;\n  vVertexNormal = vec3( uNormalMatrix * aNormal );\n  vVertTexCoord = aTexCoord;\n}\n",normalFrag:"precision mediump float;\nvarying vec3 vVertexNormal;\nvoid main(void) {\n  gl_FragColor = vec4(vVertexNormal, 1.0);\n}",basicFrag:"precision mediump float;\nvarying vec3 vVertexNormal;\nuniform vec4 uMaterialColor;\nvoid main(void) {\n  gl_FragColor = uMaterialColor;\n}",lightVert:"attribute vec3 aPosition;\nattribute vec3 aNormal;\nattribute vec2 aTexCoord;\n\nuniform mat4 uModelViewMatrix;\nuniform mat4 uProjectionMatrix;\nuniform mat3 uNormalMatrix;\nuniform int uAmbientLightCount;\nuniform int uDirectionalLightCount;\nuniform int uPointLightCount;\n\nuniform vec3 uAmbientColor[8];\nuniform vec3 uLightingDirection[8];\nuniform vec3 uDirectionalColor[8];\nuniform vec3 uPointLightLocation[8];\nuniform vec3 uPointLightColor[8];\nuniform bool uSpecular;\n\nvarying vec3 vVertexNormal;\nvarying vec2 vVertTexCoord;\nvarying vec3 vLightWeighting;\n\nvec3 ambientLightFactor = vec3(0.0, 0.0, 0.0);\nvec3 directionalLightFactor = vec3(0.0, 0.0, 0.0);\nvec3 pointLightFactor = vec3(0.0, 0.0, 0.0);\nvec3 pointLightFactor2 = vec3(0.0, 0.0, 0.0);\n\nvoid main(void){\n\n  vec4 positionVec4 = vec4(aPosition, 1.0);\n  gl_Position = uProjectionMatrix * uModelViewMatrix * positionVec4;\n\n  vec3 vertexNormal = vec3( uNormalMatrix * aNormal );\n  vVertexNormal = vertexNormal;\n  vVertTexCoord = aTexCoord;\n\n  vec4 mvPosition = uModelViewMatrix * vec4(aPosition, 1.0);\n  vec3 eyeDirection = normalize(-mvPosition.xyz);\n\n  float shininess = 32.0;\n  float specularFactor = 2.0;\n  float diffuseFactor = 0.3;\n\n  for(int i = 0; i < 8; i++){\n    if(uAmbientLightCount == i) break;\n    ambientLightFactor += uAmbientColor[i];\n  }\n\n  for(int j = 0; j < 8; j++){\n    if(uDirectionalLightCount == j) break;\n    vec3 dir = uLightingDirection[j];\n    float directionalLightWeighting = max(dot(vertexNormal, dir), 0.0);\n    directionalLightFactor += uDirectionalColor[j] * directionalLightWeighting;\n  }\n\n  for(int k = 0; k < 8; k++){\n    if(uPointLightCount == k) break;\n    vec3 loc = uPointLightLocation[k];\n    vec3 lightDirection = normalize(loc - mvPosition.xyz);\n\n    float directionalLightWeighting = max(dot(vertexNormal, lightDirection), 0.0);\n    pointLightFactor += uPointLightColor[k] * directionalLightWeighting;\n\n    //factor2 for specular\n    vec3 reflectionDirection = reflect(-lightDirection, vertexNormal);\n    float specularLightWeighting = pow(max(dot(reflectionDirection, eyeDirection), 0.0), shininess);\n\n    pointLightFactor2 += uPointLightColor[k] * (specularFactor * specularLightWeighting\n      +  directionalLightWeighting * diffuseFactor);\n  }\n\n  if(!uSpecular){\n    vLightWeighting =  ambientLightFactor + directionalLightFactor + pointLightFactor;\n  }else{\n    vLightWeighting = ambientLightFactor + directionalLightFactor + pointLightFactor2;\n  }\n\n}\n",lightTextureFrag:"precision mediump float;\n\nuniform vec4 uMaterialColor;\nuniform sampler2D uSampler;\nuniform bool isTexture;\n\nvarying vec3 vLightWeighting;\nvarying highp vec2 vVertTexCoord;\n\nvoid main(void) {\n  if(!isTexture){\n    gl_FragColor = vec4(vec3(uMaterialColor.rgb * vLightWeighting), uMaterialColor.a);\n  }else{\n    vec4 textureColor = texture2D(uSampler, vVertTexCoord);\n    if(vLightWeighting == vec3(0., 0., 0.)){\n      gl_FragColor = textureColor;\n    }else{\n      gl_FragColor = vec4(vec3(textureColor.rgb * vLightWeighting), textureColor.a);\n    }\n  }\n}"}},{}]},{},[28])(28)});
+/*! p5.dom.js v0.3.1 Jan 3, 2017 */
+/**
+ * <p>The web is much more than just canvas and p5.dom makes it easy to interact
+ * with other HTML5 objects, including text, hyperlink, image, input, video,
+ * audio, and webcam.</p>
+ * <p>There is a set of creation methods, DOM manipulation methods, and
+ * an extended p5.Element that supports a range of HTML elements. See the
+ * <a href="https://github.com/processing/p5.js/wiki/Beyond-the-canvas">
+ * beyond the canvas tutorial</a> for a full overview of how this addon works.
+ *
+ * <p>Methods and properties shown in black are part of the p5.js core, items in
+ * blue are part of the p5.dom library. You will need to include an extra file
+ * in order to access the blue functions. See the
+ * <a href="http://p5js.org/libraries/#using-a-library">using a library</a>
+ * section for information on how to include this library. p5.dom comes with
+ * <a href="http://p5js.org/download">p5 complete</a> or you can download the single file
+ * <a href="https://raw.githubusercontent.com/lmccart/p5.js/master/lib/addons/p5.dom.js">
+ * here</a>.</p>
+ * <p>See <a href="https://github.com/processing/p5.js/wiki/Beyond-the-canvas">tutorial: beyond the canvas</a>
+ * for more info on how to use this libary.</a>
+ *
+ * @module p5.dom
+ * @submodule p5.dom
+ * @for p5.dom
+ * @main
+ */
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd)
+    define('p5.dom', ['p5'], function (p5) { (factory(p5));});
+  else if (typeof exports === 'object')
+    factory(require('../p5'));
+  else
+    factory(root['p5']);
+}(this, function (p5) {
+
+// =============================================================================
+//                         p5 additions
+// =============================================================================
+
+  /**
+   * Searches the page for an element with the given ID, class, or tag name (using the '#' or '.'
+   * prefixes to specify an ID or class respectively, and none for a tag) and returns it as
+   * a p5.Element. If a class or tag name is given with more than 1 element,
+   * only the first element will be returned.
+   * The DOM node itself can be accessed with .elt.
+   * Returns null if none found. You can also specify a container to search within.
+   *
+   * @method select
+   * @param  {String} name id, class, or tag name of element to search for
+   * @param  {String} [container] id, p5.Element, or HTML element to search within
+   * @return {Object/p5.Element|Null} p5.Element containing node found
+   * @example
+   * <div ><code class='norender'>
+   * function setup() {
+   *   createCanvas(100,100);
+   *   //translates canvas 50px down
+   *   select('canvas').position(100, 100);
+   * }
+   * </code></div>
+   * <div ><code class='norender'>
+   * // these are all valid calls to select()
+   * var a = select('#moo');
+   * var b = select('#blah', '#myContainer');
+   * var c = select('#foo', b);
+   * var d = document.getElementById('beep');
+   * var e = select('p', d);
+   * </code></div>
+   *
+   */
+  p5.prototype.select = function (e, p) {
+    var res = null;
+    var container = getContainer(p);
+    if (e[0] === '.'){
+      e = e.slice(1);
+      res = container.getElementsByClassName(e);
+      if (res.length) {
+        res = res[0];
+      } else {
+        res = null;
+      }
+    }else if (e[0] === '#'){
+      e = e.slice(1);
+      res = container.getElementById(e);
+    }else {
+      res = container.getElementsByTagName(e);
+      if (res.length) {
+        res = res[0];
+      } else {
+        res = null;
+      }
+    }
+    if (res) {
+      return wrapElement(res);
+    } else {
+      return null;
+    }
+  };
+
+  /**
+   * Searches the page for elements with the given class or tag name (using the '.' prefix
+   * to specify a class and no prefix for a tag) and returns them as p5.Elements
+   * in an array.
+   * The DOM node itself can be accessed with .elt.
+   * Returns an empty array if none found.
+   * You can also specify a container to search within.
+   *
+   * @method selectAll
+   * @param  {String} name class or tag name of elements to search for
+   * @param  {String} [container] id, p5.Element, or HTML element to search within
+   * @return {Array} Array of p5.Elements containing nodes found
+   * @example
+   * <div class='norender'><code>
+   * function setup() {
+   *   createButton('btn');
+   *   createButton('2nd btn');
+   *   createButton('3rd btn');
+   *   var buttons = selectAll('button');
+   *
+   *   for (var i = 0; i < buttons.length; i++){
+   *     buttons[i].size(100,100);
+   *   }
+   * }
+   * </code></div>
+   * <div class='norender'><code>
+   * // these are all valid calls to selectAll()
+   * var a = selectAll('.moo');
+   * var b = selectAll('div');
+   * var c = selectAll('button', '#myContainer');
+   * var d = select('#container');
+   * var e = selectAll('p', d);
+   * var f = document.getElementById('beep');
+   * var g = select('.blah', f);
+   * </code></div>
+   *
+   */
+  p5.prototype.selectAll = function (e, p) {
+    var arr = [];
+    var res;
+    var container = getContainer(p);
+    if (e[0] === '.'){
+      e = e.slice(1);
+      res = container.getElementsByClassName(e);
+    } else {
+      res = container.getElementsByTagName(e);
+    }
+    if (res) {
+      for (var j = 0; j < res.length; j++) {
+        var obj = wrapElement(res[j]);
+        arr.push(obj);
+      }
+    }
+    return arr;
+  };
+
+  /**
+   * Helper function for select and selectAll
+   */
+  function getContainer(p) {
+    var container = document;
+    if (typeof p === 'string' && p[0] === '#'){
+      p = p.slice(1);
+      container = document.getElementById(p) || document;
+    } else if (p instanceof p5.Element){
+      container = p.elt;
+    } else if (p instanceof HTMLElement){
+      container = p;
+    }
+    return container;
+  }
+
+  /**
+   * Helper function for getElement and getElements.
+   */
+  function wrapElement(elt) {
+    if(elt.tagName === "INPUT" && elt.type === "checkbox") {
+      var converted = new p5.Element(elt);
+      converted.checked = function(){
+      if (arguments.length === 0){
+        return this.elt.checked;
+      } else if(arguments[0]) {
+        this.elt.checked = true;
+      } else {
+        this.elt.checked = false;
+      }
+      return this;
+      };
+      return converted;
+    } else if (elt.tagName === "VIDEO" || elt.tagName === "AUDIO") {
+      return new p5.MediaElement(elt);
+    } else {
+      return new p5.Element(elt);
+    }
+  }
+
+  /**
+   * Removes all elements created by p5, except any canvas / graphics
+   * elements created by createCanvas or createGraphics.
+   * Event handlers are removed, and element is removed from the DOM.
+   * @method removeElements
+   * @example
+   * <div class='norender'><code>
+   * function setup() {
+   *   createCanvas(100, 100);
+   *   createDiv('this is some text');
+   *   createP('this is a paragraph');
+   * }
+   * function mousePressed() {
+   *   removeElements(); // this will remove the div and p, not canvas
+   * }
+   * </code></div>
+   *
+   */
+  p5.prototype.removeElements = function (e) {
+    for (var i=0; i<this._elements.length; i++) {
+      if (!(this._elements[i].elt instanceof HTMLCanvasElement)) {
+        this._elements[i].remove();
+      }
+    }
+  };
+
+  /**
+   * Helpers for create methods.
+   */
+  function addElement(elt, pInst, media) {
+    var node = pInst._userNode ? pInst._userNode : document.body;
+    node.appendChild(elt);
+    var c = media ? new p5.MediaElement(elt) : new p5.Element(elt);
+    pInst._elements.push(c);
+    return c;
+  }
+
+  /**
+   * Creates a &lt;div&gt;&lt;/div&gt; element in the DOM with given inner HTML.
+   * Appends to the container node if one is specified, otherwise
+   * appends to body.
+   *
+   * @method createDiv
+   * @param  {String} html inner HTML for element created
+   * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var myDiv;
+   * function setup() {
+   *   myDiv = createDiv('this is some text');
+   * }
+   * </code></div>
+   */
+
+  /**
+   * Creates a &lt;p&gt;&lt;/p&gt; element in the DOM with given inner HTML. Used
+   * for paragraph length text.
+   * Appends to the container node if one is specified, otherwise
+   * appends to body.
+   *
+   * @method createP
+   * @param  {String} html inner HTML for element created
+   * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var myP;
+   * function setup() {
+   *   myP = createP('this is some text');
+   * }
+   * </code></div>
+   */
+
+  /**
+   * Creates a &lt;span&gt;&lt;/span&gt; element in the DOM with given inner HTML.
+   * Appends to the container node if one is specified, otherwise
+   * appends to body.
+   *
+   * @method createSpan
+   * @param  {String} html inner HTML for element created
+   * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var mySpan;
+   * function setup() {
+   *   mySpan = createSpan('this is some text');
+   * }
+   * </code></div>
+   */
+  var tags = ['div', 'p', 'span'];
+  tags.forEach(function(tag) {
+    var method = 'create' + tag.charAt(0).toUpperCase() + tag.slice(1);
+    p5.prototype[method] = function(html) {
+      var elt = document.createElement(tag);
+      elt.innerHTML = typeof html === undefined ? "" : html;
+      return addElement(elt, this);
+    }
+  });
+
+  /**
+   * Creates an &lt;img&gt; element in the DOM with given src and
+   * alternate text.
+   * Appends to the container node if one is specified, otherwise
+   * appends to body.
+   *
+   * @method createImg
+   * @param  {String} src src path or url for image
+   * @param  {String} [alt] alternate text to be used if image does not load
+   * @param  {Function} [successCallback] callback to be called once image data is loaded
+   * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var img;
+   * function setup() {
+   *   img = createImg('http://p5js.org/img/asterisk-01.png');
+   * }
+   * </code></div>
+   */
+  p5.prototype.createImg = function() {
+    var elt = document.createElement('img');
+    var args = arguments;
+    var self;
+    var setAttrs = function(){
+      self.width = elt.offsetWidth || elt.width;
+      self.height = elt.offsetHeight || elt.height;
+      if (args.length > 1 && typeof args[1] === 'function'){
+        self.fn = args[1];
+        self.fn();
+      }else if (args.length > 1 && typeof args[2] === 'function'){
+        self.fn = args[2];
+        self.fn();
+      }
+    };
+    elt.src = args[0];
+    if (args.length > 1 && typeof args[1] === 'string'){
+      elt.alt = args[1];
+    }
+    elt.onload = function(){
+      setAttrs();
+    }
+    self = addElement(elt, this);
+    return self;
+  };
+
+  /**
+   * Creates an &lt;a&gt;&lt;/a&gt; element in the DOM for including a hyperlink.
+   * Appends to the container node if one is specified, otherwise
+   * appends to body.
+   *
+   * @method createA
+   * @param  {String} href       url of page to link to
+   * @param  {String} html       inner html of link element to display
+   * @param  {String} [target]   target where new link should open,
+   *                             could be _blank, _self, _parent, _top.
+   * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var myLink;
+   * function setup() {
+   *   myLink = createA('http://p5js.org/', 'this is a link');
+   * }
+   * </code></div>
+   */
+  p5.prototype.createA = function(href, html, target) {
+    var elt = document.createElement('a');
+    elt.href = href;
+    elt.innerHTML = html;
+    if (target) elt.target = target;
+    return addElement(elt, this);
+  };
+
+  /** INPUT **/
+
+
+  /**
+   * Creates a slider &lt;input&gt;&lt;/input&gt; element in the DOM.
+   * Use .size() to set the display length of the slider.
+   * Appends to the container node if one is specified, otherwise
+   * appends to body.
+   *
+   * @method createSlider
+   * @param  {Number} min minimum value of the slider
+   * @param  {Number} max maximum value of the slider
+   * @param  {Number} [value] default value of the slider
+   * @param  {Number} [step] step size for each tick of the slider (if step is set to 0, the slider will move continuously from the minimum to the maximum value)
+   * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div><code>
+   * var slider;
+   * function setup() {
+   *   slider = createSlider(0, 255, 100);
+   *   slider.position(10, 10);
+   *   slider.style('width', '80px');
+   * }
+   *
+   * function draw() {
+   *   var val = slider.value();
+   *   background(val);
+   * }
+   * </code></div>
+   *
+   * <div><code>
+   * var slider;
+   * function setup() {
+   *   colorMode(HSB);
+   *   slider = createSlider(0, 360, 60, 40);
+   *   slider.position(10, 10);
+   *   slider.style('width', '80px');
+   * }
+   *
+   * function draw() {
+   *   var val = slider.value();
+   *   background(val, 100, 100, 1);
+   * }
+   * </code></div>
+   */
+  p5.prototype.createSlider = function(min, max, value, step) {
+    var elt = document.createElement('input');
+    elt.type = 'range';
+    elt.min = min;
+    elt.max = max;
+    if (step === 0) {
+      elt.step = .000000000000000001; // smallest valid step
+    } else if (step) {
+      elt.step = step;
+    }
+    if (typeof(value) === "number") elt.value = value;
+    return addElement(elt, this);
+  };
+
+  /**
+   * Creates a &lt;button&gt;&lt;/button&gt; element in the DOM.
+   * Use .size() to set the display size of the button.
+   * Use .mousePressed() to specify behavior on press.
+   * Appends to the container node if one is specified, otherwise
+   * appends to body.
+   *
+   * @method createButton
+   * @param  {String} label label displayed on the button
+   * @param  {String} [value] value of the button
+   * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var button;
+   * function setup() {
+   *   createCanvas(100, 100);
+   *   background(0);
+   *   button = createButton('click me');
+   *   button.position(19, 19);
+   *   button.mousePressed(changeBG);
+   * }
+   *
+   * function changeBG() {
+   *   var val = random(255);
+   *   background(val);
+   * }
+   * </code></div>
+   */
+  p5.prototype.createButton = function(label, value) {
+    var elt = document.createElement('button');
+    elt.innerHTML = label;
+    elt.value = value;
+    if (value) elt.value = value;
+    return addElement(elt, this);
+  };
+
+  /**
+   * Creates a checkbox &lt;input&gt;&lt;/input&gt; element in the DOM.
+   * Calling .checked() on a checkbox returns if it is checked or not
+   *
+   * @method createCheckbox
+   * @param  {String} [label] label displayed after checkbox
+   * @param  {boolean} [value] value of the checkbox; checked is true, unchecked is false.Unchecked if no value given
+   * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var checkbox;
+   *
+   * function setup() {
+   *   checkbox = createCheckbox('label', false);
+   *   checkbox.changed(myCheckedEvent);
+   * }
+   *
+   * function myCheckedEvent() {
+   *   if (this.checked()) {
+   *     console.log("Checking!");
+   *   } else {
+   *     console.log("Unchecking!");
+   *   }
+   * }
+   * </code></div>
+   */
+  p5.prototype.createCheckbox = function() {
+    var elt = document.createElement('div');
+    var checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    elt.appendChild(checkbox);
+    //checkbox must be wrapped in p5.Element before label so that label appears after
+    var self = addElement(elt, this);
+    self.checked = function(){
+      var cb = self.elt.getElementsByTagName('input')[0];
+      if (cb) {
+        if (arguments.length === 0){
+          return cb.checked;
+        }else if(arguments[0]){
+          cb.checked = true;
+        }else{
+          cb.checked = false;
+        }
+      }
+      return self;
+    };
+    this.value = function(val){
+      self.value = val;
+      return this;
+    };
+    if (arguments[0]){
+      var ran = Math.random().toString(36).slice(2);
+      var label = document.createElement('label');
+      checkbox.setAttribute('id', ran);
+      label.htmlFor = ran;
+      self.value(arguments[0]);
+      label.appendChild(document.createTextNode(arguments[0]));
+      elt.appendChild(label);
+    }
+    if (arguments[1]){
+      checkbox.checked = true;
+    }
+    return self;
+  };
+
+  /**
+   * Creates a dropdown menu &lt;select&gt;&lt;/select&gt; element in the DOM.
+   * @method createSelect
+   * @param {boolean} [multiple] [true if dropdown should support multiple selections]
+   * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div><code>
+   * var sel;
+   *
+   * function setup() {
+   *   textAlign(CENTER);
+   *   background(200);
+   *   sel = createSelect();
+   *   sel.position(10, 10);
+   *   sel.option('pear');
+   *   sel.option('kiwi');
+   *   sel.option('grape');
+   *   sel.changed(mySelectEvent);
+   * }
+   *
+   * function mySelectEvent() {
+   *   var item = sel.value();
+   *   background(200);
+   *   text("it's a "+item+"!", 50, 50);
+   * }
+   * </code></div>
+   */
+  p5.prototype.createSelect = function(mult) {
+    var elt = document.createElement('select');
+    if (mult){
+      elt.setAttribute('multiple', 'true');
+    }
+    var self = addElement(elt, this);
+    self.option = function(name, value){
+      var opt = document.createElement('option');
+      opt.innerHTML = name;
+      if (arguments.length > 1)
+        opt.value = value;
+      else
+        opt.value = name;
+      elt.appendChild(opt);
+    };
+    self.selected = function(value){
+      var arr = [];
+      if (arguments.length > 0){
+        for (var i = 0; i < this.elt.length; i++){
+          if (value.toString() === this.elt[i].value){
+            this.elt.selectedIndex = i;
+          }
+        }
+        return this;
+      }else{
+        if (mult){
+          for (var i = 0; i < this.elt.selectedOptions.length; i++){
+            arr.push(this.elt.selectedOptions[i].value);
+          }
+          return arr;
+        }else{
+          return this.elt.value;
+        }
+      }
+    };
+    return self;
+  };
+
+  /**
+   * Creates a radio button &lt;input&gt;&lt;/input&gt; element in the DOM.
+   * The .option() method can be used to set options for the radio after it is
+   * created. The .value() method will return the currently selected option.
+   *
+   * @method createRadio
+   * @param  {String} [divId] the id and name of the created div and input field respectively
+   * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div><code>
+   * var radio;
+   *
+   * function setup() {
+   *   radio = createRadio();
+   *   radio.option("black");
+   *   radio.option("white");
+   *   radio.option("gray");
+   *   radio.style('width', '60px');
+   *   textAlign(CENTER);
+   *   fill(255, 0, 0);
+   * }
+   *
+   * function draw() {
+   *   var val = radio.value();
+   *   background(val);
+   *   text(val, width/2, height/2);
+   * }
+   * </code></div>
+   * <div><code>
+   * var radio;
+   *
+   * function setup() {
+   *   radio = createRadio();
+   *   radio.option('apple', 1);
+   *   radio.option('bread', 2);
+   *   radio.option('juice', 3);
+   *   radio.style('width', '60px');
+   *   textAlign(CENTER);
+   * }
+   *
+   * function draw() {
+   *   background(200);
+   *   var val = radio.value();
+   *   if (val) {
+   *     text('item cost is $'+val, width/2, height/2);
+   *   }
+   * }
+   * </code></div>
+   */
+  p5.prototype.createRadio = function() {
+    var radios = document.querySelectorAll("input[type=radio]");
+    var count = 0;
+    if(radios.length > 1){
+      var length = radios.length;
+      var prev=radios[0].name;
+      var current = radios[1].name;
+      count = 1;
+      for(var i = 1; i < length; i++) {
+        current = radios[i].name;
+        if(prev != current){
+          count++;
+        }
+        prev = current;
+      }
+    }
+    else if (radios.length == 1){
+      count = 1;
+    }
+    var elt = document.createElement('div');
+    var self = addElement(elt, this);
+    var times = -1;
+    self.option = function(name, value){
+      var opt = document.createElement('input');
+      opt.type = 'radio';
+      opt.innerHTML = name;
+      if (arguments.length > 1)
+        opt.value = value;
+      else
+        opt.value = name;
+      opt.setAttribute('name',"defaultradio"+count);
+      elt.appendChild(opt);
+      if (name){
+        times++;
+        var ran = Math.random().toString(36).slice(2);
+        var label = document.createElement('label');
+        opt.setAttribute('id', "defaultradio"+count+"-"+times);
+        label.htmlFor = "defaultradio"+count+"-"+times;
+        label.appendChild(document.createTextNode(name));
+        elt.appendChild(label);
+      }
+      return opt;
+    };
+    self.selected = function(){
+      var length = this.elt.childNodes.length;
+      if(arguments.length == 1) {
+        for (var i = 0; i < length; i+=2){
+          if(this.elt.childNodes[i].value == arguments[0])
+            this.elt.childNodes[i].checked = true;
+        }
+        return this;
+      } else {
+        for (var i = 0; i < length; i+=2){
+          if(this.elt.childNodes[i].checked == true)
+            return this.elt.childNodes[i].value;
+        }
+      }
+    };
+    self.value = function(){
+      var length = this.elt.childNodes.length;
+      if(arguments.length == 1) {
+        for (var i = 0; i < length; i+=2){
+          if(this.elt.childNodes[i].value == arguments[0])
+            this.elt.childNodes[i].checked = true;
+        }
+        return this;
+      } else {
+        for (var i = 0; i < length; i+=2){
+          if(this.elt.childNodes[i].checked == true)
+            return this.elt.childNodes[i].value;
+        }
+        return "";
+      }
+    };
+    return self
+  };
+
+  /**
+   * Creates an &lt;input&gt;&lt;/input&gt; element in the DOM for text input.
+   * Use .size() to set the display length of the box.
+   * Appends to the container node if one is specified, otherwise
+   * appends to body.
+   *
+   * @method createInput
+   * @param {Number} [value] default value of the input box
+   * @param {String} [type] type of text, ie text, password etc. Defaults to text
+   * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * function setup(){
+   *   var inp = createInput('');
+   *   inp.input(myInputEvent);
+   * }
+   *
+   * function myInputEvent(){
+   *   console.log('you are typing: ', this.value());
+   * }
+   *
+   * </code></div>
+   */
+  p5.prototype.createInput = function(value, type) {
+    var elt = document.createElement('input');
+    elt.type = type ? type : 'text';
+    if (value) elt.value = value;
+    return addElement(elt, this);
+  };
+
+  /**
+   * Creates an &lt;input&gt;&lt;/input&gt; element in the DOM of type 'file'.
+   * This allows users to select local files for use in a sketch.
+   *
+   * @method createFileInput
+   * @param  {Function} [callback] callback function for when a file loaded
+   * @param  {String} [multiple] optional to allow multiple files selected
+   * @return {Object/p5.Element} pointer to p5.Element holding created DOM element
+   * @example
+   * var input;
+   * var img;
+   *
+   * function setup() {
+   *   input = createFileInput(handleFile);
+   *   input.position(0, 0);
+   * }
+   *
+   * function draw() {
+   *   if (img) {
+   *     image(img, 0, 0, width, height);
+   *   }
+   * }
+   *
+   * function handleFile(file) {
+   *   print(file);
+   *   if (file.type === 'image') {
+   *     img = createImg(file.data);
+   *     img.hide();
+   *   }
+   * }
+   */
+  p5.prototype.createFileInput = function(callback, multiple) {
+
+    // Is the file stuff supported?
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      // Yup, we're ok and make an input file selector
+      var elt = document.createElement('input');
+      elt.type = 'file';
+
+      // If we get a second argument that evaluates to true
+      // then we are looking for multiple files
+      if (multiple) {
+        // Anything gets the job done
+        elt.multiple = 'multiple';
+      }
+
+      // Function to handle when a file is selected
+      // We're simplifying life and assuming that we always
+      // want to load every selected file
+      function handleFileSelect(evt) {
+        // These are the files
+        var files = evt.target.files;
+        // Load each one and trigger a callback
+        for (var i = 0; i < files.length; i++) {
+          var f = files[i];
+          var reader = new FileReader();
+          function makeLoader(theFile) {
+            // Making a p5.File object
+            var p5file = new p5.File(theFile);
+            return function(e) {
+              p5file.data = e.target.result;
+              callback(p5file);
+            };
+          };
+          reader.onload = makeLoader(f);
+
+          // Text or data?
+          // This should likely be improved
+          if (f.type.indexOf('text') > -1) {
+            reader.readAsText(f);
+          } else {
+            reader.readAsDataURL(f);
+          }
+        }
+      }
+
+      // Now let's handle when a file was selected
+      elt.addEventListener('change', handleFileSelect, false);
+      return addElement(elt, this);
+    } else {
+      console.log('The File APIs are not fully supported in this browser. Cannot create element.');
+    }
+  };
+
+
+  /** VIDEO STUFF **/
+
+  function createMedia(pInst, type, src, callback) {
+    var elt = document.createElement(type);
+
+    // allow src to be empty
+    var src = src || '';
+    if (typeof src === 'string') {
+      src = [src];
+    }
+    for (var i=0; i<src.length; i++) {
+      var source = document.createElement('source');
+      source.src = src[i];
+      elt.appendChild(source);
+    }
+    if (typeof callback !== 'undefined') {
+      var callbackHandler = function() {
+        callback();
+        elt.removeEventListener('canplaythrough', callbackHandler);
+      }
+      elt.addEventListener('canplaythrough', callbackHandler);
+    }
+
+    var c = addElement(elt, pInst, true);
+    c.loadedmetadata = false;
+    // set width and height onload metadata
+    elt.addEventListener('loadedmetadata', function() {
+      c.width = elt.videoWidth;
+      c.height = elt.videoHeight;
+      // set elt width and height if not set
+      if (c.elt.width === 0) c.elt.width = elt.videoWidth;
+      if (c.elt.height === 0) c.elt.height = elt.videoHeight;
+      c.loadedmetadata = true;
+    });
+
+    return c;
+  }
+  /**
+   * Creates an HTML5 &lt;video&gt; element in the DOM for simple playback
+   * of audio/video. Shown by default, can be hidden with .hide()
+   * and drawn into canvas using video(). Appends to the container
+   * node if one is specified, otherwise appends to body. The first parameter
+   * can be either a single string path to a video file, or an array of string
+   * paths to different formats of the same video. This is useful for ensuring
+   * that your video can play across different browsers, as each supports
+   * different formats. See <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats">this
+   * page</a> for further information about supported formats.
+   *
+   * @method createVideo
+   * @param  {String|Array} src  path to a video file, or array of paths for
+   *                             supporting different browsers
+   * @param  {Object} [callback] callback function to be called upon
+   *                             'canplaythrough' event fire, that is, when the
+   *                             browser can play the media, and estimates that
+   *                             enough data has been loaded to play the media
+   *                             up to its end without having to stop for
+   *                             further buffering of content
+   * @return {Object/p5.Element} pointer to video p5.Element
+   */
+  p5.prototype.createVideo = function(src, callback) {
+    return createMedia(this, 'video', src, callback);
+  };
+
+  /** AUDIO STUFF **/
+
+  /**
+   * Creates a hidden HTML5 &lt;audio&gt; element in the DOM for simple audio
+   * playback. Appends to the container node if one is specified,
+   * otherwise appends to body. The first parameter
+   * can be either a single string path to a audio file, or an array of string
+   * paths to different formats of the same audio. This is useful for ensuring
+   * that your audio can play across different browsers, as each supports
+   * different formats. See <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats">this
+   * page for further information about supported formats</a>.
+   *
+   * @method createAudio
+   * @param  {String|Array} src  path to an audio file, or array of paths for
+   *                             supporting different browsers
+   * @param  {Object} [callback] callback function to be called upon
+   *                             'canplaythrough' event fire, that is, when the
+   *                             browser can play the media, and estimates that
+   *                             enough data has been loaded to play the media
+   *                             up to its end without having to stop for
+   *                             further buffering of content
+   * @return {Object/p5.Element} pointer to audio p5.Element
+   */
+  p5.prototype.createAudio = function(src, callback) {
+    return createMedia(this, 'audio', src, callback);
+  };
+
+
+  /** CAMERA STUFF **/
+
+  p5.prototype.VIDEO = 'video';
+  p5.prototype.AUDIO = 'audio';
+
+  navigator.getUserMedia  = navigator.getUserMedia ||
+                            navigator.webkitGetUserMedia ||
+                            navigator.mozGetUserMedia ||
+                            navigator.msGetUserMedia;
+
+  /**
+   * <p>Creates a new &lt;video&gt; element that contains the audio/video feed
+   * from a webcam. This can be drawn onto the canvas using video().</p>
+   * <p>More specific properties of the feed can be passing in a Constraints object.
+   * See the
+   * <a href="http://w3c.github.io/mediacapture-main/getusermedia.html#media-track-constraints"> W3C
+   * spec</a> for possible properties. Note that not all of these are supported
+   * by all browsers.</p>
+   * <p>Security note: A new browser security specification requires that getUserMedia,
+   * which is behind createCapture(), only works when you're running the code locally,
+   * or on HTTPS. Learn more <a href="http://stackoverflow.com/questions/34197653/getusermedia-in-chrome-47-without-using-https">here</a>
+   * and <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia">here</a>.</p>
+   *
+   * @method createCapture
+   * @param  {String|Constant|Object}   type type of capture, either VIDEO or
+   *                                    AUDIO if none specified, default both,
+   *                                    or a Constraints object
+   * @param  {Function}                 callback function to be called once
+   *                                    stream has loaded
+   * @return {Object/p5.Element} capture video p5.Element
+   * @example
+   * <div class='norender'><code>
+   * var capture;
+   *
+   * function setup() {
+   *   createCanvas(480, 120);
+   *   capture = createCapture(VIDEO);
+   * }
+   *
+   * function draw() {
+   *   image(capture, 0, 0, width, width*capture.height/capture.width);
+   *   filter(INVERT);
+   * }
+   * </code></div>
+   * <div class='norender'><code>
+   * function setup() {
+   *   createCanvas(480, 120);
+   *   var constraints = {
+   *     video: {
+   *       mandatory: {
+   *         minWidth: 1280,
+   *         minHeight: 720
+   *       },
+   *       optional: [
+   *         { maxFrameRate: 10 }
+   *       ]
+   *     },
+   *     audio: true
+   *   };
+   *   createCapture(constraints, function(stream) {
+   *     console.log(stream);
+   *   });
+   * }
+   * </code></div>
+   */
+  p5.prototype.createCapture = function() {
+    var useVideo = true;
+    var useAudio = true;
+    var constraints;
+    var cb;
+    for (var i=0; i<arguments.length; i++) {
+      if (arguments[i] === p5.prototype.VIDEO) {
+        useAudio = false;
+      } else if (arguments[i] === p5.prototype.AUDIO) {
+        useVideo = false;
+      } else if (typeof arguments[i] === 'object') {
+        constraints = arguments[i];
+      } else if (typeof arguments[i] === 'function') {
+        cb = arguments[i];
+      }
+    }
+
+    if (navigator.getUserMedia) {
+      var elt = document.createElement('video');
+
+      if (!constraints) {
+        constraints = {video: useVideo, audio: useAudio};
+      }
+
+      navigator.getUserMedia(constraints, function(stream) {
+        elt.src = window.URL.createObjectURL(stream);
+          if (cb) {
+            cb(stream);
+          }
+      }, function(e) { console.log(e); });
+    } else {
+      throw 'getUserMedia not supported in this browser';
+    }
+    var c = addElement(elt, this, true);
+    c.loadedmetadata = false;
+    // set width and height onload metadata
+    elt.addEventListener('loadedmetadata', function() {
+      elt.play();
+      if (elt.width) {
+        c.width = elt.videoWidth = elt.width;
+        c.height = elt.videoHeight = elt.height;
+      } else {
+        c.width = c.elt.width = elt.videoWidth;
+        c.height = c.elt.height = elt.videoHeight;
+      }
+      c.loadedmetadata = true;
+    });
+    return c;
+  };
+
+  /**
+   * Creates element with given tag in the DOM with given content.
+   * Appends to the container node if one is specified, otherwise
+   * appends to body.
+   *
+   * @method createElement
+   * @param  {String} tag tag for the new element
+   * @param  {String} [content] html content to be inserted into the element
+   * @return {Object/p5.Element} pointer to p5.Element holding created node
+   * @example
+   * <div class='norender'><code>
+   * var h2 = createElement('h2','im an h2 p5.element!');
+   * </code></div>
+   */
+  p5.prototype.createElement = function(tag, content) {
+    var elt = document.createElement(tag);
+    if (typeof content !== 'undefined') {
+      elt.innerHTML = content;
+    }
+    return addElement(elt, this);
+  };
+
+
+// =============================================================================
+//                         p5.Element additions
+// =============================================================================
+  /**
+   *
+   * Adds specified class to the element.
+   *
+   * @for p5.Element
+   * @method addClass
+   * @param  {String} class name of class to add
+   * @return {Object/p5.Element}
+   * @example
+   * <div class='norender'><code>
+   * var div = createDiv('div');
+   * div.addClass('myClass');
+   * </code></div>
+   */
+  p5.Element.prototype.addClass = function(c) {
+    if (this.elt.className) {
+      // PEND don't add class more than once
+      //var regex = new RegExp('[^a-zA-Z\d:]?'+c+'[^a-zA-Z\d:]?');
+      //if (this.elt.className.search(/[^a-zA-Z\d:]?hi[^a-zA-Z\d:]?/) === -1) {
+      this.elt.className = this.elt.className+' '+c;
+      //}
+    } else {
+      this.elt.className = c;
+    }
+    return this;
+  }
+
+  /**
+   *
+   * Removes specified class from the element.
+   *
+   * @method removeClass
+   * @param  {String} class name of class to remove
+   * @return {Object/p5.Element}
+   */
+  p5.Element.prototype.removeClass = function(c) {
+    var regex = new RegExp('(?:^|\\s)'+c+'(?!\\S)');
+    this.elt.className = this.elt.className.replace(regex, '');
+    this.elt.className = this.elt.className.replace(/^\s+|\s+$/g, ""); //prettify (optional)
+    return this;
+  }
+
+  /**
+   *
+   * Attaches the element  as a child to the parent specified.
+   * Accepts either a string ID, DOM node, or p5.Element.
+   * If no argument is specified, an array of children DOM nodes is returned.
+   *
+   * @method child
+   * @param  {String|Object|p5.Element} [child] the ID, DOM node, or p5.Element
+   *                         to add to the current element
+   * @return {p5.Element}
+   * @example
+   * <div class='norender'><code>
+   * var div0 = createDiv('this is the parent');
+   * var div1 = createDiv('this is the child');
+   * div0.child(div1); // use p5.Element
+   * </code></div>
+   * <div class='norender'><code>
+   * var div0 = createDiv('this is the parent');
+   * var div1 = createDiv('this is the child');
+   * div1.id('apples');
+   * div0.child('apples'); // use id
+   * </code></div>
+   * <div class='norender'><code>
+   * var div0 = createDiv('this is the parent');
+   * var elt = document.getElementById('myChildDiv');
+   * div0.child(elt); // use element from page
+   * </code></div>
+   */
+  p5.Element.prototype.child = function(c) {
+    if (typeof c === 'undefined'){
+      return this.elt.childNodes
+    }
+    if (typeof c === 'string') {
+      if (c[0] === '#') {
+        c = c.substring(1);
+      }
+      c = document.getElementById(c);
+    } else if (c instanceof p5.Element) {
+      c = c.elt;
+    }
+    this.elt.appendChild(c);
+    return this;
+  };
+
+  /**
+   * Centers a p5 Element either vertically, horizontally,
+   * or both, relative to its parent or according to
+   * the body if the Element has no parent. If no argument is passed
+   * the Element is aligned both vertically and horizontally.
+   *
+   * @param  {String} align       passing 'vertical', 'horizontal' aligns element accordingly
+   * @return {Object/p5.Element} pointer to p5.Element
+   * @example
+   * <div><code>
+   * function setup() {
+   *   var div = createDiv('').size(10,10);
+   *   div.style('background-color','orange');
+   *   div.center();
+   *
+   * }
+   * </code></div>
+   */
+  p5.Element.prototype.center = function(align) {
+    var style = this.elt.style.display;
+    var hidden = this.elt.style.display === 'none';
+    var parentHidden = this.parent().style.display === 'none';
+    var pos = { x : this.elt.offsetLeft, y : this.elt.offsetTop };
+
+    if (hidden) this.show();
+
+    this.elt.style.display = 'block';
+    this.position(0,0);
+
+    if (parentHidden) this.parent().style.display = 'block';
+
+    var wOffset = Math.abs(this.parent().offsetWidth - this.elt.offsetWidth);
+    var hOffset = Math.abs(this.parent().offsetHeight - this.elt.offsetHeight);
+    var y = pos.y;
+    var x = pos.x;
+
+    if (align === 'both' || align === undefined){
+      this.position(wOffset/2, hOffset/2);
+    }else if (align === 'horizontal'){
+      this.position(wOffset/2, y);
+    }else if (align === 'vertical'){
+      this.position(x, hOffset/2);
+    }
+
+    this.style('display', style);
+
+    if (hidden) this.hide();
+
+    if (parentHidden) this.parent().style.display = 'none';
+
+    return this;
+  };
+
+  /**
+   *
+   * If an argument is given, sets the inner HTML of the element,
+   * replacing any existing html. If true is included as a second
+   * argument, html is appended instead of replacing existing html.
+   * If no arguments are given, returns
+   * the inner HTML of the element.
+   *
+   * @for p5.Element
+   * @method html
+   * @param  {String} [html] the HTML to be placed inside the element
+   * @param  {boolean} [append] whether to append HTML to existing
+   * @return {Object/p5.Element|String}
+   * @example
+   * <div class='norender'><code>
+   * var div = createDiv('').size(100,100);
+   * div.html('hi');
+   * </code></div>
+   * <div class='norender'><code>
+   * var div = createDiv('Hello ').size(100,100);
+   * div.html('World', true);
+   * </code></div>
+   */
+  p5.Element.prototype.html = function() {
+    if (arguments.length === 0) {
+      return this.elt.innerHTML;
+    } else if (arguments[1]) {
+      this.elt.innerHTML += arguments[0];
+      return this;
+    } else {
+      this.elt.innerHTML = arguments[0];
+      return this;
+    }
+  };
+
+  /**
+   *
+   * Sets the position of the element relative to (0, 0) of the
+   * window. Essentially, sets position:absolute and left and top
+   * properties of style. If no arguments given returns the x and y position
+   * of the element in an object.
+   *
+   * @method position
+   * @param  {Number} [x] x-position relative to upper left of window
+   * @param  {Number} [y] y-position relative to upper left of window
+   * @return {Object/p5.Element}
+   * @example
+   * <div><code class='norender'>
+   * function setup() {
+   *   var cnv = createCanvas(100, 100);
+   *   // positions canvas 50px to the right and 100px
+   *   // below upper left corner of the window
+   *   cnv.position(50, 100);
+   * }
+   * </code></div>
+   */
+  p5.Element.prototype.position = function() {
+    if (arguments.length === 0){
+      return { 'x' : this.elt.offsetLeft , 'y' : this.elt.offsetTop };
+    }else{
+      this.elt.style.position = 'absolute';
+      this.elt.style.left = arguments[0]+'px';
+      this.elt.style.top = arguments[1]+'px';
+      this.x = arguments[0];
+      this.y = arguments[1];
+      return this;
+    }
+  };
+
+  /* Helper method called by p5.Element.style() */
+  p5.Element.prototype._translate = function(){
+    this.elt.style.position = 'absolute';
+    // save out initial non-translate transform styling
+    var transform = '';
+    if (this.elt.style.transform) {
+      transform = this.elt.style.transform.replace(/translate3d\(.*\)/g, '');
+      transform = transform.replace(/translate[X-Z]?\(.*\)/g, '');
+    }
+    if (arguments.length === 2) {
+      this.elt.style.transform = 'translate('+arguments[0]+'px, '+arguments[1]+'px)';
+    } else if (arguments.length > 2) {
+      this.elt.style.transform = 'translate3d('+arguments[0]+'px,'+arguments[1]+'px,'+arguments[2]+'px)';
+      if (arguments.length === 3) {
+        this.elt.parentElement.style.perspective = '1000px';
+      } else {
+        this.elt.parentElement.style.perspective = arguments[3]+'px';
+      }
+    }
+    // add any extra transform styling back on end
+    this.elt.style.transform += transform;
+    return this;
+  };
+
+  /* Helper method called by p5.Element.style() */
+  p5.Element.prototype._rotate = function(){
+    // save out initial non-rotate transform styling
+    var transform = '';
+    if (this.elt.style.transform) {
+      var transform = this.elt.style.transform.replace(/rotate3d\(.*\)/g, '');
+      transform = transform.replace(/rotate[X-Z]?\(.*\)/g, '');
+    }
+
+    if (arguments.length === 1){
+      this.elt.style.transform = 'rotate('+arguments[0]+'deg)';
+    }else if (arguments.length === 2){
+      this.elt.style.transform = 'rotate('+arguments[0]+'deg, '+arguments[1]+'deg)';
+    }else if (arguments.length === 3){
+      this.elt.style.transform = 'rotateX('+arguments[0]+'deg)';
+      this.elt.style.transform += 'rotateY('+arguments[1]+'deg)';
+      this.elt.style.transform += 'rotateZ('+arguments[2]+'deg)';
+    }
+    // add remaining transform back on
+    this.elt.style.transform += transform;
+    return this;
+  };
+
+  /**
+   * Sets the given style (css) property (1st arg) of the element with the
+   * given value (2nd arg). If a single argument is given, .style()
+   * returns the value of the given property; however, if the single argument
+   * is given in css syntax ('text-align:center'), .style() sets the css
+   * appropriatly. .style() also handles 2d and 3d css transforms. If
+   * the 1st arg is 'rotate', 'translate', or 'position', the following arguments
+   * accept Numbers as values. ('translate', 10, 100, 50);
+   *
+   * @method style
+   * @param  {String} property   property to be set
+   * @param  {String|Number|p5.Color} [value]   value to assign to property
+   * @param  {String|Number} [value]   value to assign to property (rotate/translate)
+   * @param  {String|Number} [value]   value to assign to property (rotate/translate)
+   * @param  {String|Number} [value]   value to assign to property (translate)
+   * @return {String|Object/p5.Element} value of property, if no value is specified
+   * or p5.Element
+   * @example
+   * <div><code class="norender">
+   * var myDiv = createDiv("I like pandas.");
+   * myDiv.style("font-size", "18px");
+   * myDiv.style("color", "#ff0000");
+   * </code></div>
+   * <div><code class="norender">
+   * var col = color(25,23,200,50);
+   * var button = createButton("button");
+   * button.style("background-color", col);
+   * button.position(10, 10);
+   * </code></div>
+   * <div><code class="norender">
+   * var myDiv = createDiv("I like lizards.");
+   * myDiv.style("position", 20, 20);
+   * myDiv.style("rotate", 45);
+   * </code></div>
+   * <div><code class="norender">
+   * var myDiv;
+   * function setup() {
+   *   background(200);
+   *   myDiv = createDiv("I like gray.");
+   *   myDiv.position(20, 20);
+   * }
+   *
+   * function draw() {
+   *   myDiv.style("font-size", mouseX+"px");
+   * }
+   * </code></div>
+   */
+  p5.Element.prototype.style = function(prop, val) {
+    var self = this;
+
+    if (val instanceof p5.Color) {
+      val = 'rgba(' + val.levels[0] + ',' + val.levels[1] + ',' + val.levels[2] + ',' + val.levels[3]/255 + ')'
+    }
+
+    if (typeof val === 'undefined') {
+      if (prop.indexOf(':') === -1) {
+        var styles = window.getComputedStyle(self.elt);
+        var style = styles.getPropertyValue(prop);
+        return style;
+      } else {
+        var attrs = prop.split(';');
+        for (var i = 0; i < attrs.length; i++) {
+          var parts = attrs[i].split(':');
+          if (parts[0] && parts[1]) {
+            this.elt.style[parts[0].trim()] = parts[1].trim();
+          }
+        }
+      }
+    } else {
+      if (prop === 'rotate' || prop === 'translate' || prop === 'position'){
+        var trans = Array.prototype.shift.apply(arguments);
+        var f = this[trans] || this['_'+trans];
+        f.apply(this, arguments);
+      } else {
+        this.elt.style[prop] = val;
+        if (prop === 'width' || prop === 'height' || prop === 'left' || prop === 'top') {
+          var numVal = val.replace(/\D+/g, '');
+          this[prop] = parseInt(numVal, 10); // pend: is this necessary?
+        }
+      }
+    }
+    return this;
+  };
+
+
+  /**
+   *
+   * Adds a new attribute or changes the value of an existing attribute
+   * on the specified element. If no value is specified, returns the
+   * value of the given attribute, or null if attribute is not set.
+   *
+   * @method attribute
+   * @param  {String} attr       attribute to set
+   * @param  {String} [value]    value to assign to attribute
+   * @return {String|Object/p5.Element} value of attribute, if no value is
+   *                             specified or p5.Element
+   * @example
+   * <div class="norender"><code>
+   * var myDiv = createDiv("I like pandas.");
+   * myDiv.attribute("align", "center");
+   * </code></div>
+   */
+  p5.Element.prototype.attribute = function(attr, value) {
+    if (typeof value === 'undefined') {
+      return this.elt.getAttribute(attr);
+    } else {
+      this.elt.setAttribute(attr, value);
+      return this;
+    }
+  };
+
+
+  /**
+   *
+   * Removes an attribute on the specified element.
+   *
+   * @method removeAttribute
+   * @param  {String} attr       attribute to remove
+   * @return {Object/p5.Element}
+   *
+   * @example
+   * <div><code>
+   * var button;
+   * var checkbox;
+   *
+   * function setup() {
+   *   checkbox = createCheckbox('enable', true);
+   *   checkbox.changed(enableButton);
+   *   button = createButton('button');
+   *   button.position(10, 10);
+   * }
+   *
+   * function enableButton() {
+   *   if( this.checked() ) {
+   *     // Re-enable the button
+   *     button.removeAttribute('disabled');
+   *   } else {
+   *     // Disable the button
+   *     button.attribute('disabled','');
+   *   }
+   * }
+   * </code></div>
+   */
+  p5.Element.prototype.removeAttribute = function(attr) {
+    this.elt.removeAttribute(attr);
+    return this;
+  };
+
+
+  /**
+   * Either returns the value of the element if no arguments
+   * given, or sets the value of the element.
+   *
+   * @method value
+   * @param  {String|Number}     [value]
+   * @return {String|Object/p5.Element} value of element if no value is specified or p5.Element
+   * @example
+   * <div class='norender'><code>
+   * // gets the value
+   * var inp;
+   * function setup() {
+   *   inp = createInput('');
+   * }
+   *
+   * function mousePressed() {
+   *   print(inp.value());
+   * }
+   * </code></div>
+   * <div class='norender'><code>
+   * // sets the value
+   * var inp;
+   * function setup() {
+   *   inp = createInput('myValue');
+   * }
+   *
+   * function mousePressed() {
+   *   inp.value("myValue");
+   * }
+   * </code></div>
+   */
+  p5.Element.prototype.value = function() {
+    if (arguments.length > 0) {
+      this.elt.value = arguments[0];
+      return this;
+    } else {
+      if (this.elt.type === 'range') {
+        return parseFloat(this.elt.value);
+      }
+      else return this.elt.value;
+    }
+  };
+
+  /**
+   *
+   * Shows the current element. Essentially, setting display:block for the style.
+   *
+   * @method show
+   * @return {Object/p5.Element}
+   * @example
+   * <div class='norender'><code>
+   * var div = createDiv('div');
+   * div.style("display", "none");
+   * div.show(); // turns display to block
+   * </code></div>
+   */
+  p5.Element.prototype.show = function() {
+    this.elt.style.display = 'block';
+    return this;
+  };
+
+  /**
+   * Hides the current element. Essentially, setting display:none for the style.
+   *
+   * @method hide
+   * @return {Object/p5.Element}
+   * @example
+   * <div class='norender'><code>
+   * var div = createDiv('this is a div');
+   * div.hide();
+   * </code></div>
+   */
+  p5.Element.prototype.hide = function() {
+    this.elt.style.display = 'none';
+    return this;
+  };
+
+  /**
+   *
+   * Sets the width and height of the element. AUTO can be used to
+   * only adjust one dimension. If no arguments given returns the width and height
+   * of the element in an object.
+   *
+   * @method size
+   * @param  {Number} [w] width of the element
+   * @param  {Number} [h] height of the element
+   * @return {Object/p5.Element}
+   * @example
+   * <div class='norender'><code>
+   * var div = createDiv('this is a div');
+   * div.size(100, 100);
+   * </code></div>
+   */
+  p5.Element.prototype.size = function(w, h) {
+    if (arguments.length === 0){
+      return { 'width' : this.elt.offsetWidth , 'height' : this.elt.offsetHeight };
+    }else{
+      var aW = w;
+      var aH = h;
+      var AUTO = p5.prototype.AUTO;
+      if (aW !== AUTO || aH !== AUTO) {
+        if (aW === AUTO) {
+          aW = h * this.width / this.height;
+        } else if (aH === AUTO) {
+          aH = w * this.height / this.width;
+        }
+        // set diff for cnv vs normal div
+        if (this.elt instanceof HTMLCanvasElement) {
+          var j = {};
+          var k  = this.elt.getContext('2d');
+          for (var prop in k) {
+            j[prop] = k[prop];
+          }
+          this.elt.setAttribute('width', aW * this._pInst._pixelDensity);
+          this.elt.setAttribute('height', aH * this._pInst._pixelDensity);
+          this.elt.setAttribute('style', 'width:' + aW + 'px; height:' + aH + 'px');
+          this._pInst.scale(this._pInst._pixelDensity, this._pInst._pixelDensity);
+          for (var prop in j) {
+            this.elt.getContext('2d')[prop] = j[prop];
+          }
+        } else {
+          this.elt.style.width = aW+'px';
+          this.elt.style.height = aH+'px';
+          this.elt.width = aW;
+          this.elt.height = aH;
+          this.width = aW;
+          this.height = aH;
+        }
+
+        this.width = this.elt.offsetWidth;
+        this.height = this.elt.offsetHeight;
+
+        if (this._pInst) { // main canvas associated with p5 instance
+          if (this._pInst._curElement.elt === this.elt) {
+            this._pInst._setProperty('width', this.elt.offsetWidth);
+            this._pInst._setProperty('height', this.elt.offsetHeight);
+          }
+        }
+      }
+      return this;
+    }
+  };
+
+  /**
+   * Removes the element and deregisters all listeners.
+   * @method remove
+   * @example
+   * <div class='norender'><code>
+   * var myDiv = createDiv('this is some text');
+   * myDiv.remove();
+   * </code></div>
+   */
+  p5.Element.prototype.remove = function() {
+    // deregister events
+    for (var ev in this._events) {
+      this.elt.removeEventListener(ev, this._events[ev]);
+    }
+    if (this.elt.parentNode) {
+      this.elt.parentNode.removeChild(this.elt);
+    }
+    delete(this);
+  };
+
+
+
+// =============================================================================
+//                         p5.MediaElement additions
+// =============================================================================
+
+
+  /**
+   * Extends p5.Element to handle audio and video. In addition to the methods
+   * of p5.Element, it also contains methods for controlling media. It is not
+   * called directly, but p5.MediaElements are created by calling createVideo,
+   * createAudio, and createCapture.
+   *
+   * @class p5.MediaElement
+   * @constructor
+   * @param {String} elt DOM node that is wrapped
+   * @param {Object} [pInst] pointer to p5 instance
+   */
+  p5.MediaElement = function(elt, pInst) {
+    p5.Element.call(this, elt, pInst);
+
+    var self = this;
+    this.elt.crossOrigin = 'anonymous';
+
+    this._prevTime = 0;
+    this._cueIDCounter = 0;
+    this._cues = [];
+    this._pixelDensity = 1;
+
+    /**
+     *  Path to the media element source.
+     *
+     *  @property src
+     *  @return {String} src
+     */
+    Object.defineProperty(self, 'src', {
+      get: function() {
+        var firstChildSrc = self.elt.children[0].src;
+        var srcVal = self.elt.src === window.location.href ? '' : self.elt.src;
+        var ret = firstChildSrc === window.location.href ? srcVal : firstChildSrc;
+        return ret;
+      },
+      set: function(newValue) {
+        for (var i = 0; i < self.elt.children.length; i++) {
+          self.elt.removeChild(self.elt.children[i]);
+        }
+        var source = document.createElement('source');
+        source.src = newValue;
+        elt.appendChild(source);
+        self.elt.src = newValue;
+      },
+    });
+
+    // private _onended callback, set by the method: onended(callback)
+    self._onended = function() {};
+    self.elt.onended = function() {
+      self._onended(self);
+    }
+  };
+  p5.MediaElement.prototype = Object.create(p5.Element.prototype);
+
+
+
+
+  /**
+   * Play an HTML5 media element.
+   *
+   * @method play
+   * @return {Object/p5.Element}
+   */
+  p5.MediaElement.prototype.play = function() {
+    if (this.elt.currentTime === this.elt.duration) {
+      this.elt.currentTime = 0;
+    }
+
+    if (this.elt.readyState > 1) {
+      this.elt.play();
+    } else {
+      // in Chrome, playback cannot resume after being stopped and must reload
+      this.elt.load();
+      this.elt.play();
+    }
+    return this;
+  };
+
+  /**
+   * Stops an HTML5 media element (sets current time to zero).
+   *
+   * @method stop
+   * @return {Object/p5.Element}
+   */
+  p5.MediaElement.prototype.stop = function() {
+    this.elt.pause();
+    this.elt.currentTime = 0;
+    return this;
+  };
+
+  /**
+   * Pauses an HTML5 media element.
+   *
+   * @method pause
+   * @return {Object/p5.Element}
+   */
+  p5.MediaElement.prototype.pause = function() {
+    this.elt.pause();
+    return this;
+  };
+
+  /**
+   * Set 'loop' to true for an HTML5 media element, and starts playing.
+   *
+   * @method loop
+   * @return {Object/p5.Element}
+   */
+  p5.MediaElement.prototype.loop = function() {
+    this.elt.setAttribute('loop', true);
+    this.play();
+    return this;
+  };
+  /**
+   * Set 'loop' to false for an HTML5 media element. Element will stop
+   * when it reaches the end.
+   *
+   * @method noLoop
+   * @return {Object/p5.Element}
+   */
+  p5.MediaElement.prototype.noLoop = function() {
+    this.elt.setAttribute('loop', false);
+    return this;
+  };
+
+
+  /**
+   * Set HTML5 media element to autoplay or not.
+   *
+   * @method autoplay
+   * @param {Boolean} autoplay whether the element should autoplay
+   * @return {Object/p5.Element}
+   */
+  p5.MediaElement.prototype.autoplay = function(val) {
+    this.elt.setAttribute('autoplay', val);
+    return this;
+  };
+
+  /**
+   * Sets volume for this HTML5 media element. If no argument is given,
+   * returns the current volume.
+   *
+   * @param {Number}            [val] volume between 0.0 and 1.0
+   * @return {Number|p5.MediaElement} current volume or p5.MediaElement
+   * @method volume
+   */
+  p5.MediaElement.prototype.volume = function(val) {
+    if (typeof val === 'undefined') {
+      return this.elt.volume;
+    } else {
+      this.elt.volume = val;
+    }
+  };
+
+  /**
+   * If no arguments are given, returns the current playback speed of the
+   * element. The speed parameter sets the speed where 2.0 will play the
+   * element twice as fast, 0.5 will play at half the speed, and -1 will play
+   * the element in normal speed in reverse.(Note that not all browsers support
+   * backward playback and even if they do, playback might not be smooth.)
+   *
+   * @method speed
+   * @param {Number} [speed]  speed multiplier for element playback
+   * @return {Number|Object/p5.MediaElement} current playback speed or p5.MediaElement
+   */
+  p5.MediaElement.prototype.speed = function(val) {
+    if (typeof val === 'undefined') {
+      return this.elt.playbackRate;
+    } else {
+      this.elt.playbackRate = val;
+    }
+  };
+
+  /**
+   * If no arguments are given, returns the current time of the element.
+   * If an argument is given the current time of the element is set to it.
+   *
+   * @method time
+   * @param {Number} [time] time to jump to (in seconds)
+   * @return {Number|Object/p5.MediaElement} current time (in seconds)
+   *                                  or p5.MediaElement
+   */
+  p5.MediaElement.prototype.time = function(val) {
+    if (typeof val === 'undefined') {
+      return this.elt.currentTime;
+    } else {
+      this.elt.currentTime = val;
+    }
+  };
+
+  /**
+   * Returns the duration of the HTML5 media element.
+   *
+   * @method duration
+   * @return {Number} duration
+   */
+  p5.MediaElement.prototype.duration = function() {
+    return this.elt.duration;
+  };
+  p5.MediaElement.prototype.pixels = [];
+  p5.MediaElement.prototype.loadPixels = function() {
+    if (!this.canvas) {
+      this.canvas = document.createElement('canvas');
+      this.drawingContext = this.canvas.getContext('2d');
+    }
+    if (this.loadedmetadata) { // wait for metadata for w/h
+      if (this.canvas.width !== this.elt.width) {
+        this.canvas.width = this.elt.width;
+        this.canvas.height = this.elt.height;
+        this.width = this.canvas.width;
+        this.height = this.canvas.height;
+      }
+      this.drawingContext.drawImage(this.elt, 0, 0, this.canvas.width, this.canvas.height);
+      p5.Renderer2D.prototype.loadPixels.call(this);
+    }
+    return this;
+  }
+  p5.MediaElement.prototype.updatePixels =  function(x, y, w, h){
+    if (this.loadedmetadata) { // wait for metadata
+      p5.Renderer2D.prototype.updatePixels.call(this, x, y, w, h);
+    }
+    return this;
+  }
+  p5.MediaElement.prototype.get = function(x, y, w, h){
+    if (this.loadedmetadata) { // wait for metadata
+      return p5.Renderer2D.prototype.get.call(this, x, y, w, h);
+    } else if (typeof x === 'undefined') {
+      return new p5.Image(1, 1);
+    } else if (w > 1) {
+      return new p5.Image(x, y, w, h);
+    } else {
+      return [0, 0, 0, 255];
+    }
+  };
+  p5.MediaElement.prototype.set = function(x, y, imgOrCol){
+    if (this.loadedmetadata) { // wait for metadata
+      p5.Renderer2D.prototype.set.call(this, x, y, imgOrCol);
+    }
+  };
+  p5.MediaElement.prototype.copy = function(){
+    p5.Renderer2D.prototype.copy.apply(this, arguments);
+  };
+  p5.MediaElement.prototype.mask = function(){
+    this.loadPixels();
+    p5.Image.prototype.mask.apply(this, arguments);
+  };
+  /**
+   *  Schedule an event to be called when the audio or video
+   *  element reaches the end. If the element is looping,
+   *  this will not be called. The element is passed in
+   *  as the argument to the onended callback.
+   *
+   *  @method  onended
+   *  @param  {Function} callback function to call when the
+   *                              soundfile has ended. The
+   *                              media element will be passed
+   *                              in as the argument to the
+   *                              callback.
+   *  @return {Object/p5.MediaElement}
+   *  @example
+   *  <div><code>
+   *  function setup() {
+   *    audioEl = createAudio('assets/beat.mp3');
+   *    audioEl.showControls(true);
+   *    audioEl.onended(sayDone);
+   *  }
+   *
+   *  function sayDone(elt) {
+   *    alert('done playing ' + elt.src );
+   *  }
+   *  </code></div>
+   */
+  p5.MediaElement.prototype.onended = function(callback) {
+    this._onended = callback;
+    return this;
+  };
+
+
+  /*** CONNECT TO WEB AUDIO API / p5.sound.js ***/
+
+  /**
+   *  Send the audio output of this element to a specified audioNode or
+   *  p5.sound object. If no element is provided, connects to p5's master
+   *  output. That connection is established when this method is first called.
+   *  All connections are removed by the .disconnect() method.
+   *
+   *  This method is meant to be used with the p5.sound.js addon library.
+   *
+   *  @method  connect
+   *  @param  {AudioNode|p5.sound object} audioNode AudioNode from the Web Audio API,
+   *  or an object from the p5.sound library
+   */
+  p5.MediaElement.prototype.connect = function(obj) {
+    var audioContext, masterOutput;
+
+    // if p5.sound exists, same audio context
+    if (typeof p5.prototype.getAudioContext === 'function') {
+      audioContext = p5.prototype.getAudioContext();
+      masterOutput = p5.soundOut.input;
+    } else {
+      try {
+        audioContext = obj.context;
+        masterOutput = audioContext.destination
+      } catch(e) {
+        throw 'connect() is meant to be used with Web Audio API or p5.sound.js'
+      }
+    }
+
+    // create a Web Audio MediaElementAudioSourceNode if none already exists
+    if (!this.audioSourceNode) {
+      this.audioSourceNode = audioContext.createMediaElementSource(this.elt);
+
+      // connect to master output when this method is first called
+      this.audioSourceNode.connect(masterOutput);
+    }
+
+    // connect to object if provided
+    if (obj) {
+      if (obj.input) {
+        this.audioSourceNode.connect(obj.input);
+      } else {
+        this.audioSourceNode.connect(obj);
+      }
+    }
+
+    // otherwise connect to master output of p5.sound / AudioContext
+    else {
+      this.audioSourceNode.connect(masterOutput);
+    }
+
+  };
+
+  /**
+   *  Disconnect all Web Audio routing, including to master output.
+   *  This is useful if you want to re-route the output through
+   *  audio effects, for example.
+   *
+   *  @method  disconnect
+   */
+  p5.MediaElement.prototype.disconnect = function() {
+    if (this.audioSourceNode) {
+      this.audioSourceNode.disconnect();
+    } else {
+      throw 'nothing to disconnect';
+    }
+  };
+
+
+  /*** SHOW / HIDE CONTROLS ***/
+
+  /**
+   *  Show the default MediaElement controls, as determined by the web browser.
+   *
+   *  @method  showControls
+   */
+  p5.MediaElement.prototype.showControls = function() {
+    // must set style for the element to show on the page
+    this.elt.style['text-align'] = 'inherit';
+    this.elt.controls = true;
+  };
+
+  /**
+   *  Hide the default mediaElement controls.
+   *
+   *  @method hideControls
+   */
+  p5.MediaElement.prototype.hideControls = function() {
+    this.elt.controls = false;
+  };
+
+  /*** SCHEDULE EVENTS ***/
+
+  /**
+   *  Schedule events to trigger every time a MediaElement
+   *  (audio/video) reaches a playback cue point.
+   *
+   *  Accepts a callback function, a time (in seconds) at which to trigger
+   *  the callback, and an optional parameter for the callback.
+   *
+   *  Time will be passed as the first parameter to the callback function,
+   *  and param will be the second parameter.
+   *
+   *
+   *  @method  addCue
+   *  @param {Number}   time     Time in seconds, relative to this media
+   *                             element's playback. For example, to trigger
+   *                             an event every time playback reaches two
+   *                             seconds, pass in the number 2. This will be
+   *                             passed as the first parameter to
+   *                             the callback function.
+   *  @param {Function} callback Name of a function that will be
+   *                             called at the given time. The callback will
+   *                             receive time and (optionally) param as its
+   *                             two parameters.
+   *  @param {Object} [value]    An object to be passed as the
+   *                             second parameter to the
+   *                             callback function.
+   *  @return {Number} id ID of this cue,
+   *                      useful for removeCue(id)
+   *  @example
+   *  <div><code>
+   *  function setup() {
+   *    background(255,255,255);
+   *
+   *    audioEl = createAudio('assets/beat.mp3');
+   *    audioEl.showControls();
+   *
+   *    // schedule three calls to changeBackground
+   *    audioEl.addCue(0.5, changeBackground, color(255,0,0) );
+   *    audioEl.addCue(1.0, changeBackground, color(0,255,0) );
+   *    audioEl.addCue(2.5, changeBackground, color(0,0,255) );
+   *    audioEl.addCue(3.0, changeBackground, color(0,255,255) );
+   *    audioEl.addCue(4.2, changeBackground, color(255,255,0) );
+   *    audioEl.addCue(5.0, changeBackground, color(255,255,0) );
+   *  }
+   *
+   *  function changeBackground(val) {
+   *    background(val);
+   *  }
+   *  </code></div>
+   */
+  p5.MediaElement.prototype.addCue = function(time, callback, val) {
+    var id = this._cueIDCounter++;
+
+    var cue = new Cue(callback, time, id, val);
+    this._cues.push(cue);
+
+    if (!this.elt.ontimeupdate) {
+      this.elt.ontimeupdate = this._onTimeUpdate.bind(this);
+    }
+
+    return id;
+  };
+
+  /**
+   *  Remove a callback based on its ID. The ID is returned by the
+   *  addCue method.
+   *
+   *  @method removeCue
+   *  @param  {Number} id ID of the cue, as returned by addCue
+   */
+  p5.MediaElement.prototype.removeCue = function(id) {
+    for (var i = 0; i < this._cues.length; i++) {
+      var cue = this._cues[i];
+      if (cue.id === id) {
+        this.cues.splice(i, 1);
+      }
+    }
+
+    if (this._cues.length === 0) {
+      this.elt.ontimeupdate = null
+    }
+  };
+
+  /**
+   *  Remove all of the callbacks that had originally been scheduled
+   *  via the addCue method.
+   *
+   *  @method  clearCues
+   */
+  p5.MediaElement.prototype.clearCues = function() {
+    this._cues = [];
+    this.elt.ontimeupdate = null;
+  };
+
+  // private method that checks for cues to be fired if events
+  // have been scheduled using addCue(callback, time).
+  p5.MediaElement.prototype._onTimeUpdate = function() {
+    var playbackTime = this.time();
+
+    for (var i = 0 ; i < this._cues.length; i++) {
+      var callbackTime = this._cues[i].time;
+      var val = this._cues[i].val;
+
+
+      if (this._prevTime < callbackTime && callbackTime <= playbackTime) {
+
+        // pass the scheduled callbackTime as parameter to the callback
+        this._cues[i].callback(val);
+      }
+
+    }
+
+    this._prevTime = playbackTime;
+  };
+
+
+  // Cue inspired by JavaScript setTimeout, and the
+  // Tone.js Transport Timeline Event, MIT License Yotam Mann 2015 tonejs.org
+  var Cue = function(callback, time, id, val) {
+    this.callback = callback;
+    this.time = time;
+    this.id = id;
+    this.val = val;
+  };
+
+// =============================================================================
+//                         p5.File
+// =============================================================================
+
+
+  /**
+   * Base class for a file
+   * Using this for createFileInput
+   *
+   * @class p5.File
+   * @constructor
+   * @param {File} file File that is wrapped
+   * @param {Object} [pInst] pointer to p5 instance
+   */
+  p5.File = function(file, pInst) {
+    /**
+     * Underlying File object. All normal File methods can be called on this.
+     *
+     * @property file
+     */
+    this.file = file;
+
+    this._pInst = pInst;
+
+    // Splitting out the file type into two components
+    // This makes determining if image or text etc simpler
+    var typeList = file.type.split('/');
+    /**
+     * File type (image, text, etc.)
+     *
+     * @property type
+     */
+    this.type = typeList[0];
+    /**
+     * File subtype (usually the file extension jpg, png, xml, etc.)
+     *
+     * @property subtype
+     */
+    this.subtype = typeList[1];
+    /**
+     * File name
+     *
+     * @property name
+     */
+    this.name = file.name;
+    /**
+     * File size
+     *
+     * @property size
+     */
+    this.size = file.size;
+
+    /**
+     * URL string containing image data.
+     *
+     * @property data
+     */
+    this.data = undefined;
+  };
+
+}));
+
+/* axios v0.15.3 | (c) 2016 by Matt Zabriskie */
+!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.axios=t():e.axios=t()}(this,function(){return function(e){function t(r){if(n[r])return n[r].exports;var o=n[r]={exports:{},id:r,loaded:!1};return e[r].call(o.exports,o,o.exports,t),o.loaded=!0,o.exports}var n={};return t.m=e,t.c=n,t.p="",t(0)}([function(e,t,n){e.exports=n(1)},function(e,t,n){"use strict";function r(e){var t=new i(e),n=s(i.prototype.request,t);return o.extend(n,i.prototype,t),o.extend(n,t),n}var o=n(2),s=n(3),i=n(4),a=n(5),u=r(a);u.Axios=i,u.create=function(e){return r(o.merge(a,e))},u.Cancel=n(22),u.CancelToken=n(23),u.isCancel=n(19),u.all=function(e){return Promise.all(e)},u.spread=n(24),e.exports=u,e.exports.default=u},function(e,t,n){"use strict";function r(e){return"[object Array]"===C.call(e)}function o(e){return"[object ArrayBuffer]"===C.call(e)}function s(e){return"undefined"!=typeof FormData&&e instanceof FormData}function i(e){var t;return t="undefined"!=typeof ArrayBuffer&&ArrayBuffer.isView?ArrayBuffer.isView(e):e&&e.buffer&&e.buffer instanceof ArrayBuffer}function a(e){return"string"==typeof e}function u(e){return"number"==typeof e}function c(e){return"undefined"==typeof e}function f(e){return null!==e&&"object"==typeof e}function p(e){return"[object Date]"===C.call(e)}function d(e){return"[object File]"===C.call(e)}function l(e){return"[object Blob]"===C.call(e)}function h(e){return"[object Function]"===C.call(e)}function m(e){return f(e)&&h(e.pipe)}function y(e){return"undefined"!=typeof URLSearchParams&&e instanceof URLSearchParams}function w(e){return e.replace(/^\s*/,"").replace(/\s*$/,"")}function g(){return"undefined"!=typeof window&&"undefined"!=typeof document&&"function"==typeof document.createElement}function v(e,t){if(null!==e&&"undefined"!=typeof e)if("object"==typeof e||r(e)||(e=[e]),r(e))for(var n=0,o=e.length;n<o;n++)t.call(null,e[n],n,e);else for(var s in e)Object.prototype.hasOwnProperty.call(e,s)&&t.call(null,e[s],s,e)}function x(){function e(e,n){"object"==typeof t[n]&&"object"==typeof e?t[n]=x(t[n],e):t[n]=e}for(var t={},n=0,r=arguments.length;n<r;n++)v(arguments[n],e);return t}function b(e,t,n){return v(t,function(t,r){n&&"function"==typeof t?e[r]=E(t,n):e[r]=t}),e}var E=n(3),C=Object.prototype.toString;e.exports={isArray:r,isArrayBuffer:o,isFormData:s,isArrayBufferView:i,isString:a,isNumber:u,isObject:f,isUndefined:c,isDate:p,isFile:d,isBlob:l,isFunction:h,isStream:m,isURLSearchParams:y,isStandardBrowserEnv:g,forEach:v,merge:x,extend:b,trim:w}},function(e,t){"use strict";e.exports=function(e,t){return function(){for(var n=new Array(arguments.length),r=0;r<n.length;r++)n[r]=arguments[r];return e.apply(t,n)}}},function(e,t,n){"use strict";function r(e){this.defaults=e,this.interceptors={request:new i,response:new i}}var o=n(5),s=n(2),i=n(16),a=n(17),u=n(20),c=n(21);r.prototype.request=function(e){"string"==typeof e&&(e=s.merge({url:arguments[0]},arguments[1])),e=s.merge(o,this.defaults,{method:"get"},e),e.baseURL&&!u(e.url)&&(e.url=c(e.baseURL,e.url));var t=[a,void 0],n=Promise.resolve(e);for(this.interceptors.request.forEach(function(e){t.unshift(e.fulfilled,e.rejected)}),this.interceptors.response.forEach(function(e){t.push(e.fulfilled,e.rejected)});t.length;)n=n.then(t.shift(),t.shift());return n},s.forEach(["delete","get","head"],function(e){r.prototype[e]=function(t,n){return this.request(s.merge(n||{},{method:e,url:t}))}}),s.forEach(["post","put","patch"],function(e){r.prototype[e]=function(t,n,r){return this.request(s.merge(r||{},{method:e,url:t,data:n}))}}),e.exports=r},function(e,t,n){"use strict";function r(e,t){!s.isUndefined(e)&&s.isUndefined(e["Content-Type"])&&(e["Content-Type"]=t)}function o(){var e;return"undefined"!=typeof XMLHttpRequest?e=n(7):"undefined"!=typeof process&&(e=n(7)),e}var s=n(2),i=n(6),a=/^\)\]\}',?\n/,u={"Content-Type":"application/x-www-form-urlencoded"},c={adapter:o(),transformRequest:[function(e,t){return i(t,"Content-Type"),s.isFormData(e)||s.isArrayBuffer(e)||s.isStream(e)||s.isFile(e)||s.isBlob(e)?e:s.isArrayBufferView(e)?e.buffer:s.isURLSearchParams(e)?(r(t,"application/x-www-form-urlencoded;charset=utf-8"),e.toString()):s.isObject(e)?(r(t,"application/json;charset=utf-8"),JSON.stringify(e)):e}],transformResponse:[function(e){if("string"==typeof e){e=e.replace(a,"");try{e=JSON.parse(e)}catch(e){}}return e}],timeout:0,xsrfCookieName:"XSRF-TOKEN",xsrfHeaderName:"X-XSRF-TOKEN",maxContentLength:-1,validateStatus:function(e){return e>=200&&e<300}};c.headers={common:{Accept:"application/json, text/plain, */*"}},s.forEach(["delete","get","head"],function(e){c.headers[e]={}}),s.forEach(["post","put","patch"],function(e){c.headers[e]=s.merge(u)}),e.exports=c},function(e,t,n){"use strict";var r=n(2);e.exports=function(e,t){r.forEach(e,function(n,r){r!==t&&r.toUpperCase()===t.toUpperCase()&&(e[t]=n,delete e[r])})}},function(e,t,n){"use strict";var r=n(2),o=n(8),s=n(11),i=n(12),a=n(13),u=n(9),c="undefined"!=typeof window&&window.btoa&&window.btoa.bind(window)||n(14);e.exports=function(e){return new Promise(function(t,f){var p=e.data,d=e.headers;r.isFormData(p)&&delete d["Content-Type"];var l=new XMLHttpRequest,h="onreadystatechange",m=!1;if("undefined"==typeof window||!window.XDomainRequest||"withCredentials"in l||a(e.url)||(l=new window.XDomainRequest,h="onload",m=!0,l.onprogress=function(){},l.ontimeout=function(){}),e.auth){var y=e.auth.username||"",w=e.auth.password||"";d.Authorization="Basic "+c(y+":"+w)}if(l.open(e.method.toUpperCase(),s(e.url,e.params,e.paramsSerializer),!0),l.timeout=e.timeout,l[h]=function(){if(l&&(4===l.readyState||m)&&(0!==l.status||l.responseURL&&0===l.responseURL.indexOf("file:"))){var n="getAllResponseHeaders"in l?i(l.getAllResponseHeaders()):null,r=e.responseType&&"text"!==e.responseType?l.response:l.responseText,s={data:r,status:1223===l.status?204:l.status,statusText:1223===l.status?"No Content":l.statusText,headers:n,config:e,request:l};o(t,f,s),l=null}},l.onerror=function(){f(u("Network Error",e)),l=null},l.ontimeout=function(){f(u("timeout of "+e.timeout+"ms exceeded",e,"ECONNABORTED")),l=null},r.isStandardBrowserEnv()){var g=n(15),v=(e.withCredentials||a(e.url))&&e.xsrfCookieName?g.read(e.xsrfCookieName):void 0;v&&(d[e.xsrfHeaderName]=v)}if("setRequestHeader"in l&&r.forEach(d,function(e,t){"undefined"==typeof p&&"content-type"===t.toLowerCase()?delete d[t]:l.setRequestHeader(t,e)}),e.withCredentials&&(l.withCredentials=!0),e.responseType)try{l.responseType=e.responseType}catch(e){if("json"!==l.responseType)throw e}"function"==typeof e.onDownloadProgress&&l.addEventListener("progress",e.onDownloadProgress),"function"==typeof e.onUploadProgress&&l.upload&&l.upload.addEventListener("progress",e.onUploadProgress),e.cancelToken&&e.cancelToken.promise.then(function(e){l&&(l.abort(),f(e),l=null)}),void 0===p&&(p=null),l.send(p)})}},function(e,t,n){"use strict";var r=n(9);e.exports=function(e,t,n){var o=n.config.validateStatus;n.status&&o&&!o(n.status)?t(r("Request failed with status code "+n.status,n.config,null,n)):e(n)}},function(e,t,n){"use strict";var r=n(10);e.exports=function(e,t,n,o){var s=new Error(e);return r(s,t,n,o)}},function(e,t){"use strict";e.exports=function(e,t,n,r){return e.config=t,n&&(e.code=n),e.response=r,e}},function(e,t,n){"use strict";function r(e){return encodeURIComponent(e).replace(/%40/gi,"@").replace(/%3A/gi,":").replace(/%24/g,"$").replace(/%2C/gi,",").replace(/%20/g,"+").replace(/%5B/gi,"[").replace(/%5D/gi,"]")}var o=n(2);e.exports=function(e,t,n){if(!t)return e;var s;if(n)s=n(t);else if(o.isURLSearchParams(t))s=t.toString();else{var i=[];o.forEach(t,function(e,t){null!==e&&"undefined"!=typeof e&&(o.isArray(e)&&(t+="[]"),o.isArray(e)||(e=[e]),o.forEach(e,function(e){o.isDate(e)?e=e.toISOString():o.isObject(e)&&(e=JSON.stringify(e)),i.push(r(t)+"="+r(e))}))}),s=i.join("&")}return s&&(e+=(e.indexOf("?")===-1?"?":"&")+s),e}},function(e,t,n){"use strict";var r=n(2);e.exports=function(e){var t,n,o,s={};return e?(r.forEach(e.split("\n"),function(e){o=e.indexOf(":"),t=r.trim(e.substr(0,o)).toLowerCase(),n=r.trim(e.substr(o+1)),t&&(s[t]=s[t]?s[t]+", "+n:n)}),s):s}},function(e,t,n){"use strict";var r=n(2);e.exports=r.isStandardBrowserEnv()?function(){function e(e){var t=e;return n&&(o.setAttribute("href",t),t=o.href),o.setAttribute("href",t),{href:o.href,protocol:o.protocol?o.protocol.replace(/:$/,""):"",host:o.host,search:o.search?o.search.replace(/^\?/,""):"",hash:o.hash?o.hash.replace(/^#/,""):"",hostname:o.hostname,port:o.port,pathname:"/"===o.pathname.charAt(0)?o.pathname:"/"+o.pathname}}var t,n=/(msie|trident)/i.test(navigator.userAgent),o=document.createElement("a");return t=e(window.location.href),function(n){var o=r.isString(n)?e(n):n;return o.protocol===t.protocol&&o.host===t.host}}():function(){return function(){return!0}}()},function(e,t){"use strict";function n(){this.message="String contains an invalid character"}function r(e){for(var t,r,s=String(e),i="",a=0,u=o;s.charAt(0|a)||(u="=",a%1);i+=u.charAt(63&t>>8-a%1*8)){if(r=s.charCodeAt(a+=.75),r>255)throw new n;t=t<<8|r}return i}var o="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";n.prototype=new Error,n.prototype.code=5,n.prototype.name="InvalidCharacterError",e.exports=r},function(e,t,n){"use strict";var r=n(2);e.exports=r.isStandardBrowserEnv()?function(){return{write:function(e,t,n,o,s,i){var a=[];a.push(e+"="+encodeURIComponent(t)),r.isNumber(n)&&a.push("expires="+new Date(n).toGMTString()),r.isString(o)&&a.push("path="+o),r.isString(s)&&a.push("domain="+s),i===!0&&a.push("secure"),document.cookie=a.join("; ")},read:function(e){var t=document.cookie.match(new RegExp("(^|;\\s*)("+e+")=([^;]*)"));return t?decodeURIComponent(t[3]):null},remove:function(e){this.write(e,"",Date.now()-864e5)}}}():function(){return{write:function(){},read:function(){return null},remove:function(){}}}()},function(e,t,n){"use strict";function r(){this.handlers=[]}var o=n(2);r.prototype.use=function(e,t){return this.handlers.push({fulfilled:e,rejected:t}),this.handlers.length-1},r.prototype.eject=function(e){this.handlers[e]&&(this.handlers[e]=null)},r.prototype.forEach=function(e){o.forEach(this.handlers,function(t){null!==t&&e(t)})},e.exports=r},function(e,t,n){"use strict";function r(e){e.cancelToken&&e.cancelToken.throwIfRequested()}var o=n(2),s=n(18),i=n(19),a=n(5);e.exports=function(e){r(e),e.headers=e.headers||{},e.data=s(e.data,e.headers,e.transformRequest),e.headers=o.merge(e.headers.common||{},e.headers[e.method]||{},e.headers||{}),o.forEach(["delete","get","head","post","put","patch","common"],function(t){delete e.headers[t]});var t=e.adapter||a.adapter;return t(e).then(function(t){return r(e),t.data=s(t.data,t.headers,e.transformResponse),t},function(t){return i(t)||(r(e),t&&t.response&&(t.response.data=s(t.response.data,t.response.headers,e.transformResponse))),Promise.reject(t)})}},function(e,t,n){"use strict";var r=n(2);e.exports=function(e,t,n){return r.forEach(n,function(n){e=n(e,t)}),e}},function(e,t){"use strict";e.exports=function(e){return!(!e||!e.__CANCEL__)}},function(e,t){"use strict";e.exports=function(e){return/^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(e)}},function(e,t){"use strict";e.exports=function(e,t){return e.replace(/\/+$/,"")+"/"+t.replace(/^\/+/,"")}},function(e,t){"use strict";function n(e){this.message=e}n.prototype.toString=function(){return"Cancel"+(this.message?": "+this.message:"")},n.prototype.__CANCEL__=!0,e.exports=n},function(e,t,n){"use strict";function r(e){if("function"!=typeof e)throw new TypeError("executor must be a function.");var t;this.promise=new Promise(function(e){t=e});var n=this;e(function(e){n.reason||(n.reason=new o(e),t(n.reason))})}var o=n(22);r.prototype.throwIfRequested=function(){if(this.reason)throw this.reason},r.source=function(){var e,t=new r(function(t){e=t});return{token:t,cancel:e}},e.exports=r},function(e,t){"use strict";e.exports=function(e){return function(t){return e.apply(null,t)}}}])});
+//# sourceMappingURL=axios.min.map
+/*!
+ * Vue.js v2.1.10
+ * (c) 2014-2017 Evan You
+ * Released under the MIT License.
+ */
+!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):e.Vue=t()}(this,function(){"use strict";function e(e){return null==e?"":"object"==typeof e?JSON.stringify(e,null,2):String(e)}function t(e){var t=parseFloat(e);return isNaN(t)?e:t}function n(e,t){for(var n=Object.create(null),r=e.split(","),i=0;i<r.length;i++)n[r[i]]=!0;return t?function(e){return n[e.toLowerCase()]}:function(e){return n[e]}}function r(e,t){if(e.length){var n=e.indexOf(t);if(n>-1)return e.splice(n,1)}}function i(e,t){return ii.call(e,t)}function o(e){return"string"==typeof e||"number"==typeof e}function a(e){var t=Object.create(null);return function(n){var r=t[n];return r||(t[n]=e(n))}}function s(e,t){function n(n){var r=arguments.length;return r?r>1?e.apply(t,arguments):e.call(t,n):e.call(t)}return n._length=e.length,n}function c(e,t){t=t||0;for(var n=e.length-t,r=new Array(n);n--;)r[n]=e[n+t];return r}function u(e,t){for(var n in t)e[n]=t[n];return e}function l(e){return null!==e&&"object"==typeof e}function f(e){return li.call(e)===fi}function p(e){for(var t={},n=0;n<e.length;n++)e[n]&&u(t,e[n]);return t}function d(){}function v(e){return e.reduce(function(e,t){return e.concat(t.staticKeys||[])},[]).join(",")}function h(e,t){var n=l(e),r=l(t);return n&&r?JSON.stringify(e)===JSON.stringify(t):!n&&!r&&String(e)===String(t)}function m(e,t){for(var n=0;n<e.length;n++)if(h(e[n],t))return n;return-1}function g(e){var t=(e+"").charCodeAt(0);return 36===t||95===t}function y(e,t,n,r){Object.defineProperty(e,t,{value:n,enumerable:!!r,writable:!0,configurable:!0})}function _(e){if(!hi.test(e)){var t=e.split(".");return function(e){for(var n=0;n<t.length;n++){if(!e)return;e=e[t[n]]}return e}}}function b(e){return/native code/.test(e.toString())}function $(e){Ei.target&&Ii.push(Ei.target),Ei.target=e}function w(){Ei.target=Ii.pop()}function C(e,t){e.__proto__=t}function x(e,t,n){for(var r=0,i=n.length;r<i;r++){var o=n[r];y(e,o,t[o])}}function k(e,t){if(l(e)){var n;return i(e,"__ob__")&&e.__ob__ instanceof Di?n=e.__ob__:Mi.shouldConvert&&!xi()&&(Array.isArray(e)||f(e))&&Object.isExtensible(e)&&!e._isVue&&(n=new Di(e)),t&&n&&n.vmCount++,n}}function A(e,t,n,r){var i=new Ei,o=Object.getOwnPropertyDescriptor(e,t);if(!o||o.configurable!==!1){var a=o&&o.get,s=o&&o.set,c=k(n);Object.defineProperty(e,t,{enumerable:!0,configurable:!0,get:function(){var t=a?a.call(e):n;return Ei.target&&(i.depend(),c&&c.dep.depend(),Array.isArray(t)&&T(t)),t},set:function(t){var r=a?a.call(e):n;t===r||t!==t&&r!==r||(s?s.call(e,t):n=t,c=k(t),i.notify())}})}}function O(e,t,n){if(Array.isArray(e))return e.length=Math.max(e.length,t),e.splice(t,1,n),n;if(i(e,t))return void(e[t]=n);var r=e.__ob__;if(!(e._isVue||r&&r.vmCount))return r?(A(r.value,t,n),r.dep.notify(),n):void(e[t]=n)}function S(e,t){var n=e.__ob__;e._isVue||n&&n.vmCount||i(e,t)&&(delete e[t],n&&n.dep.notify())}function T(e){for(var t=void 0,n=0,r=e.length;n<r;n++)t=e[n],t&&t.__ob__&&t.__ob__.dep.depend(),Array.isArray(t)&&T(t)}function E(e,t){if(!t)return e;for(var n,r,o,a=Object.keys(t),s=0;s<a.length;s++)n=a[s],r=e[n],o=t[n],i(e,n)?f(r)&&f(o)&&E(r,o):O(e,n,o);return e}function I(e,t){return t?e?e.concat(t):Array.isArray(t)?t:[t]:e}function j(e,t){var n=Object.create(e||null);return t?u(n,t):n}function N(e){var t=e.props;if(t){var n,r,i,o={};if(Array.isArray(t))for(n=t.length;n--;)r=t[n],"string"==typeof r&&(i=ai(r),o[i]={type:null});else if(f(t))for(var a in t)r=t[a],i=ai(a),o[i]=f(r)?r:{type:r};e.props=o}}function L(e){var t=e.directives;if(t)for(var n in t){var r=t[n];"function"==typeof r&&(t[n]={bind:r,update:r})}}function M(e,t,n){function r(r){var i=Pi[r]||Ri;l[r]=i(e[r],t[r],n,r)}N(t),L(t);var o=t.extends;if(o&&(e="function"==typeof o?M(e,o.options,n):M(e,o,n)),t.mixins)for(var a=0,s=t.mixins.length;a<s;a++){var c=t.mixins[a];c.prototype instanceof Ue&&(c=c.options),e=M(e,c,n)}var u,l={};for(u in e)r(u);for(u in t)i(e,u)||r(u);return l}function D(e,t,n,r){if("string"==typeof n){var o=e[t];if(i(o,n))return o[n];var a=ai(n);if(i(o,a))return o[a];var s=si(a);if(i(o,s))return o[s];var c=o[n]||o[a]||o[s];return c}}function P(e,t,n,r){var o=t[e],a=!i(n,e),s=n[e];if(H(Boolean,o.type)&&(a&&!i(o,"default")?s=!1:H(String,o.type)||""!==s&&s!==ui(e)||(s=!0)),void 0===s){s=R(r,o,e);var c=Mi.shouldConvert;Mi.shouldConvert=!0,k(s),Mi.shouldConvert=c}return s}function R(e,t,n){if(i(t,"default")){var r=t.default;return l(r),e&&e.$options.propsData&&void 0===e.$options.propsData[n]&&void 0!==e[n]?e[n]:"function"==typeof r&&t.type!==Function?r.call(e):r}}function F(e){var t=e&&e.toString().match(/^\s*function (\w+)/);return t&&t[1]}function H(e,t){if(!Array.isArray(t))return F(t)===F(e);for(var n=0,r=t.length;n<r;n++)if(F(t[n])===F(e))return!0;return!1}function U(e){return new Hi(void 0,void 0,void 0,String(e))}function B(e){var t=new Hi(e.tag,e.data,e.children,e.text,e.elm,e.context,e.componentOptions);return t.ns=e.ns,t.isStatic=e.isStatic,t.key=e.key,t.isCloned=!0,t}function z(e){for(var t=new Array(e.length),n=0;n<e.length;n++)t[n]=B(e[n]);return t}function V(e,t,n,r,i){if(e){var o=n.$options._base;if(l(e)&&(e=o.extend(e)),"function"==typeof e){if(!e.cid)if(e.resolved)e=e.resolved;else if(e=Y(e,o,function(){n.$forceUpdate()}),!e)return;He(e),t=t||{};var a=Q(t,e);if(e.options.functional)return J(e,a,t,n,r);var s=t.on;t.on=t.nativeOn,e.options.abstract&&(t={}),ee(t);var c=e.options.name||i,u=new Hi("vue-component-"+e.cid+(c?"-"+c:""),t,void 0,void 0,void 0,n,{Ctor:e,propsData:a,listeners:s,tag:i,children:r});return u}}}function J(e,t,n,r,i){var o={},a=e.options.props;if(a)for(var s in a)o[s]=P(s,a,t);var c=Object.create(r),u=function(e,t,n,r){return ue(c,e,t,n,r,!0)},l=e.options.render.call(null,u,{props:o,data:n,parent:r,children:i,slots:function(){return ve(i,r)}});return l instanceof Hi&&(l.functionalContext=r,n.slot&&((l.data||(l.data={})).slot=n.slot)),l}function K(e,t,n,r){var i=e.componentOptions,o={_isComponent:!0,parent:t,propsData:i.propsData,_componentTag:i.tag,_parentVnode:e,_parentListeners:i.listeners,_renderChildren:i.children,_parentElm:n||null,_refElm:r||null},a=e.data.inlineTemplate;return a&&(o.render=a.render,o.staticRenderFns=a.staticRenderFns),new i.Ctor(o)}function q(e,t,n,r){if(!e.componentInstance||e.componentInstance._isDestroyed){var i=e.componentInstance=K(e,Zi,n,r);i.$mount(t?e.elm:void 0,t)}else if(e.data.keepAlive){var o=e;W(o,o)}}function W(e,t){var n=t.componentOptions,r=t.componentInstance=e.componentInstance;r._updateFromParent(n.propsData,n.listeners,t,n.children)}function Z(e){e.componentInstance._isMounted||(e.componentInstance._isMounted=!0,we(e.componentInstance,"mounted")),e.data.keepAlive&&(e.componentInstance._inactive=!1,we(e.componentInstance,"activated"))}function G(e){e.componentInstance._isDestroyed||(e.data.keepAlive?(e.componentInstance._inactive=!0,we(e.componentInstance,"deactivated")):e.componentInstance.$destroy())}function Y(e,t,n){if(!e.requested){e.requested=!0;var r=e.pendingCallbacks=[n],i=!0,o=function(n){if(l(n)&&(n=t.extend(n)),e.resolved=n,!i)for(var o=0,a=r.length;o<a;o++)r[o](n)},a=function(e){},s=e(o,a);return s&&"function"==typeof s.then&&!e.resolved&&s.then(o,a),i=!1,e.resolved}e.pendingCallbacks.push(n)}function Q(e,t){var n=t.options.props;if(n){var r={},i=e.attrs,o=e.props,a=e.domProps;if(i||o||a)for(var s in n){var c=ui(s);X(r,o,s,c,!0)||X(r,i,s,c)||X(r,a,s,c)}return r}}function X(e,t,n,r,o){if(t){if(i(t,n))return e[n]=t[n],o||delete t[n],!0;if(i(t,r))return e[n]=t[r],o||delete t[r],!0}return!1}function ee(e){e.hook||(e.hook={});for(var t=0;t<Ji.length;t++){var n=Ji[t],r=e.hook[n],i=Vi[n];e.hook[n]=r?te(i,r):i}}function te(e,t){return function(n,r,i,o){e(n,r,i,o),t(n,r,i,o)}}function ne(e,t,n,r){r+=t;var i=e.__injected||(e.__injected={});if(!i[r]){i[r]=!0;var o=e[t];o?e[t]=function(){o.apply(this,arguments),n.apply(this,arguments)}:e[t]=n}}function re(e){var t={fn:e,invoker:function(){var e=arguments,n=t.fn;if(Array.isArray(n))for(var r=0;r<n.length;r++)n[r].apply(null,e);else n.apply(null,arguments)}};return t}function ie(e,t,n,r,i){var o,a,s,c;for(o in e)a=e[o],s=t[o],c=Ki(o),a&&(s?a!==s&&(s.fn=a,e[o]=s):(a.invoker||(a=e[o]=re(a)),n(c.name,a.invoker,c.once,c.capture)));for(o in t)e[o]||(c=Ki(o),r(c.name,t[o].invoker,c.capture))}function oe(e){for(var t=0;t<e.length;t++)if(Array.isArray(e[t]))return Array.prototype.concat.apply([],e);return e}function ae(e){return o(e)?[U(e)]:Array.isArray(e)?se(e):void 0}function se(e,t){var n,r,i,a=[];for(n=0;n<e.length;n++)r=e[n],null!=r&&"boolean"!=typeof r&&(i=a[a.length-1],Array.isArray(r)?a.push.apply(a,se(r,(t||"")+"_"+n)):o(r)?i&&i.text?i.text+=String(r):""!==r&&a.push(U(r)):r.text&&i&&i.text?a[a.length-1]=U(i.text+r.text):(r.tag&&null==r.key&&null!=t&&(r.key="__vlist"+t+"_"+n+"__"),a.push(r)));return a}function ce(e){return e&&e.filter(function(e){return e&&e.componentOptions})[0]}function ue(e,t,n,r,i,a){return(Array.isArray(n)||o(n))&&(i=r,r=n,n=void 0),a&&(i=Wi),le(e,t,n,r,i)}function le(e,t,n,r,i){if(n&&n.__ob__)return zi();if(!t)return zi();Array.isArray(r)&&"function"==typeof r[0]&&(n=n||{},n.scopedSlots={default:r[0]},r.length=0),i===Wi?r=ae(r):i===qi&&(r=oe(r));var o,a;if("string"==typeof t){var s;a=vi.getTagNamespace(t),o=vi.isReservedTag(t)?new Hi(vi.parsePlatformTagName(t),n,r,void 0,void 0,e):(s=D(e.$options,"components",t))?V(s,n,e,r,t):new Hi(t,n,r,void 0,void 0,e)}else o=V(t,n,e,r);return o?(a&&fe(o,a),o):zi()}function fe(e,t){if(e.ns=t,"foreignObject"!==e.tag&&e.children)for(var n=0,r=e.children.length;n<r;n++){var i=e.children[n];i.tag&&!i.ns&&fe(i,t)}}function pe(e){e.$vnode=null,e._vnode=null,e._staticTrees=null;var t=e.$options._parentVnode,n=t&&t.context;e.$slots=ve(e.$options._renderChildren,n),e.$scopedSlots={},e._c=function(t,n,r,i){return ue(e,t,n,r,i,!1)},e.$createElement=function(t,n,r,i){return ue(e,t,n,r,i,!0)}}function de(n){function r(e,t,n){if(Array.isArray(e))for(var r=0;r<e.length;r++)e[r]&&"string"!=typeof e[r]&&i(e[r],t+"_"+r,n);else i(e,t,n)}function i(e,t,n){e.isStatic=!0,e.key=t,e.isOnce=n}n.prototype.$nextTick=function(e){return Ai(e,this)},n.prototype._render=function(){var e=this,t=e.$options,n=t.render,r=t.staticRenderFns,i=t._parentVnode;if(e._isMounted)for(var o in e.$slots)e.$slots[o]=z(e.$slots[o]);i&&i.data.scopedSlots&&(e.$scopedSlots=i.data.scopedSlots),r&&!e._staticTrees&&(e._staticTrees=[]),e.$vnode=i;var a;try{a=n.call(e._renderProxy,e.$createElement)}catch(t){if(!vi.errorHandler)throw t;vi.errorHandler.call(null,t,e),a=e._vnode}return a instanceof Hi||(a=zi()),a.parent=i,a},n.prototype._s=e,n.prototype._v=U,n.prototype._n=t,n.prototype._e=zi,n.prototype._q=h,n.prototype._i=m,n.prototype._m=function(e,t){var n=this._staticTrees[e];return n&&!t?Array.isArray(n)?z(n):B(n):(n=this._staticTrees[e]=this.$options.staticRenderFns[e].call(this._renderProxy),r(n,"__static__"+e,!1),n)},n.prototype._o=function(e,t,n){return r(e,"__once__"+t+(n?"_"+n:""),!0),e},n.prototype._f=function(e){return D(this.$options,"filters",e,!0)||di},n.prototype._l=function(e,t){var n,r,i,o,a;if(Array.isArray(e)||"string"==typeof e)for(n=new Array(e.length),r=0,i=e.length;r<i;r++)n[r]=t(e[r],r);else if("number"==typeof e)for(n=new Array(e),r=0;r<e;r++)n[r]=t(r+1,r);else if(l(e))for(o=Object.keys(e),n=new Array(o.length),r=0,i=o.length;r<i;r++)a=o[r],n[r]=t(e[a],a,r);return n},n.prototype._t=function(e,t,n,r){var i=this.$scopedSlots[e];if(i)return n=n||{},r&&u(n,r),i(n)||t;var o=this.$slots[e];return o||t},n.prototype._b=function(e,t,n,r){if(n)if(l(n)){Array.isArray(n)&&(n=p(n));for(var i in n)if("class"===i||"style"===i)e[i]=n[i];else{var o=e.attrs&&e.attrs.type,a=r||vi.mustUseProp(t,o,i)?e.domProps||(e.domProps={}):e.attrs||(e.attrs={});a[i]=n[i]}}else;return e},n.prototype._k=function(e,t,n){var r=vi.keyCodes[t]||n;return Array.isArray(r)?r.indexOf(e)===-1:r!==e}}function ve(e,t){var n={};if(!e)return n;for(var r,i,o=[],a=0,s=e.length;a<s;a++)if(i=e[a],(i.context===t||i.functionalContext===t)&&i.data&&(r=i.data.slot)){var c=n[r]||(n[r]=[]);"template"===i.tag?c.push.apply(c,i.children):c.push(i)}else o.push(i);return o.length&&(1!==o.length||" "!==o[0].text&&!o[0].isComment)&&(n.default=o),n}function he(e){e._events=Object.create(null),e._hasHookEvent=!1;var t=e.$options._parentListeners;t&&ye(e,t)}function me(e,t,n){n?Bi.$once(e,t):Bi.$on(e,t)}function ge(e,t){Bi.$off(e,t)}function ye(e,t,n){Bi=e,ie(t,n||{},me,ge,e)}function _e(e){var t=/^hook:/;e.prototype.$on=function(e,n){var r=this;return(r._events[e]||(r._events[e]=[])).push(n),t.test(e)&&(r._hasHookEvent=!0),r},e.prototype.$once=function(e,t){function n(){r.$off(e,n),t.apply(r,arguments)}var r=this;return n.fn=t,r.$on(e,n),r},e.prototype.$off=function(e,t){var n=this;if(!arguments.length)return n._events=Object.create(null),n;var r=n._events[e];if(!r)return n;if(1===arguments.length)return n._events[e]=null,n;for(var i,o=r.length;o--;)if(i=r[o],i===t||i.fn===t){r.splice(o,1);break}return n},e.prototype.$emit=function(e){var t=this,n=t._events[e];if(n){n=n.length>1?c(n):n;for(var r=c(arguments,1),i=0,o=n.length;i<o;i++)n[i].apply(t,r)}return t}}function be(e){var t=e.$options,n=t.parent;if(n&&!t.abstract){for(;n.$options.abstract&&n.$parent;)n=n.$parent;n.$children.push(e)}e.$parent=n,e.$root=n?n.$root:e,e.$children=[],e.$refs={},e._watcher=null,e._inactive=!1,e._isMounted=!1,e._isDestroyed=!1,e._isBeingDestroyed=!1}function $e(e){e.prototype._mount=function(e,t){var n=this;return n.$el=e,n.$options.render||(n.$options.render=zi),we(n,"beforeMount"),n._watcher=new no(n,function(){n._update(n._render(),t)},d),t=!1,null==n.$vnode&&(n._isMounted=!0,we(n,"mounted")),n},e.prototype._update=function(e,t){var n=this;n._isMounted&&we(n,"beforeUpdate");var r=n.$el,i=n._vnode,o=Zi;Zi=n,n._vnode=e,i?n.$el=n.__patch__(i,e):n.$el=n.__patch__(n.$el,e,t,!1,n.$options._parentElm,n.$options._refElm),Zi=o,r&&(r.__vue__=null),n.$el&&(n.$el.__vue__=n),n.$vnode&&n.$parent&&n.$vnode===n.$parent._vnode&&(n.$parent.$el=n.$el)},e.prototype._updateFromParent=function(e,t,n,r){var i=this,o=!(!i.$options._renderChildren&&!r);if(i.$options._parentVnode=n,i.$vnode=n,i._vnode&&(i._vnode.parent=n),i.$options._renderChildren=r,e&&i.$options.props){Mi.shouldConvert=!1;for(var a=i.$options._propKeys||[],s=0;s<a.length;s++){var c=a[s];i[c]=P(c,i.$options.props,e,i)}Mi.shouldConvert=!0,i.$options.propsData=e}if(t){var u=i.$options._parentListeners;i.$options._parentListeners=t,ye(i,t,u)}o&&(i.$slots=ve(r,n.context),i.$forceUpdate())},e.prototype.$forceUpdate=function(){var e=this;e._watcher&&e._watcher.update()},e.prototype.$destroy=function(){var e=this;if(!e._isBeingDestroyed){we(e,"beforeDestroy"),e._isBeingDestroyed=!0;var t=e.$parent;!t||t._isBeingDestroyed||e.$options.abstract||r(t.$children,e),e._watcher&&e._watcher.teardown();for(var n=e._watchers.length;n--;)e._watchers[n].teardown();e._data.__ob__&&e._data.__ob__.vmCount--,e._isDestroyed=!0,we(e,"destroyed"),e.$off(),e.$el&&(e.$el.__vue__=null),e.__patch__(e._vnode,null)}}}function we(e,t){var n=e.$options[t];if(n)for(var r=0,i=n.length;r<i;r++)n[r].call(e);e._hasHookEvent&&e.$emit("hook:"+t)}function Ce(){Gi.length=0,Yi={},Qi=Xi=!1}function xe(){Xi=!0;var e,t,n;for(Gi.sort(function(e,t){return e.id-t.id}),eo=0;eo<Gi.length;eo++)e=Gi[eo],t=e.id,Yi[t]=null,e.run();for(eo=Gi.length;eo--;)e=Gi[eo],n=e.vm,n._watcher===e&&n._isMounted&&we(n,"updated");ki&&vi.devtools&&ki.emit("flush"),Ce()}function ke(e){var t=e.id;if(null==Yi[t]){if(Yi[t]=!0,Xi){for(var n=Gi.length-1;n>=0&&Gi[n].id>e.id;)n--;Gi.splice(Math.max(n,eo)+1,0,e)}else Gi.push(e);Qi||(Qi=!0,Ai(xe))}}function Ae(e){ro.clear(),Oe(e,ro)}function Oe(e,t){var n,r,i=Array.isArray(e);if((i||l(e))&&Object.isExtensible(e)){if(e.__ob__){var o=e.__ob__.dep.id;if(t.has(o))return;t.add(o)}if(i)for(n=e.length;n--;)Oe(e[n],t);else for(r=Object.keys(e),n=r.length;n--;)Oe(e[r[n]],t)}}function Se(e){e._watchers=[];var t=e.$options;t.props&&Te(e,t.props),t.methods&&Ne(e,t.methods),t.data?Ee(e):k(e._data={},!0),t.computed&&Ie(e,t.computed),t.watch&&Le(e,t.watch)}function Te(e,t){var n=e.$options.propsData||{},r=e.$options._propKeys=Object.keys(t),i=!e.$parent;Mi.shouldConvert=i;for(var o=function(i){var o=r[i];A(e,o,P(o,t,n,e))},a=0;a<r.length;a++)o(a);Mi.shouldConvert=!0}function Ee(e){var t=e.$options.data;t=e._data="function"==typeof t?t.call(e):t||{},f(t)||(t={});for(var n=Object.keys(t),r=e.$options.props,o=n.length;o--;)r&&i(r,n[o])||Pe(e,n[o]);k(t,!0)}function Ie(e,t){for(var n in t){var r=t[n];"function"==typeof r?(io.get=je(r,e),io.set=d):(io.get=r.get?r.cache!==!1?je(r.get,e):s(r.get,e):d,io.set=r.set?s(r.set,e):d),Object.defineProperty(e,n,io)}}function je(e,t){var n=new no(t,e,d,{lazy:!0});return function(){return n.dirty&&n.evaluate(),Ei.target&&n.depend(),n.value}}function Ne(e,t){for(var n in t)e[n]=null==t[n]?d:s(t[n],e)}function Le(e,t){for(var n in t){var r=t[n];if(Array.isArray(r))for(var i=0;i<r.length;i++)Me(e,n,r[i]);else Me(e,n,r)}}function Me(e,t,n){var r;f(n)&&(r=n,n=n.handler),"string"==typeof n&&(n=e[n]),e.$watch(t,n,r)}function De(e){var t={};t.get=function(){return this._data},Object.defineProperty(e.prototype,"$data",t),e.prototype.$set=O,e.prototype.$delete=S,e.prototype.$watch=function(e,t,n){var r=this;n=n||{},n.user=!0;var i=new no(r,e,t,n);return n.immediate&&t.call(r,i.value),function(){i.teardown()}}}function Pe(e,t){g(t)||Object.defineProperty(e,t,{configurable:!0,enumerable:!0,get:function(){return e._data[t]},set:function(n){e._data[t]=n}})}function Re(e){e.prototype._init=function(e){var t=this;t._uid=oo++,t._isVue=!0,e&&e._isComponent?Fe(t,e):t.$options=M(He(t.constructor),e||{},t),t._renderProxy=t,t._self=t,be(t),he(t),pe(t),we(t,"beforeCreate"),Se(t),we(t,"created"),t.$options.el&&t.$mount(t.$options.el)}}function Fe(e,t){var n=e.$options=Object.create(e.constructor.options);n.parent=t.parent,n.propsData=t.propsData,n._parentVnode=t._parentVnode,n._parentListeners=t._parentListeners,n._renderChildren=t._renderChildren,n._componentTag=t._componentTag,n._parentElm=t._parentElm,n._refElm=t._refElm,t.render&&(n.render=t.render,n.staticRenderFns=t.staticRenderFns)}function He(e){var t=e.options;if(e.super){var n=e.super.options,r=e.superOptions,i=e.extendOptions;n!==r&&(e.superOptions=n,i.render=t.render,i.staticRenderFns=t.staticRenderFns,i._scopeId=t._scopeId,t=e.options=M(n,i),t.name&&(t.components[t.name]=e))}return t}function Ue(e){this._init(e)}function Be(e){e.use=function(e){if(!e.installed){var t=c(arguments,1);return t.unshift(this),"function"==typeof e.install?e.install.apply(e,t):e.apply(null,t),e.installed=!0,this}}}function ze(e){e.mixin=function(e){this.options=M(this.options,e)}}function Ve(e){e.cid=0;var t=1;e.extend=function(e){e=e||{};var n=this,r=n.cid,i=e._Ctor||(e._Ctor={});if(i[r])return i[r];var o=e.name||n.options.name,a=function(e){this._init(e)};return a.prototype=Object.create(n.prototype),a.prototype.constructor=a,a.cid=t++,a.options=M(n.options,e),a.super=n,a.extend=n.extend,a.mixin=n.mixin,a.use=n.use,vi._assetTypes.forEach(function(e){a[e]=n[e]}),o&&(a.options.components[o]=a),a.superOptions=n.options,a.extendOptions=e,i[r]=a,a}}function Je(e){vi._assetTypes.forEach(function(t){e[t]=function(e,n){return n?("component"===t&&f(n)&&(n.name=n.name||e,n=this.options._base.extend(n)),"directive"===t&&"function"==typeof n&&(n={bind:n,update:n}),this.options[t+"s"][e]=n,n):this.options[t+"s"][e]}})}function Ke(e){return e&&(e.Ctor.options.name||e.tag)}function qe(e,t){return"string"==typeof e?e.split(",").indexOf(t)>-1:e.test(t)}function We(e,t){for(var n in e){var r=e[n];if(r){var i=Ke(r.componentOptions);i&&!t(i)&&(Ze(r),e[n]=null)}}}function Ze(e){e&&(e.componentInstance._inactive||we(e.componentInstance,"deactivated"),e.componentInstance.$destroy())}function Ge(e){var t={};t.get=function(){return vi},Object.defineProperty(e,"config",t),e.util=Fi,e.set=O,e.delete=S,e.nextTick=Ai,e.options=Object.create(null),vi._assetTypes.forEach(function(t){e.options[t+"s"]=Object.create(null)}),e.options._base=e,u(e.options.components,co),Be(e),ze(e),Ve(e),Je(e)}function Ye(e){for(var t=e.data,n=e,r=e;r.componentInstance;)r=r.componentInstance._vnode,r.data&&(t=Qe(r.data,t));for(;n=n.parent;)n.data&&(t=Qe(t,n.data));return Xe(t)}function Qe(e,t){return{staticClass:et(e.staticClass,t.staticClass),class:e.class?[e.class,t.class]:t.class}}function Xe(e){var t=e.class,n=e.staticClass;return n||t?et(n,tt(t)):""}function et(e,t){return e?t?e+" "+t:e:t||""}function tt(e){var t="";if(!e)return t;if("string"==typeof e)return e;if(Array.isArray(e)){for(var n,r=0,i=e.length;r<i;r++)e[r]&&(n=tt(e[r]))&&(t+=n+" ");return t.slice(0,-1)}if(l(e)){for(var o in e)e[o]&&(t+=o+" ");return t.slice(0,-1)}return t}function nt(e){return wo(e)?"svg":"math"===e?"math":void 0}function rt(e){if(!gi)return!0;if(xo(e))return!1;if(e=e.toLowerCase(),null!=ko[e])return ko[e];var t=document.createElement(e);return e.indexOf("-")>-1?ko[e]=t.constructor===window.HTMLUnknownElement||t.constructor===window.HTMLElement:ko[e]=/HTMLUnknownElement/.test(t.toString())}function it(e){if("string"==typeof e){if(e=document.querySelector(e),!e)return document.createElement("div")}return e}function ot(e,t){var n=document.createElement(e);return"select"!==e?n:(t.data&&t.data.attrs&&"multiple"in t.data.attrs&&n.setAttribute("multiple","multiple"),n)}function at(e,t){return document.createElementNS(bo[e],t)}function st(e){return document.createTextNode(e)}function ct(e){return document.createComment(e)}function ut(e,t,n){e.insertBefore(t,n)}function lt(e,t){e.removeChild(t)}function ft(e,t){e.appendChild(t)}function pt(e){return e.parentNode}function dt(e){return e.nextSibling}function vt(e){return e.tagName}function ht(e,t){e.textContent=t}function mt(e,t,n){e.setAttribute(t,n)}function gt(e,t){var n=e.data.ref;if(n){var i=e.context,o=e.componentInstance||e.elm,a=i.$refs;t?Array.isArray(a[n])?r(a[n],o):a[n]===o&&(a[n]=void 0):e.data.refInFor?Array.isArray(a[n])&&a[n].indexOf(o)<0?a[n].push(o):a[n]=[o]:a[n]=o}}function yt(e){return null==e}function _t(e){return null!=e}function bt(e,t){return e.key===t.key&&e.tag===t.tag&&e.isComment===t.isComment&&!e.data==!t.data}function $t(e,t,n){var r,i,o={};for(r=t;r<=n;++r)i=e[r].key,_t(i)&&(o[i]=r);return o}function wt(e){function t(e){return new Hi(O.tagName(e).toLowerCase(),{},[],void 0,e)}function r(e,t){function n(){0===--n.listeners&&i(e)}return n.listeners=t,n}function i(e){var t=O.parentNode(e);t&&O.removeChild(t,e)}function a(e,t,n,r,i){if(e.isRootInsert=!i,!s(e,t,n,r)){var o=e.data,a=e.children,c=e.tag;_t(c)?(e.elm=e.ns?O.createElementNS(e.ns,c):O.createElement(c,e),v(e),f(e,a,t),_t(o)&&d(e,t),l(n,e.elm,r)):e.isComment?(e.elm=O.createComment(e.text),l(n,e.elm,r)):(e.elm=O.createTextNode(e.text),l(n,e.elm,r))}}function s(e,t,n,r){var i=e.data;if(_t(i)){var o=_t(e.componentInstance)&&i.keepAlive;if(_t(i=i.hook)&&_t(i=i.init)&&i(e,!1,n,r),_t(e.componentInstance))return c(e,t),o&&u(e,t,n,r),!0}}function c(e,t){e.data.pendingInsert&&t.push.apply(t,e.data.pendingInsert),e.elm=e.componentInstance.$el,p(e)?(d(e,t),v(e)):(gt(e),t.push(e))}function u(e,t,n,r){for(var i,o=e;o.componentInstance;)if(o=o.componentInstance._vnode,_t(i=o.data)&&_t(i=i.transition)){for(i=0;i<k.activate.length;++i)k.activate[i](So,o);t.push(o);break}l(n,e.elm,r)}function l(e,t,n){e&&(n?O.insertBefore(e,t,n):O.appendChild(e,t))}function f(e,t,n){if(Array.isArray(t))for(var r=0;r<t.length;++r)a(t[r],n,e.elm,null,!0);else o(e.text)&&O.appendChild(e.elm,O.createTextNode(e.text))}function p(e){for(;e.componentInstance;)e=e.componentInstance._vnode;return _t(e.tag)}function d(e,t){for(var n=0;n<k.create.length;++n)k.create[n](So,e);C=e.data.hook,_t(C)&&(C.create&&C.create(So,e),C.insert&&t.push(e))}function v(e){var t;_t(t=e.context)&&_t(t=t.$options._scopeId)&&O.setAttribute(e.elm,t,""),_t(t=Zi)&&t!==e.context&&_t(t=t.$options._scopeId)&&O.setAttribute(e.elm,t,"")}function h(e,t,n,r,i,o){for(;r<=i;++r)a(n[r],o,e,t)}function m(e){var t,n,r=e.data;if(_t(r))for(_t(t=r.hook)&&_t(t=t.destroy)&&t(e),t=0;t<k.destroy.length;++t)k.destroy[t](e);if(_t(t=e.children))for(n=0;n<e.children.length;++n)m(e.children[n])}function g(e,t,n,r){for(;n<=r;++n){var o=t[n];_t(o)&&(_t(o.tag)?(y(o),m(o)):i(o.elm))}}function y(e,t){if(t||_t(e.data)){var n=k.remove.length+1;for(t?t.listeners+=n:t=r(e.elm,n),_t(C=e.componentInstance)&&_t(C=C._vnode)&&_t(C.data)&&y(C,t),C=0;C<k.remove.length;++C)k.remove[C](e,t);_t(C=e.data.hook)&&_t(C=C.remove)?C(e,t):t()}else i(e.elm)}function _(e,t,n,r,i){for(var o,s,c,u,l=0,f=0,p=t.length-1,d=t[0],v=t[p],m=n.length-1,y=n[0],_=n[m],$=!i;l<=p&&f<=m;)yt(d)?d=t[++l]:yt(v)?v=t[--p]:bt(d,y)?(b(d,y,r),d=t[++l],y=n[++f]):bt(v,_)?(b(v,_,r),v=t[--p],_=n[--m]):bt(d,_)?(b(d,_,r),$&&O.insertBefore(e,d.elm,O.nextSibling(v.elm)),d=t[++l],_=n[--m]):bt(v,y)?(b(v,y,r),$&&O.insertBefore(e,v.elm,d.elm),v=t[--p],y=n[++f]):(yt(o)&&(o=$t(t,l,p)),s=_t(y.key)?o[y.key]:null,yt(s)?(a(y,r,e,d.elm),y=n[++f]):(c=t[s],bt(c,y)?(b(c,y,r),t[s]=void 0,$&&O.insertBefore(e,y.elm,d.elm),y=n[++f]):(a(y,r,e,d.elm),y=n[++f])));l>p?(u=yt(n[m+1])?null:n[m+1].elm,h(e,u,n,f,m,r)):f>m&&g(e,t,l,p)}function b(e,t,n,r){if(e!==t){if(t.isStatic&&e.isStatic&&t.key===e.key&&(t.isCloned||t.isOnce))return t.elm=e.elm,void(t.componentInstance=e.componentInstance);var i,o=t.data,a=_t(o);a&&_t(i=o.hook)&&_t(i=i.prepatch)&&i(e,t);var s=t.elm=e.elm,c=e.children,u=t.children;if(a&&p(t)){for(i=0;i<k.update.length;++i)k.update[i](e,t);_t(i=o.hook)&&_t(i=i.update)&&i(e,t)}yt(t.text)?_t(c)&&_t(u)?c!==u&&_(s,c,u,n,r):_t(u)?(_t(e.text)&&O.setTextContent(s,""),h(s,null,u,0,u.length-1,n)):_t(c)?g(s,c,0,c.length-1):_t(e.text)&&O.setTextContent(s,""):e.text!==t.text&&O.setTextContent(s,t.text),a&&_t(i=o.hook)&&_t(i=i.postpatch)&&i(e,t)}}function $(e,t,n){if(n&&e.parent)e.parent.data.pendingInsert=t;else for(var r=0;r<t.length;++r)t[r].data.hook.insert(t[r])}function w(e,t,n){t.elm=e;var r=t.tag,i=t.data,o=t.children;if(_t(i)&&(_t(C=i.hook)&&_t(C=C.init)&&C(t,!0),_t(C=t.componentInstance)))return c(t,n),!0;if(_t(r)){if(_t(o))if(e.hasChildNodes()){for(var a=!0,s=e.firstChild,u=0;u<o.length;u++){if(!s||!w(s,o[u],n)){a=!1;break}s=s.nextSibling}if(!a||s)return!1}else f(t,o,n);if(_t(i))for(var l in i)if(!S(l)){d(t,n);break}}else e.data!==t.text&&(e.data=t.text);return!0}var C,x,k={},A=e.modules,O=e.nodeOps;for(C=0;C<To.length;++C)for(k[To[C]]=[],x=0;x<A.length;++x)void 0!==A[x][To[C]]&&k[To[C]].push(A[x][To[C]]);var S=n("attrs,style,class,staticClass,staticStyle,key");return function(e,n,r,i,o,s){if(!n)return void(e&&m(e));var c=!1,u=[];if(e){var l=_t(e.nodeType);if(!l&&bt(e,n))b(e,n,u,i);else{if(l){if(1===e.nodeType&&e.hasAttribute("server-rendered")&&(e.removeAttribute("server-rendered"),r=!0),r&&w(e,n,u))return $(n,u,!0),e;e=t(e)}var f=e.elm,d=O.parentNode(f);if(a(n,u,f._leaveCb?null:d,O.nextSibling(f)),n.parent){for(var v=n.parent;v;)v.elm=n.elm,v=v.parent;if(p(n))for(var h=0;h<k.create.length;++h)k.create[h](So,n.parent)}null!==d?g(d,[e],0,0):_t(e.tag)&&m(e)}}else c=!0,a(n,u,o,s);return $(n,u,c),n.elm}}function Ct(e,t){(e.data.directives||t.data.directives)&&xt(e,t)}function xt(e,t){var n,r,i,o=e===So,a=t===So,s=kt(e.data.directives,e.context),c=kt(t.data.directives,t.context),u=[],l=[];for(n in c)r=s[n],i=c[n],r?(i.oldValue=r.value,Ot(i,"update",t,e),i.def&&i.def.componentUpdated&&l.push(i)):(Ot(i,"bind",t,e),i.def&&i.def.inserted&&u.push(i));if(u.length){var f=function(){for(var n=0;n<u.length;n++)Ot(u[n],"inserted",t,e)};o?ne(t.data.hook||(t.data.hook={}),"insert",f,"dir-insert"):f()}if(l.length&&ne(t.data.hook||(t.data.hook={}),"postpatch",function(){for(var n=0;n<l.length;n++)Ot(l[n],"componentUpdated",t,e)},"dir-postpatch"),!o)for(n in s)c[n]||Ot(s[n],"unbind",e,e,a)}function kt(e,t){var n=Object.create(null);if(!e)return n;var r,i;for(r=0;r<e.length;r++)i=e[r],i.modifiers||(i.modifiers=Io),n[At(i)]=i,i.def=D(t.$options,"directives",i.name,!0);return n}function At(e){return e.rawName||e.name+"."+Object.keys(e.modifiers||{}).join(".")}function Ot(e,t,n,r,i){var o=e.def&&e.def[t];o&&o(n.elm,e,n,r,i)}function St(e,t){if(e.data.attrs||t.data.attrs){var n,r,i,o=t.elm,a=e.data.attrs||{},s=t.data.attrs||{};s.__ob__&&(s=t.data.attrs=u({},s));for(n in s)r=s[n],i=a[n],i!==r&&Tt(o,n,r);bi&&s.value!==a.value&&Tt(o,"value",s.value);for(n in a)null==s[n]&&(go(n)?o.removeAttributeNS(mo,yo(n)):vo(n)||o.removeAttribute(n))}}function Tt(e,t,n){ho(t)?_o(n)?e.removeAttribute(t):e.setAttribute(t,t):vo(t)?e.setAttribute(t,_o(n)||"false"===n?"false":"true"):go(t)?_o(n)?e.removeAttributeNS(mo,yo(t)):e.setAttributeNS(mo,t,n):_o(n)?e.removeAttribute(t):e.setAttribute(t,n)}function Et(e,t){var n=t.elm,r=t.data,i=e.data;if(r.staticClass||r.class||i&&(i.staticClass||i.class)){var o=Ye(t),a=n._transitionClasses;a&&(o=et(o,tt(a))),o!==n._prevClass&&(n.setAttribute("class",o),n._prevClass=o)}}function It(e,t,n,r){if(n){var i=t,o=uo;t=function(n){jt(e,t,r,o),1===arguments.length?i(n):i.apply(null,arguments)}}uo.addEventListener(e,t,r)}function jt(e,t,n,r){(r||uo).removeEventListener(e,t,n)}function Nt(e,t){if(e.data.on||t.data.on){var n=t.data.on||{},r=e.data.on||{};uo=t.elm,ie(n,r,It,jt,t.context)}}function Lt(e,t){if(e.data.domProps||t.data.domProps){var n,r,i=t.elm,o=e.data.domProps||{},a=t.data.domProps||{};a.__ob__&&(a=t.data.domProps=u({},a));for(n in o)null==a[n]&&(i[n]="");for(n in a)if(r=a[n],"textContent"!==n&&"innerHTML"!==n||(t.children&&(t.children.length=0),r!==o[n]))if("value"===n){i._value=r;var s=null==r?"":String(r);Mt(i,t,s)&&(i.value=s)}else i[n]=r}}function Mt(e,t,n){return!e.composing&&("option"===t.tag||Dt(e,n)||Pt(t,n))}function Dt(e,t){return document.activeElement!==e&&e.value!==t}function Pt(e,n){var r=e.elm.value,i=e.elm._vModifiers;return i&&i.number||"number"===e.elm.type?t(r)!==t(n):i&&i.trim?r.trim()!==n.trim():r!==n}function Rt(e){var t=Ft(e.style);return e.staticStyle?u(e.staticStyle,t):t}function Ft(e){return Array.isArray(e)?p(e):"string"==typeof e?Po(e):e}function Ht(e,t){var n,r={};if(t)for(var i=e;i.componentInstance;)i=i.componentInstance._vnode,i.data&&(n=Rt(i.data))&&u(r,n);(n=Rt(e.data))&&u(r,n);for(var o=e;o=o.parent;)o.data&&(n=Rt(o.data))&&u(r,n);return r}function Ut(e,t){var n=t.data,r=e.data;if(n.staticStyle||n.style||r.staticStyle||r.style){var i,o,a=t.elm,s=e.data.staticStyle,c=e.data.style||{},l=s||c,f=Ft(t.data.style)||{};t.data.style=f.__ob__?u({},f):f;var p=Ht(t,!0);for(o in l)null==p[o]&&Ho(a,o,"");for(o in p)i=p[o],i!==l[o]&&Ho(a,o,null==i?"":i)}}function Bt(e,t){if(t&&t.trim())if(e.classList)t.indexOf(" ")>-1?t.split(/\s+/).forEach(function(t){return e.classList.add(t)}):e.classList.add(t);else{var n=" "+e.getAttribute("class")+" ";n.indexOf(" "+t+" ")<0&&e.setAttribute("class",(n+t).trim())}}function zt(e,t){if(t&&t.trim())if(e.classList)t.indexOf(" ")>-1?t.split(/\s+/).forEach(function(t){return e.classList.remove(t)}):e.classList.remove(t);else{for(var n=" "+e.getAttribute("class")+" ",r=" "+t+" ";n.indexOf(r)>=0;)n=n.replace(r," ");e.setAttribute("class",n.trim())}}function Vt(e){Yo(function(){Yo(e)})}function Jt(e,t){(e._transitionClasses||(e._transitionClasses=[])).push(t),Bt(e,t)}function Kt(e,t){e._transitionClasses&&r(e._transitionClasses,t),zt(e,t)}function qt(e,t,n){var r=Wt(e,t),i=r.type,o=r.timeout,a=r.propCount;if(!i)return n();var s=i===Jo?Wo:Go,c=0,u=function(){e.removeEventListener(s,l),n()},l=function(t){t.target===e&&++c>=a&&u()};setTimeout(function(){c<a&&u()},o+1),e.addEventListener(s,l)}function Wt(e,t){var n,r=window.getComputedStyle(e),i=r[qo+"Delay"].split(", "),o=r[qo+"Duration"].split(", "),a=Zt(i,o),s=r[Zo+"Delay"].split(", "),c=r[Zo+"Duration"].split(", "),u=Zt(s,c),l=0,f=0;t===Jo?a>0&&(n=Jo,l=a,f=o.length):t===Ko?u>0&&(n=Ko,l=u,f=c.length):(l=Math.max(a,u),n=l>0?a>u?Jo:Ko:null,f=n?n===Jo?o.length:c.length:0);var p=n===Jo&&Qo.test(r[qo+"Property"]);return{type:n,timeout:l,propCount:f,hasTransform:p}}function Zt(e,t){for(;e.length<t.length;)e=e.concat(e);return Math.max.apply(null,t.map(function(t,n){
+return Gt(t)+Gt(e[n])}))}function Gt(e){return 1e3*Number(e.slice(0,-1))}function Yt(e,t){var n=e.elm;n._leaveCb&&(n._leaveCb.cancelled=!0,n._leaveCb());var r=Xt(e.data.transition);if(r&&!n._enterCb&&1===n.nodeType){for(var i=r.css,o=r.type,a=r.enterClass,s=r.enterToClass,c=r.enterActiveClass,u=r.appearClass,l=r.appearToClass,f=r.appearActiveClass,p=r.beforeEnter,d=r.enter,v=r.afterEnter,h=r.enterCancelled,m=r.beforeAppear,g=r.appear,y=r.afterAppear,_=r.appearCancelled,b=Zi,$=Zi.$vnode;$&&$.parent;)$=$.parent,b=$.context;var w=!b._isMounted||!e.isRootInsert;if(!w||g||""===g){var C=w?u:a,x=w?f:c,k=w?l:s,A=w?m||p:p,O=w&&"function"==typeof g?g:d,S=w?y||v:v,T=w?_||h:h,E=i!==!1&&!bi,I=O&&(O._length||O.length)>1,j=n._enterCb=en(function(){E&&(Kt(n,k),Kt(n,x)),j.cancelled?(E&&Kt(n,C),T&&T(n)):S&&S(n),n._enterCb=null});e.data.show||ne(e.data.hook||(e.data.hook={}),"insert",function(){var t=n.parentNode,r=t&&t._pending&&t._pending[e.key];r&&r.tag===e.tag&&r.elm._leaveCb&&r.elm._leaveCb(),O&&O(n,j)},"transition-insert"),A&&A(n),E&&(Jt(n,C),Jt(n,x),Vt(function(){Jt(n,k),Kt(n,C),j.cancelled||I||qt(n,o,j)})),e.data.show&&(t&&t(),O&&O(n,j)),E||I||j()}}}function Qt(e,t){function n(){g.cancelled||(e.data.show||((r.parentNode._pending||(r.parentNode._pending={}))[e.key]=e),l&&l(r),h&&(Jt(r,s),Jt(r,u),Vt(function(){Jt(r,c),Kt(r,s),g.cancelled||m||qt(r,a,g)})),f&&f(r,g),h||m||g())}var r=e.elm;r._enterCb&&(r._enterCb.cancelled=!0,r._enterCb());var i=Xt(e.data.transition);if(!i)return t();if(!r._leaveCb&&1===r.nodeType){var o=i.css,a=i.type,s=i.leaveClass,c=i.leaveToClass,u=i.leaveActiveClass,l=i.beforeLeave,f=i.leave,p=i.afterLeave,d=i.leaveCancelled,v=i.delayLeave,h=o!==!1&&!bi,m=f&&(f._length||f.length)>1,g=r._leaveCb=en(function(){r.parentNode&&r.parentNode._pending&&(r.parentNode._pending[e.key]=null),h&&(Kt(r,c),Kt(r,u)),g.cancelled?(h&&Kt(r,s),d&&d(r)):(t(),p&&p(r)),r._leaveCb=null});v?v(n):n()}}function Xt(e){if(e){if("object"==typeof e){var t={};return e.css!==!1&&u(t,Xo(e.name||"v")),u(t,e),t}return"string"==typeof e?Xo(e):void 0}}function en(e){var t=!1;return function(){t||(t=!0,e())}}function tn(e,t){t.data.show||Yt(t)}function nn(e,t,n){var r=t.value,i=e.multiple;if(!i||Array.isArray(r)){for(var o,a,s=0,c=e.options.length;s<c;s++)if(a=e.options[s],i)o=m(r,on(a))>-1,a.selected!==o&&(a.selected=o);else if(h(on(a),r))return void(e.selectedIndex!==s&&(e.selectedIndex=s));i||(e.selectedIndex=-1)}}function rn(e,t){for(var n=0,r=t.length;n<r;n++)if(h(on(t[n]),e))return!1;return!0}function on(e){return"_value"in e?e._value:e.value}function an(e){e.target.composing=!0}function sn(e){e.target.composing=!1,cn(e.target,"input")}function cn(e,t){var n=document.createEvent("HTMLEvents");n.initEvent(t,!0,!0),e.dispatchEvent(n)}function un(e){return!e.componentInstance||e.data&&e.data.transition?e:un(e.componentInstance._vnode)}function ln(e){var t=e&&e.componentOptions;return t&&t.Ctor.options.abstract?ln(ce(t.children)):e}function fn(e){var t={},n=e.$options;for(var r in n.propsData)t[r]=e[r];var i=n._parentListeners;for(var o in i)t[ai(o)]=i[o].fn;return t}function pn(e,t){return/\d-keep-alive$/.test(t.tag)?e("keep-alive"):null}function dn(e){for(;e=e.parent;)if(e.data.transition)return!0}function vn(e,t){return t.key===e.key&&t.tag===e.tag}function hn(e){e.elm._moveCb&&e.elm._moveCb(),e.elm._enterCb&&e.elm._enterCb()}function mn(e){e.data.newPos=e.elm.getBoundingClientRect()}function gn(e){var t=e.data.pos,n=e.data.newPos,r=t.left-n.left,i=t.top-n.top;if(r||i){e.data.moved=!0;var o=e.elm.style;o.transform=o.WebkitTransform="translate("+r+"px,"+i+"px)",o.transitionDuration="0s"}}function yn(e,t){var n=document.createElement("div");return n.innerHTML='<div a="'+e+'">',n.innerHTML.indexOf(t)>0}function _n(e){return pa=pa||document.createElement("div"),pa.innerHTML=e,pa.textContent}function bn(e,t){return t&&(e=e.replace(os,"\n")),e.replace(rs,"<").replace(is,">").replace(as,"&").replace(ss,'"')}function $n(e,t){function n(t){f+=t,e=e.substring(t)}function r(){var t=e.match(Ca);if(t){var r={tagName:t[1],attrs:[],start:f};n(t[0].length);for(var i,o;!(i=e.match(xa))&&(o=e.match(ba));)n(o[0].length),r.attrs.push(o);if(i)return r.unarySlash=i[1],n(i[0].length),r.end=f,r}}function i(e){var n=e.tagName,r=e.unarySlash;u&&("p"===s&&ma(n)&&o(s),ha(n)&&s===n&&o(n));for(var i=l(n)||"html"===n&&"head"===s||!!r,a=e.attrs.length,f=new Array(a),p=0;p<a;p++){var d=e.attrs[p];Ta&&d[0].indexOf('""')===-1&&(""===d[3]&&delete d[3],""===d[4]&&delete d[4],""===d[5]&&delete d[5]);var v=d[3]||d[4]||d[5]||"";f[p]={name:d[1],value:bn(v,t.shouldDecodeNewlines)}}i||(c.push({tag:n,lowerCasedTag:n.toLowerCase(),attrs:f}),s=n,r=""),t.start&&t.start(n,f,i,e.start,e.end)}function o(e,n,r){var i,o;if(null==n&&(n=f),null==r&&(r=f),e&&(o=e.toLowerCase()),e)for(i=c.length-1;i>=0&&c[i].lowerCasedTag!==o;i--);else i=0;if(i>=0){for(var a=c.length-1;a>=i;a--)t.end&&t.end(c[a].tag,n,r);c.length=i,s=i&&c[i-1].tag}else"br"===o?t.start&&t.start(e,[],!0,n,r):"p"===o&&(t.start&&t.start(e,[],!1,n,r),t.end&&t.end(e,n,r))}for(var a,s,c=[],u=t.expectHTML,l=t.isUnaryTag||pi,f=0;e;){if(a=e,s&&ts(s)){var p=s.toLowerCase(),d=ns[p]||(ns[p]=new RegExp("([\\s\\S]*?)(</"+p+"[^>]*>)","i")),v=0,h=e.replace(d,function(e,n,r){return v=r.length,"script"!==p&&"style"!==p&&"noscript"!==p&&(n=n.replace(/<!--([\s\S]*?)-->/g,"$1").replace(/<!\[CDATA\[([\s\S]*?)]]>/g,"$1")),t.chars&&t.chars(n),""});f+=e.length-h.length,e=h,o(p,f-v,f)}else{var m=e.indexOf("<");if(0===m){if(Oa.test(e)){var g=e.indexOf("-->");if(g>=0){n(g+3);continue}}if(Sa.test(e)){var y=e.indexOf("]>");if(y>=0){n(y+2);continue}}var _=e.match(Aa);if(_){n(_[0].length);continue}var b=e.match(ka);if(b){var $=f;n(b[0].length),o(b[1],$,f);continue}var w=r();if(w){i(w);continue}}var C=void 0,x=void 0,k=void 0;if(m>0){for(x=e.slice(m);!(ka.test(x)||Ca.test(x)||Oa.test(x)||Sa.test(x)||(k=x.indexOf("<",1),k<0));)m+=k,x=e.slice(m);C=e.substring(0,m),n(m)}m<0&&(C=e,e=""),t.chars&&C&&t.chars(C)}if(e===a&&t.chars){t.chars(e);break}}o()}function wn(e){function t(){(a||(a=[])).push(e.slice(v,i).trim()),v=i+1}var n,r,i,o,a,s=!1,c=!1,u=!1,l=!1,f=0,p=0,d=0,v=0;for(i=0;i<e.length;i++)if(r=n,n=e.charCodeAt(i),s)39===n&&92!==r&&(s=!1);else if(c)34===n&&92!==r&&(c=!1);else if(u)96===n&&92!==r&&(u=!1);else if(l)47===n&&92!==r&&(l=!1);else if(124!==n||124===e.charCodeAt(i+1)||124===e.charCodeAt(i-1)||f||p||d){switch(n){case 34:c=!0;break;case 39:s=!0;break;case 96:u=!0;break;case 40:d++;break;case 41:d--;break;case 91:p++;break;case 93:p--;break;case 123:f++;break;case 125:f--}if(47===n){for(var h=i-1,m=void 0;h>=0&&(m=e.charAt(h)," "===m);h--);m&&/[\w$]/.test(m)||(l=!0)}}else void 0===o?(v=i+1,o=e.slice(0,i).trim()):t();if(void 0===o?o=e.slice(0,i).trim():0!==v&&t(),a)for(i=0;i<a.length;i++)o=Cn(o,a[i]);return o}function Cn(e,t){var n=t.indexOf("(");if(n<0)return'_f("'+t+'")('+e+")";var r=t.slice(0,n),i=t.slice(n+1);return'_f("'+r+'")('+e+","+i}function xn(e,t){var n=t?ls(t):cs;if(n.test(e)){for(var r,i,o=[],a=n.lastIndex=0;r=n.exec(e);){i=r.index,i>a&&o.push(JSON.stringify(e.slice(a,i)));var s=wn(r[1].trim());o.push("_s("+s+")"),a=i+r[0].length}return a<e.length&&o.push(JSON.stringify(e.slice(a))),o.join("+")}}function kn(e){console.error("[Vue parser]: "+e)}function An(e,t){return e?e.map(function(e){return e[t]}).filter(function(e){return e}):[]}function On(e,t,n){(e.props||(e.props=[])).push({name:t,value:n})}function Sn(e,t,n){(e.attrs||(e.attrs=[])).push({name:t,value:n})}function Tn(e,t,n,r,i,o){(e.directives||(e.directives=[])).push({name:t,rawName:n,value:r,arg:i,modifiers:o})}function En(e,t,n,r,i){r&&r.capture&&(delete r.capture,t="!"+t),r&&r.once&&(delete r.once,t="~"+t);var o;r&&r.native?(delete r.native,o=e.nativeEvents||(e.nativeEvents={})):o=e.events||(e.events={});var a={value:n,modifiers:r},s=o[t];Array.isArray(s)?i?s.unshift(a):s.push(a):s?o[t]=i?[a,s]:[s,a]:o[t]=a}function In(e,t,n){var r=jn(e,":"+t)||jn(e,"v-bind:"+t);if(null!=r)return wn(r);if(n!==!1){var i=jn(e,t);if(null!=i)return JSON.stringify(i)}}function jn(e,t){var n;if(null!=(n=e.attrsMap[t]))for(var r=e.attrsList,i=0,o=r.length;i<o;i++)if(r[i].name===t){r.splice(i,1);break}return n}function Nn(e){if(Ia=e,Ea=Ia.length,Na=La=Ma=0,e.indexOf("[")<0||e.lastIndexOf("]")<Ea-1)return{exp:e,idx:null};for(;!Mn();)ja=Ln(),Dn(ja)?Rn(ja):91===ja&&Pn(ja);return{exp:e.substring(0,La),idx:e.substring(La+1,Ma)}}function Ln(){return Ia.charCodeAt(++Na)}function Mn(){return Na>=Ea}function Dn(e){return 34===e||39===e}function Pn(e){var t=1;for(La=Na;!Mn();)if(e=Ln(),Dn(e))Rn(e);else if(91===e&&t++,93===e&&t--,0===t){Ma=Na;break}}function Rn(e){for(var t=e;!Mn()&&(e=Ln(),e!==t););}function Fn(e,t){Da=t.warn||kn,Pa=t.getTagNamespace||pi,Ra=t.mustUseProp||pi,Fa=t.isPreTag||pi,Ha=An(t.modules,"preTransformNode"),Ua=An(t.modules,"transformNode"),Ba=An(t.modules,"postTransformNode"),za=t.delimiters;var n,r,i=[],o=t.preserveWhitespace!==!1,a=!1,s=!1;return $n(e,{expectHTML:t.expectHTML,isUnaryTag:t.isUnaryTag,shouldDecodeNewlines:t.shouldDecodeNewlines,start:function(e,o,c){function u(e){}var l=r&&r.ns||Pa(e);_i&&"svg"===l&&(o=rr(o));var f={type:1,tag:e,attrsList:o,attrsMap:tr(o),parent:r,children:[]};l&&(f.ns=l),nr(f)&&!xi()&&(f.forbidden=!0);for(var p=0;p<Ha.length;p++)Ha[p](f,t);if(a||(Hn(f),f.pre&&(a=!0)),Fa(f.tag)&&(s=!0),a)Un(f);else{Vn(f),Jn(f),Zn(f),Bn(f),f.plain=!f.key&&!o.length,zn(f),Gn(f),Yn(f);for(var d=0;d<Ua.length;d++)Ua[d](f,t);Qn(f)}if(n?i.length||n.if&&(f.elseif||f.else)&&(u(f),Wn(n,{exp:f.elseif,block:f})):(n=f,u(n)),r&&!f.forbidden)if(f.elseif||f.else)Kn(f,r);else if(f.slotScope){r.plain=!1;var v=f.slotTarget||"default";(r.scopedSlots||(r.scopedSlots={}))[v]=f}else r.children.push(f),f.parent=r;c||(r=f,i.push(f));for(var h=0;h<Ba.length;h++)Ba[h](f,t)},end:function(){var e=i[i.length-1],t=e.children[e.children.length-1];t&&3===t.type&&" "===t.text&&e.children.pop(),i.length-=1,r=i[i.length-1],e.pre&&(a=!1),Fa(e.tag)&&(s=!1)},chars:function(e){if(r&&(!_i||"textarea"!==r.tag||r.attrsMap.placeholder!==e)){var t=r.children;if(e=s||e.trim()?ys(e):o&&t.length?" ":""){var n;!a&&" "!==e&&(n=xn(e,za))?t.push({type:2,expression:n,text:e}):" "===e&&" "===t[t.length-1].text||r.children.push({type:3,text:e})}}}}),n}function Hn(e){null!=jn(e,"v-pre")&&(e.pre=!0)}function Un(e){var t=e.attrsList.length;if(t)for(var n=e.attrs=new Array(t),r=0;r<t;r++)n[r]={name:e.attrsList[r].name,value:JSON.stringify(e.attrsList[r].value)};else e.pre||(e.plain=!0)}function Bn(e){var t=In(e,"key");t&&(e.key=t)}function zn(e){var t=In(e,"ref");t&&(e.ref=t,e.refInFor=Xn(e))}function Vn(e){var t;if(t=jn(e,"v-for")){var n=t.match(ps);if(!n)return;e.for=n[2].trim();var r=n[1].trim(),i=r.match(ds);i?(e.alias=i[1].trim(),e.iterator1=i[2].trim(),i[3]&&(e.iterator2=i[3].trim())):e.alias=r}}function Jn(e){var t=jn(e,"v-if");if(t)e.if=t,Wn(e,{exp:t,block:e});else{null!=jn(e,"v-else")&&(e.else=!0);var n=jn(e,"v-else-if");n&&(e.elseif=n)}}function Kn(e,t){var n=qn(t.children);n&&n.if&&Wn(n,{exp:e.elseif,block:e})}function qn(e){for(var t=e.length;t--;){if(1===e[t].type)return e[t];e.pop()}}function Wn(e,t){e.ifConditions||(e.ifConditions=[]),e.ifConditions.push(t)}function Zn(e){var t=jn(e,"v-once");null!=t&&(e.once=!0)}function Gn(e){if("slot"===e.tag)e.slotName=In(e,"name");else{var t=In(e,"slot");t&&(e.slotTarget='""'===t?'"default"':t),"template"===e.tag&&(e.slotScope=jn(e,"scope"))}}function Yn(e){var t;(t=In(e,"is"))&&(e.component=t),null!=jn(e,"inline-template")&&(e.inlineTemplate=!0)}function Qn(e){var t,n,r,i,o,a,s,c,u=e.attrsList;for(t=0,n=u.length;t<n;t++)if(r=i=u[t].name,o=u[t].value,fs.test(r))if(e.hasBindings=!0,s=er(r),s&&(r=r.replace(gs,"")),vs.test(r))r=r.replace(vs,""),o=wn(o),c=!1,s&&(s.prop&&(c=!0,r=ai(r),"innerHtml"===r&&(r="innerHTML")),s.camel&&(r=ai(r))),c||Ra(e.tag,e.attrsMap.type,r)?On(e,r,o):Sn(e,r,o);else if(hs.test(r))r=r.replace(hs,""),En(e,r,o,s);else{r=r.replace(fs,"");var l=r.match(ms);l&&(a=l[1])&&(r=r.slice(0,-(a.length+1))),Tn(e,r,i,o,a,s)}else Sn(e,r,JSON.stringify(o))}function Xn(e){for(var t=e;t;){if(void 0!==t.for)return!0;t=t.parent}return!1}function er(e){var t=e.match(gs);if(t){var n={};return t.forEach(function(e){n[e.slice(1)]=!0}),n}}function tr(e){for(var t={},n=0,r=e.length;n<r;n++)t[e[n].name]=e[n].value;return t}function nr(e){return"style"===e.tag||"script"===e.tag&&(!e.attrsMap.type||"text/javascript"===e.attrsMap.type)}function rr(e){for(var t=[],n=0;n<e.length;n++){var r=e[n];_s.test(r.name)||(r.name=r.name.replace(bs,""),t.push(r))}return t}function ir(e,t){e&&(Va=$s(t.staticKeys||""),Ja=t.isReservedTag||pi,ar(e),sr(e,!1))}function or(e){return n("type,tag,attrsList,attrsMap,plain,parent,children,attrs"+(e?","+e:""))}function ar(e){if(e.static=ur(e),1===e.type){if(!Ja(e.tag)&&"slot"!==e.tag&&null==e.attrsMap["inline-template"])return;for(var t=0,n=e.children.length;t<n;t++){var r=e.children[t];ar(r),r.static||(e.static=!1)}}}function sr(e,t){if(1===e.type){if((e.static||e.once)&&(e.staticInFor=t),e.static&&e.children.length&&(1!==e.children.length||3!==e.children[0].type))return void(e.staticRoot=!0);if(e.staticRoot=!1,e.children)for(var n=0,r=e.children.length;n<r;n++)sr(e.children[n],t||!!e.for);e.ifConditions&&cr(e.ifConditions,t)}}function cr(e,t){for(var n=1,r=e.length;n<r;n++)sr(e[n].block,t)}function ur(e){return 2!==e.type&&(3===e.type||!(!e.pre&&(e.hasBindings||e.if||e.for||ri(e.tag)||!Ja(e.tag)||lr(e)||!Object.keys(e).every(Va))))}function lr(e){for(;e.parent;){if(e=e.parent,"template"!==e.tag)return!1;if(e.for)return!0}return!1}function fr(e,t){var n=t?"nativeOn:{":"on:{";for(var r in e)n+='"'+r+'":'+pr(r,e[r])+",";return n.slice(0,-1)+"}"}function pr(e,t){if(t){if(Array.isArray(t))return"["+t.map(function(t){return pr(e,t)}).join(",")+"]";if(t.modifiers){var n="",r=[];for(var i in t.modifiers)ks[i]?n+=ks[i]:r.push(i);r.length&&(n=dr(r)+n);var o=Cs.test(t.value)?t.value+"($event)":t.value;return"function($event){"+n+o+"}"}return ws.test(t.value)||Cs.test(t.value)?t.value:"function($event){"+t.value+"}"}return"function(){}"}function dr(e){return"if("+e.map(vr).join("&&")+")return;"}function vr(e){var t=parseInt(e,10);if(t)return"$event.keyCode!=="+t;var n=xs[e];return"_k($event.keyCode,"+JSON.stringify(e)+(n?","+JSON.stringify(n):"")+")"}function hr(e,t){e.wrapData=function(n){return"_b("+n+",'"+e.tag+"',"+t.value+(t.modifiers&&t.modifiers.prop?",true":"")+")"}}function mr(e,t){var n=Ya,r=Ya=[],i=Qa;Qa=0,Xa=t,Ka=t.warn||kn,qa=An(t.modules,"transformCode"),Wa=An(t.modules,"genData"),Za=t.directives||{},Ga=t.isReservedTag||pi;var o=e?gr(e):'_c("div")';return Ya=n,Qa=i,{render:"with(this){return "+o+"}",staticRenderFns:r}}function gr(e){if(e.staticRoot&&!e.staticProcessed)return yr(e);if(e.once&&!e.onceProcessed)return _r(e);if(e.for&&!e.forProcessed)return wr(e);if(e.if&&!e.ifProcessed)return br(e);if("template"!==e.tag||e.slotTarget){if("slot"===e.tag)return Lr(e);var t;if(e.component)t=Mr(e.component,e);else{var n=e.plain?void 0:Cr(e),r=e.inlineTemplate?null:Sr(e,!0);t="_c('"+e.tag+"'"+(n?","+n:"")+(r?","+r:"")+")"}for(var i=0;i<qa.length;i++)t=qa[i](e,t);return t}return Sr(e)||"void 0"}function yr(e){return e.staticProcessed=!0,Ya.push("with(this){return "+gr(e)+"}"),"_m("+(Ya.length-1)+(e.staticInFor?",true":"")+")"}function _r(e){if(e.onceProcessed=!0,e.if&&!e.ifProcessed)return br(e);if(e.staticInFor){for(var t="",n=e.parent;n;){if(n.for){t=n.key;break}n=n.parent}return t?"_o("+gr(e)+","+Qa++ +(t?","+t:"")+")":gr(e)}return yr(e)}function br(e){return e.ifProcessed=!0,$r(e.ifConditions.slice())}function $r(e){function t(e){return e.once?_r(e):gr(e)}if(!e.length)return"_e()";var n=e.shift();return n.exp?"("+n.exp+")?"+t(n.block)+":"+$r(e):""+t(n.block)}function wr(e){var t=e.for,n=e.alias,r=e.iterator1?","+e.iterator1:"",i=e.iterator2?","+e.iterator2:"";return e.forProcessed=!0,"_l(("+t+"),function("+n+r+i+"){return "+gr(e)+"})"}function Cr(e){var t="{",n=xr(e);n&&(t+=n+","),e.key&&(t+="key:"+e.key+","),e.ref&&(t+="ref:"+e.ref+","),e.refInFor&&(t+="refInFor:true,"),e.pre&&(t+="pre:true,"),e.component&&(t+='tag:"'+e.tag+'",');for(var r=0;r<Wa.length;r++)t+=Wa[r](e);if(e.attrs&&(t+="attrs:{"+Dr(e.attrs)+"},"),e.props&&(t+="domProps:{"+Dr(e.props)+"},"),e.events&&(t+=fr(e.events)+","),e.nativeEvents&&(t+=fr(e.nativeEvents,!0)+","),e.slotTarget&&(t+="slot:"+e.slotTarget+","),e.scopedSlots&&(t+=Ar(e.scopedSlots)+","),e.inlineTemplate){var i=kr(e);i&&(t+=i+",")}return t=t.replace(/,$/,"")+"}",e.wrapData&&(t=e.wrapData(t)),t}function xr(e){var t=e.directives;if(t){var n,r,i,o,a="directives:[",s=!1;for(n=0,r=t.length;n<r;n++){i=t[n],o=!0;var c=Za[i.name]||As[i.name];c&&(o=!!c(e,i,Ka)),o&&(s=!0,a+='{name:"'+i.name+'",rawName:"'+i.rawName+'"'+(i.value?",value:("+i.value+"),expression:"+JSON.stringify(i.value):"")+(i.arg?',arg:"'+i.arg+'"':"")+(i.modifiers?",modifiers:"+JSON.stringify(i.modifiers):"")+"},")}return s?a.slice(0,-1)+"]":void 0}}function kr(e){var t=e.children[0];if(1===t.type){var n=mr(t,Xa);return"inlineTemplate:{render:function(){"+n.render+"},staticRenderFns:["+n.staticRenderFns.map(function(e){return"function(){"+e+"}"}).join(",")+"]}"}}function Ar(e){return"scopedSlots:{"+Object.keys(e).map(function(t){return Or(t,e[t])}).join(",")+"}"}function Or(e,t){return e+":function("+String(t.attrsMap.scope)+"){return "+("template"===t.tag?Sr(t)||"void 0":gr(t))+"}"}function Sr(e,t){var n=e.children;if(n.length){var r=n[0];if(1===n.length&&r.for&&"template"!==r.tag&&"slot"!==r.tag)return gr(r);var i=Tr(n);return"["+n.map(jr).join(",")+"]"+(t&&i?","+i:"")}}function Tr(e){for(var t=0,n=0;n<e.length;n++){var r=e[n];if(1===r.type){if(Er(r)||r.ifConditions&&r.ifConditions.some(function(e){return Er(e.block)})){t=2;break}(Ir(r)||r.ifConditions&&r.ifConditions.some(function(e){return Ir(e.block)}))&&(t=1)}}return t}function Er(e){return void 0!==e.for||"template"===e.tag||"slot"===e.tag}function Ir(e){return!Ga(e.tag)}function jr(e){return 1===e.type?gr(e):Nr(e)}function Nr(e){return"_v("+(2===e.type?e.expression:Pr(JSON.stringify(e.text)))+")"}function Lr(e){var t=e.slotName||'"default"',n=Sr(e),r="_t("+t+(n?","+n:""),i=e.attrs&&"{"+e.attrs.map(function(e){return ai(e.name)+":"+e.value}).join(",")+"}",o=e.attrsMap["v-bind"];return!i&&!o||n||(r+=",null"),i&&(r+=","+i),o&&(r+=(i?"":",null")+","+o),r+")"}function Mr(e,t){var n=t.inlineTemplate?null:Sr(t,!0);return"_c("+e+","+Cr(t)+(n?","+n:"")+")"}function Dr(e){for(var t="",n=0;n<e.length;n++){var r=e[n];t+='"'+r.name+'":'+Pr(r.value)+","}return t.slice(0,-1)}function Pr(e){return e.replace(/\u2028/g,"\\u2028").replace(/\u2029/g,"\\u2029")}function Rr(e,t){var n=Fn(e.trim(),t);ir(n,t);var r=mr(n,t);return{ast:n,render:r.render,staticRenderFns:r.staticRenderFns}}function Fr(e,t){var n=(t.warn||kn,jn(e,"class"));n&&(e.staticClass=JSON.stringify(n));var r=In(e,"class",!1);r&&(e.classBinding=r)}function Hr(e){var t="";return e.staticClass&&(t+="staticClass:"+e.staticClass+","),e.classBinding&&(t+="class:"+e.classBinding+","),t}function Ur(e,t){var n=(t.warn||kn,jn(e,"style"));n&&(e.staticStyle=JSON.stringify(Po(n)));var r=In(e,"style",!1);r&&(e.styleBinding=r)}function Br(e){var t="";return e.staticStyle&&(t+="staticStyle:"+e.staticStyle+","),e.styleBinding&&(t+="style:("+e.styleBinding+"),"),t}function zr(e,t,n){es=n;var r=t.value,i=t.modifiers,o=e.tag,a=e.attrsMap.type;return"select"===o?qr(e,r,i):"input"===o&&"checkbox"===a?Vr(e,r,i):"input"===o&&"radio"===a?Jr(e,r,i):Kr(e,r,i),!0}function Vr(e,t,n){var r=n&&n.number,i=In(e,"value")||"null",o=In(e,"true-value")||"true",a=In(e,"false-value")||"false";On(e,"checked","Array.isArray("+t+")?_i("+t+","+i+")>-1"+("true"===o?":("+t+")":":_q("+t+","+o+")")),En(e,"click","var $$a="+t+",$$el=$event.target,$$c=$$el.checked?("+o+"):("+a+");if(Array.isArray($$a)){var $$v="+(r?"_n("+i+")":i)+",$$i=_i($$a,$$v);if($$c){$$i<0&&("+t+"=$$a.concat($$v))}else{$$i>-1&&("+t+"=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}}else{"+t+"=$$c}",null,!0)}function Jr(e,t,n){var r=n&&n.number,i=In(e,"value")||"null";i=r?"_n("+i+")":i,On(e,"checked","_q("+t+","+i+")"),En(e,"click",Wr(t,i),null,!0)}function Kr(e,t,n){var r=e.attrsMap.type,i=n||{},o=i.lazy,a=i.number,s=i.trim,c=o||_i&&"range"===r?"change":"input",u=!o&&"range"!==r,l="input"===e.tag||"textarea"===e.tag,f=l?"$event.target.value"+(s?".trim()":""):s?"(typeof $event === 'string' ? $event.trim() : $event)":"$event";f=a||"number"===r?"_n("+f+")":f;var p=Wr(t,f);l&&u&&(p="if($event.target.composing)return;"+p),On(e,"value",l?"_s("+t+")":"("+t+")"),En(e,c,p,null,!0),(s||a||"number"===r)&&En(e,"blur","$forceUpdate()")}function qr(e,t,n){var r=n&&n.number,i='Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return '+(r?"_n(val)":"val")+"})"+(null==e.attrsMap.multiple?"[0]":""),o=Wr(t,i);En(e,"change",o,null,!0)}function Wr(e,t){var n=Nn(e);return null===n.idx?e+"="+t:"var $$exp = "+n.exp+", $$idx = "+n.idx+";if (!Array.isArray($$exp)){"+e+"="+t+"}else{$$exp.splice($$idx, 1, "+t+")}"}function Zr(e,t){t.value&&On(e,"textContent","_s("+t.value+")")}function Gr(e,t){t.value&&On(e,"innerHTML","_s("+t.value+")")}function Yr(e,t){return t=t?u(u({},js),t):js,Rr(e,t)}function Qr(e,t,n){var r=(t&&t.warn||Si,t&&t.delimiters?String(t.delimiters)+e:e);if(Is[r])return Is[r];var i={},o=Yr(e,t);i.render=Xr(o.render);var a=o.staticRenderFns.length;i.staticRenderFns=new Array(a);for(var s=0;s<a;s++)i.staticRenderFns[s]=Xr(o.staticRenderFns[s]);return Is[r]=i}function Xr(e){try{return new Function(e)}catch(e){return d}}function ei(e){if(e.outerHTML)return e.outerHTML;var t=document.createElement("div");return t.appendChild(e.cloneNode(!0)),t.innerHTML}var ti,ni,ri=n("slot,component",!0),ii=Object.prototype.hasOwnProperty,oi=/-(\w)/g,ai=a(function(e){return e.replace(oi,function(e,t){return t?t.toUpperCase():""})}),si=a(function(e){return e.charAt(0).toUpperCase()+e.slice(1)}),ci=/([^-])([A-Z])/g,ui=a(function(e){return e.replace(ci,"$1-$2").replace(ci,"$1-$2").toLowerCase()}),li=Object.prototype.toString,fi="[object Object]",pi=function(){return!1},di=function(e){return e},vi={optionMergeStrategies:Object.create(null),silent:!1,devtools:!1,errorHandler:null,ignoredElements:[],keyCodes:Object.create(null),isReservedTag:pi,isUnknownElement:pi,getTagNamespace:d,parsePlatformTagName:di,mustUseProp:pi,_assetTypes:["component","directive","filter"],_lifecycleHooks:["beforeCreate","created","beforeMount","mounted","beforeUpdate","updated","beforeDestroy","destroyed","activated","deactivated"],_maxUpdateCount:100},hi=/[^\w.$]/,mi="__proto__"in{},gi="undefined"!=typeof window,yi=gi&&window.navigator.userAgent.toLowerCase(),_i=yi&&/msie|trident/.test(yi),bi=yi&&yi.indexOf("msie 9.0")>0,$i=yi&&yi.indexOf("edge/")>0,wi=yi&&yi.indexOf("android")>0,Ci=yi&&/iphone|ipad|ipod|ios/.test(yi),xi=function(){return void 0===ti&&(ti=!gi&&"undefined"!=typeof global&&"server"===global.process.env.VUE_ENV),ti},ki=gi&&window.__VUE_DEVTOOLS_GLOBAL_HOOK__,Ai=function(){function e(){r=!1;var e=n.slice(0);n.length=0;for(var t=0;t<e.length;t++)e[t]()}var t,n=[],r=!1;if("undefined"!=typeof Promise&&b(Promise)){var i=Promise.resolve(),o=function(e){console.error(e)};t=function(){i.then(e).catch(o),Ci&&setTimeout(d)}}else if("undefined"==typeof MutationObserver||!b(MutationObserver)&&"[object MutationObserverConstructor]"!==MutationObserver.toString())t=function(){setTimeout(e,0)};else{var a=1,s=new MutationObserver(e),c=document.createTextNode(String(a));s.observe(c,{characterData:!0}),t=function(){a=(a+1)%2,c.data=String(a)}}return function(e,i){var o;if(n.push(function(){e&&e.call(i),o&&o(i)}),r||(r=!0,t()),!e&&"undefined"!=typeof Promise)return new Promise(function(e){o=e})}}();ni="undefined"!=typeof Set&&b(Set)?Set:function(){function e(){this.set=Object.create(null)}return e.prototype.has=function(e){return this.set[e]===!0},e.prototype.add=function(e){this.set[e]=!0},e.prototype.clear=function(){this.set=Object.create(null)},e}();var Oi,Si=d,Ti=0,Ei=function(){this.id=Ti++,this.subs=[]};Ei.prototype.addSub=function(e){this.subs.push(e)},Ei.prototype.removeSub=function(e){r(this.subs,e)},Ei.prototype.depend=function(){Ei.target&&Ei.target.addDep(this)},Ei.prototype.notify=function(){for(var e=this.subs.slice(),t=0,n=e.length;t<n;t++)e[t].update()},Ei.target=null;var Ii=[],ji=Array.prototype,Ni=Object.create(ji);["push","pop","shift","unshift","splice","sort","reverse"].forEach(function(e){var t=ji[e];y(Ni,e,function(){for(var n=arguments,r=arguments.length,i=new Array(r);r--;)i[r]=n[r];var o,a=t.apply(this,i),s=this.__ob__;switch(e){case"push":o=i;break;case"unshift":o=i;break;case"splice":o=i.slice(2)}return o&&s.observeArray(o),s.dep.notify(),a})});var Li=Object.getOwnPropertyNames(Ni),Mi={shouldConvert:!0,isSettingProps:!1},Di=function(e){if(this.value=e,this.dep=new Ei,this.vmCount=0,y(e,"__ob__",this),Array.isArray(e)){var t=mi?C:x;t(e,Ni,Li),this.observeArray(e)}else this.walk(e)};Di.prototype.walk=function(e){for(var t=Object.keys(e),n=0;n<t.length;n++)A(e,t[n],e[t[n]])},Di.prototype.observeArray=function(e){for(var t=0,n=e.length;t<n;t++)k(e[t])};var Pi=vi.optionMergeStrategies;Pi.data=function(e,t,n){return n?e||t?function(){var r="function"==typeof t?t.call(n):t,i="function"==typeof e?e.call(n):void 0;return r?E(r,i):i}:void 0:t?"function"!=typeof t?e:e?function(){return E(t.call(this),e.call(this))}:t:e},vi._lifecycleHooks.forEach(function(e){Pi[e]=I}),vi._assetTypes.forEach(function(e){Pi[e+"s"]=j}),Pi.watch=function(e,t){if(!t)return e;if(!e)return t;var n={};u(n,e);for(var r in t){var i=n[r],o=t[r];i&&!Array.isArray(i)&&(i=[i]),n[r]=i?i.concat(o):[o]}return n},Pi.props=Pi.methods=Pi.computed=function(e,t){if(!t)return e;if(!e)return t;var n=Object.create(null);return u(n,e),u(n,t),n};var Ri=function(e,t){return void 0===t?e:t},Fi=Object.freeze({defineReactive:A,_toString:e,toNumber:t,makeMap:n,isBuiltInTag:ri,remove:r,hasOwn:i,isPrimitive:o,cached:a,camelize:ai,capitalize:si,hyphenate:ui,bind:s,toArray:c,extend:u,isObject:l,isPlainObject:f,toObject:p,noop:d,no:pi,identity:di,genStaticKeys:v,looseEqual:h,looseIndexOf:m,isReserved:g,def:y,parsePath:_,hasProto:mi,inBrowser:gi,UA:yi,isIE:_i,isIE9:bi,isEdge:$i,isAndroid:wi,isIOS:Ci,isServerRendering:xi,devtools:ki,nextTick:Ai,get _Set(){return ni},mergeOptions:M,resolveAsset:D,warn:Si,formatComponentName:Oi,validateProp:P}),Hi=function(e,t,n,r,i,o,a){this.tag=e,this.data=t,this.children=n,this.text=r,this.elm=i,this.ns=void 0,this.context=o,this.functionalContext=void 0,this.key=t&&t.key,this.componentOptions=a,this.componentInstance=void 0,this.parent=void 0,this.raw=!1,this.isStatic=!1,this.isRootInsert=!0,this.isComment=!1,this.isCloned=!1,this.isOnce=!1},Ui={child:{}};Ui.child.get=function(){return this.componentInstance},Object.defineProperties(Hi.prototype,Ui);var Bi,zi=function(){var e=new Hi;return e.text="",e.isComment=!0,e},Vi={init:q,prepatch:W,insert:Z,destroy:G},Ji=Object.keys(Vi),Ki=a(function(e){var t="~"===e.charAt(0);e=t?e.slice(1):e;var n="!"===e.charAt(0);return e=n?e.slice(1):e,{name:e,once:t,capture:n}}),qi=1,Wi=2,Zi=null,Gi=[],Yi={},Qi=!1,Xi=!1,eo=0,to=0,no=function(e,t,n,r){this.vm=e,e._watchers.push(this),r?(this.deep=!!r.deep,this.user=!!r.user,this.lazy=!!r.lazy,this.sync=!!r.sync):this.deep=this.user=this.lazy=this.sync=!1,this.cb=n,this.id=++to,this.active=!0,this.dirty=this.lazy,this.deps=[],this.newDeps=[],this.depIds=new ni,this.newDepIds=new ni,this.expression="","function"==typeof t?this.getter=t:(this.getter=_(t),this.getter||(this.getter=function(){})),this.value=this.lazy?void 0:this.get()};no.prototype.get=function(){$(this);var e=this.getter.call(this.vm,this.vm);return this.deep&&Ae(e),w(),this.cleanupDeps(),e},no.prototype.addDep=function(e){var t=e.id;this.newDepIds.has(t)||(this.newDepIds.add(t),this.newDeps.push(e),this.depIds.has(t)||e.addSub(this))},no.prototype.cleanupDeps=function(){for(var e=this,t=this.deps.length;t--;){var n=e.deps[t];e.newDepIds.has(n.id)||n.removeSub(e)}var r=this.depIds;this.depIds=this.newDepIds,this.newDepIds=r,this.newDepIds.clear(),r=this.deps,this.deps=this.newDeps,this.newDeps=r,this.newDeps.length=0},no.prototype.update=function(){this.lazy?this.dirty=!0:this.sync?this.run():ke(this)},no.prototype.run=function(){if(this.active){var e=this.get();if(e!==this.value||l(e)||this.deep){var t=this.value;if(this.value=e,this.user)try{this.cb.call(this.vm,e,t)}catch(e){if(!vi.errorHandler)throw e;vi.errorHandler.call(null,e,this.vm)}else this.cb.call(this.vm,e,t)}}},no.prototype.evaluate=function(){this.value=this.get(),this.dirty=!1},no.prototype.depend=function(){for(var e=this,t=this.deps.length;t--;)e.deps[t].depend()},no.prototype.teardown=function(){var e=this;if(this.active){this.vm._isBeingDestroyed||r(this.vm._watchers,this);for(var t=this.deps.length;t--;)e.deps[t].removeSub(e);this.active=!1}};var ro=new ni,io={enumerable:!0,configurable:!0,get:d,set:d},oo=0;Re(Ue),De(Ue),_e(Ue),$e(Ue),de(Ue);var ao=[String,RegExp],so={name:"keep-alive",abstract:!0,props:{include:ao,exclude:ao},created:function(){this.cache=Object.create(null)},destroyed:function(){var e=this;for(var t in this.cache)Ze(e.cache[t])},watch:{include:function(e){We(this.cache,function(t){return qe(e,t)})},exclude:function(e){We(this.cache,function(t){return!qe(e,t)})}},render:function(){var e=ce(this.$slots.default),t=e&&e.componentOptions;if(t){var n=Ke(t);if(n&&(this.include&&!qe(this.include,n)||this.exclude&&qe(this.exclude,n)))return e;var r=null==e.key?t.Ctor.cid+(t.tag?"::"+t.tag:""):e.key;this.cache[r]?e.componentInstance=this.cache[r].componentInstance:this.cache[r]=e,e.data.keepAlive=!0}return e}},co={KeepAlive:so};Ge(Ue),Object.defineProperty(Ue.prototype,"$isServer",{get:xi}),Ue.version="2.1.10";var uo,lo,fo=n("input,textarea,option,select"),po=function(e,t,n){return"value"===n&&fo(e)&&"button"!==t||"selected"===n&&"option"===e||"checked"===n&&"input"===e||"muted"===n&&"video"===e},vo=n("contenteditable,draggable,spellcheck"),ho=n("allowfullscreen,async,autofocus,autoplay,checked,compact,controls,declare,default,defaultchecked,defaultmuted,defaultselected,defer,disabled,enabled,formnovalidate,hidden,indeterminate,inert,ismap,itemscope,loop,multiple,muted,nohref,noresize,noshade,novalidate,nowrap,open,pauseonexit,readonly,required,reversed,scoped,seamless,selected,sortable,translate,truespeed,typemustmatch,visible"),mo="http://www.w3.org/1999/xlink",go=function(e){return":"===e.charAt(5)&&"xlink"===e.slice(0,5)},yo=function(e){return go(e)?e.slice(6,e.length):""},_o=function(e){return null==e||e===!1},bo={svg:"http://www.w3.org/2000/svg",math:"http://www.w3.org/1998/Math/MathML"},$o=n("html,body,base,head,link,meta,style,title,address,article,aside,footer,header,h1,h2,h3,h4,h5,h6,hgroup,nav,section,div,dd,dl,dt,figcaption,figure,hr,img,li,main,ol,p,pre,ul,a,b,abbr,bdi,bdo,br,cite,code,data,dfn,em,i,kbd,mark,q,rp,rt,rtc,ruby,s,samp,small,span,strong,sub,sup,time,u,var,wbr,area,audio,map,track,video,embed,object,param,source,canvas,script,noscript,del,ins,caption,col,colgroup,table,thead,tbody,td,th,tr,button,datalist,fieldset,form,input,label,legend,meter,optgroup,option,output,progress,select,textarea,details,dialog,menu,menuitem,summary,content,element,shadow,template"),wo=n("svg,animate,circle,clippath,cursor,defs,desc,ellipse,filter,font-face,g,glyph,image,line,marker,mask,missing-glyph,path,pattern,polygon,polyline,rect,switch,symbol,text,textpath,tspan,use,view",!0),Co=function(e){return"pre"===e},xo=function(e){return $o(e)||wo(e)},ko=Object.create(null),Ao=Object.freeze({createElement:ot,createElementNS:at,createTextNode:st,createComment:ct,insertBefore:ut,removeChild:lt,appendChild:ft,parentNode:pt,nextSibling:dt,tagName:vt,setTextContent:ht,setAttribute:mt}),Oo={create:function(e,t){gt(t)},update:function(e,t){e.data.ref!==t.data.ref&&(gt(e,!0),gt(t))},destroy:function(e){gt(e,!0)}},So=new Hi("",{},[]),To=["create","activate","update","remove","destroy"],Eo={create:Ct,
+update:Ct,destroy:function(e){Ct(e,So)}},Io=Object.create(null),jo=[Oo,Eo],No={create:St,update:St},Lo={create:Et,update:Et},Mo={create:Nt,update:Nt},Do={create:Lt,update:Lt},Po=a(function(e){var t={},n=/;(?![^(]*\))/g,r=/:(.+)/;return e.split(n).forEach(function(e){if(e){var n=e.split(r);n.length>1&&(t[n[0].trim()]=n[1].trim())}}),t}),Ro=/^--/,Fo=/\s*!important$/,Ho=function(e,t,n){Ro.test(t)?e.style.setProperty(t,n):Fo.test(n)?e.style.setProperty(t,n.replace(Fo,""),"important"):e.style[Bo(t)]=n},Uo=["Webkit","Moz","ms"],Bo=a(function(e){if(lo=lo||document.createElement("div"),e=ai(e),"filter"!==e&&e in lo.style)return e;for(var t=e.charAt(0).toUpperCase()+e.slice(1),n=0;n<Uo.length;n++){var r=Uo[n]+t;if(r in lo.style)return r}}),zo={create:Ut,update:Ut},Vo=gi&&!bi,Jo="transition",Ko="animation",qo="transition",Wo="transitionend",Zo="animation",Go="animationend";Vo&&(void 0===window.ontransitionend&&void 0!==window.onwebkittransitionend&&(qo="WebkitTransition",Wo="webkitTransitionEnd"),void 0===window.onanimationend&&void 0!==window.onwebkitanimationend&&(Zo="WebkitAnimation",Go="webkitAnimationEnd"));var Yo=gi&&window.requestAnimationFrame?window.requestAnimationFrame.bind(window):setTimeout,Qo=/\b(transform|all)(,|$)/,Xo=a(function(e){return{enterClass:e+"-enter",leaveClass:e+"-leave",appearClass:e+"-enter",enterToClass:e+"-enter-to",leaveToClass:e+"-leave-to",appearToClass:e+"-enter-to",enterActiveClass:e+"-enter-active",leaveActiveClass:e+"-leave-active",appearActiveClass:e+"-enter-active"}}),ea=gi?{create:tn,activate:tn,remove:function(e,t){e.data.show?t():Qt(e,t)}}:{},ta=[No,Lo,Mo,Do,zo,ea],na=ta.concat(jo),ra=wt({nodeOps:Ao,modules:na});bi&&document.addEventListener("selectionchange",function(){var e=document.activeElement;e&&e.vmodel&&cn(e,"input")});var ia={inserted:function(e,t,n){if("select"===n.tag){var r=function(){nn(e,t,n.context)};r(),(_i||$i)&&setTimeout(r,0)}else"textarea"!==n.tag&&"text"!==e.type||(e._vModifiers=t.modifiers,t.modifiers.lazy||(wi||(e.addEventListener("compositionstart",an),e.addEventListener("compositionend",sn)),bi&&(e.vmodel=!0)))},componentUpdated:function(e,t,n){if("select"===n.tag){nn(e,t,n.context);var r=e.multiple?t.value.some(function(t){return rn(t,e.options)}):t.value!==t.oldValue&&rn(t.value,e.options);r&&cn(e,"change")}}},oa={bind:function(e,t,n){var r=t.value;n=un(n);var i=n.data&&n.data.transition,o=e.__vOriginalDisplay="none"===e.style.display?"":e.style.display;r&&i&&!bi?(n.data.show=!0,Yt(n,function(){e.style.display=o})):e.style.display=r?o:"none"},update:function(e,t,n){var r=t.value,i=t.oldValue;if(r!==i){n=un(n);var o=n.data&&n.data.transition;o&&!bi?(n.data.show=!0,r?Yt(n,function(){e.style.display=e.__vOriginalDisplay}):Qt(n,function(){e.style.display="none"})):e.style.display=r?e.__vOriginalDisplay:"none"}},unbind:function(e,t,n,r,i){i||(e.style.display=e.__vOriginalDisplay)}},aa={model:ia,show:oa},sa={name:String,appear:Boolean,css:Boolean,mode:String,type:String,enterClass:String,leaveClass:String,enterToClass:String,leaveToClass:String,enterActiveClass:String,leaveActiveClass:String,appearClass:String,appearActiveClass:String,appearToClass:String},ca={name:"transition",props:sa,abstract:!0,render:function(e){var t=this,n=this.$slots.default;if(n&&(n=n.filter(function(e){return e.tag}),n.length)){var r=this.mode,i=n[0];if(dn(this.$vnode))return i;var a=ln(i);if(!a)return i;if(this._leaving)return pn(e,i);var s="__transition-"+this._uid+"-",c=a.key=null==a.key?s+a.tag:o(a.key)?0===String(a.key).indexOf(s)?a.key:s+a.key:a.key,l=(a.data||(a.data={})).transition=fn(this),f=this._vnode,p=ln(f);if(a.data.directives&&a.data.directives.some(function(e){return"show"===e.name})&&(a.data.show=!0),p&&p.data&&!vn(a,p)){var d=p&&(p.data.transition=u({},l));if("out-in"===r)return this._leaving=!0,ne(d,"afterLeave",function(){t._leaving=!1,t.$forceUpdate()},c),pn(e,i);if("in-out"===r){var v,h=function(){v()};ne(l,"afterEnter",h,c),ne(l,"enterCancelled",h,c),ne(d,"delayLeave",function(e){v=e},c)}}return i}}},ua=u({tag:String,moveClass:String},sa);delete ua.mode;var la={props:ua,render:function(e){for(var t=this.tag||this.$vnode.data.tag||"span",n=Object.create(null),r=this.prevChildren=this.children,i=this.$slots.default||[],o=this.children=[],a=fn(this),s=0;s<i.length;s++){var c=i[s];c.tag&&null!=c.key&&0!==String(c.key).indexOf("__vlist")&&(o.push(c),n[c.key]=c,(c.data||(c.data={})).transition=a)}if(r){for(var u=[],l=[],f=0;f<r.length;f++){var p=r[f];p.data.transition=a,p.data.pos=p.elm.getBoundingClientRect(),n[p.key]?u.push(p):l.push(p)}this.kept=e(t,null,u),this.removed=l}return e(t,null,o)},beforeUpdate:function(){this.__patch__(this._vnode,this.kept,!1,!0),this._vnode=this.kept},updated:function(){var e=this.prevChildren,t=this.moveClass||(this.name||"v")+"-move";if(e.length&&this.hasMove(e[0].elm,t)){e.forEach(hn),e.forEach(mn),e.forEach(gn);document.body.offsetHeight;e.forEach(function(e){if(e.data.moved){var n=e.elm,r=n.style;Jt(n,t),r.transform=r.WebkitTransform=r.transitionDuration="",n.addEventListener(Wo,n._moveCb=function e(r){r&&!/transform$/.test(r.propertyName)||(n.removeEventListener(Wo,e),n._moveCb=null,Kt(n,t))})}})}},methods:{hasMove:function(e,t){if(!Vo)return!1;if(null!=this._hasMove)return this._hasMove;Jt(e,t);var n=Wt(e);return Kt(e,t),this._hasMove=n.hasTransform}}},fa={Transition:ca,TransitionGroup:la};Ue.config.isUnknownElement=rt,Ue.config.isReservedTag=xo,Ue.config.getTagNamespace=nt,Ue.config.mustUseProp=po,u(Ue.options.directives,aa),u(Ue.options.components,fa),Ue.prototype.__patch__=gi?ra:d,Ue.prototype.$mount=function(e,t){return e=e&&gi?it(e):void 0,this._mount(e,t)},setTimeout(function(){vi.devtools&&ki&&ki.emit("init",Ue)},0);var pa,da=!!gi&&yn("\n","&#10;"),va=n("area,base,br,col,embed,frame,hr,img,input,isindex,keygen,link,meta,param,source,track,wbr",!0),ha=n("colgroup,dd,dt,li,options,p,td,tfoot,th,thead,tr,source",!0),ma=n("address,article,aside,base,blockquote,body,caption,col,colgroup,dd,details,dialog,div,dl,dt,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,head,header,hgroup,hr,html,legend,li,menuitem,meta,optgroup,option,param,rp,rt,source,style,summary,tbody,td,tfoot,th,thead,title,tr,track",!0),ga=/([^\s"'<>\/=]+)/,ya=/(?:=)/,_a=[/"([^"]*)"+/.source,/'([^']*)'+/.source,/([^\s"'=<>`]+)/.source],ba=new RegExp("^\\s*"+ga.source+"(?:\\s*("+ya.source+")\\s*(?:"+_a.join("|")+"))?"),$a="[a-zA-Z_][\\w\\-\\.]*",wa="((?:"+$a+"\\:)?"+$a+")",Ca=new RegExp("^<"+wa),xa=/^\s*(\/?)>/,ka=new RegExp("^<\\/"+wa+"[^>]*>"),Aa=/^<!DOCTYPE [^>]+>/i,Oa=/^<!--/,Sa=/^<!\[/,Ta=!1;"x".replace(/x(.)?/g,function(e,t){Ta=""===t});var Ea,Ia,ja,Na,La,Ma,Da,Pa,Ra,Fa,Ha,Ua,Ba,za,Va,Ja,Ka,qa,Wa,Za,Ga,Ya,Qa,Xa,es,ts=n("script,style",!0),ns={},rs=/&lt;/g,is=/&gt;/g,os=/&#10;/g,as=/&amp;/g,ss=/&quot;/g,cs=/\{\{((?:.|\n)+?)\}\}/g,us=/[-.*+?^${}()|[\]\/\\]/g,ls=a(function(e){var t=e[0].replace(us,"\\$&"),n=e[1].replace(us,"\\$&");return new RegExp(t+"((?:.|\\n)+?)"+n,"g")}),fs=/^v-|^@|^:/,ps=/(.*?)\s+(?:in|of)\s+(.*)/,ds=/\((\{[^}]*\}|[^,]*),([^,]*)(?:,([^,]*))?\)/,vs=/^:|^v-bind:/,hs=/^@|^v-on:/,ms=/:(.*)$/,gs=/\.[^.]+/g,ys=a(_n),_s=/^xmlns:NS\d+/,bs=/^NS\d+:/,$s=a(or),ws=/^\s*([\w$_]+|\([^)]*?\))\s*=>|^function\s*\(/,Cs=/^\s*[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['.*?']|\[".*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*\s*$/,xs={esc:27,tab:9,enter:13,space:32,up:38,left:37,right:39,down:40,delete:[8,46]},ks={stop:"$event.stopPropagation();",prevent:"$event.preventDefault();",self:"if($event.target !== $event.currentTarget)return;",ctrl:"if(!$event.ctrlKey)return;",shift:"if(!$event.shiftKey)return;",alt:"if(!$event.altKey)return;",meta:"if(!$event.metaKey)return;"},As={bind:hr,cloak:d},Os={staticKeys:["staticClass"],transformNode:Fr,genData:Hr},Ss={staticKeys:["staticStyle"],transformNode:Ur,genData:Br},Ts=[Os,Ss],Es={model:zr,text:Zr,html:Gr},Is=Object.create(null),js={expectHTML:!0,modules:Ts,staticKeys:v(Ts),directives:Es,isReservedTag:xo,isUnaryTag:va,mustUseProp:po,getTagNamespace:nt,isPreTag:Co},Ns=a(function(e){var t=it(e);return t&&t.innerHTML}),Ls=Ue.prototype.$mount;return Ue.prototype.$mount=function(e,t){if(e=e&&it(e),e===document.body||e===document.documentElement)return this;var n=this.$options;if(!n.render){var r=n.template;if(r)if("string"==typeof r)"#"===r.charAt(0)&&(r=Ns(r));else{if(!r.nodeType)return this;r=r.innerHTML}else e&&(r=ei(e));if(r){var i=Qr(r,{warn:Si,shouldDecodeNewlines:da,delimiters:n.delimiters},this),o=i.render,a=i.staticRenderFns;n.render=o,n.staticRenderFns=a}}return Ls.call(this,e,t)},Ue.compile=Qr,Ue});

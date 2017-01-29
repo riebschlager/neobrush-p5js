@@ -27,18 +27,18 @@ SketchLine.prototype.update = function(mouseX, mouseY) {
         this.distances[i].y = (i === 0) ? mouseY - this.curveVertices[0].y : this.curveVertices[i - 1].y - this.curveVertices[i].y;
         this.distances[i].mult(this.easeFactor);
         this.endPoints[i].add(this.distances[i]);
-        this.curveVertices[i].add(this.endPoints[i]);
         this.endPoints[i].mult(this.speedFactor);
+        this.curveVertices[i].add(this.endPoints[i]);
     }
 };
 
-SketchLine.prototype.render = function(artwork) {
+SketchLine.prototype.render = function(artwork, color) {
     artwork.beginShape();
     for (let i = 0; i < this.numberOfVertices; i++) {
         artwork.noFill();
         artwork.strokeWeight(0.5);
-        artwork.blendMode(artwork.ADD);
-        artwork.stroke(255, 10);
+        // artwork.blendMode(artwork.ADD);
+        artwork.stroke(color[0], color[1], color[2], 10);
         artwork.curveVertex(this.curveVertices[i].x, this.curveVertices[i].y);
     }
     artwork.endShape();

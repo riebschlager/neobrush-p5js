@@ -5,7 +5,10 @@ const concat = require('gulp-concat');
 const sass = require('gulp-sass');
 
 const vendorScripts = [
-    'node_modules/p5/lib/p5.min.js'
+    'node_modules/p5/lib/p5.min.js',
+    'node_modules/p5/lib/addons/p5.dom.js',
+    'node_modules/axios/dist/axios.min.js',
+    'node_modules/vue/dist/vue.min.js'
 ];
 
 gulp.task('vendor-scripts', function() {

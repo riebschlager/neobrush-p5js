@@ -22,7 +22,9 @@
   },
   "homepage": "https://github.com/riebschlager/neobrush-p5js#readme",
   "dependencies": {
-    "p5": "^0.5.6"
+    "axios": "^0.15.3",
+    "p5": "^0.5.6",
+    "vue": "^2.1.10"
   },
   "devDependencies": {
     "browser-sync": "^2.18.6",

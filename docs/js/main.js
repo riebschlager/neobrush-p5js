@@ -2,16 +2,16 @@ const s = function(_p5) {
 
     const sketchLines = [];
     let canvas, artwork;
+    let img;
 
-    const ui = {
-        numberOfLines: 100,
-        easeFactor: 0.25,
-        easeFactorJitter: 0.1,
-        speedFactor: 0.3,
-        speedFactorJitter: 0.1,
-        numberOfVertices: 8,
-        numberOfVerticesJitter: 1
-    };
+    function gotFile(file) {
+        if (file.type === 'image') {
+            img = _p5.loadImage(file.data, function(loadedImage) {
+                loadedImage.resize(canvas.width, canvas.height);
+                loadedImage.loadPixels();
+            });
+        }
+    }
 
     _p5.mousePressed = function() {
         for (let i = 0; i < ui.numberOfLines; i++) {
@@ -33,15 +33,20 @@ const s = function(_p5) {
         _p5.background(0);
         canvas = _p5.createCanvas(window.innerWidth, window.innerHeight);
         canvas.parent('neobrush');
+        canvas.drop(gotFile);
         artwork = _p5.createGraphics(canvas.width, canvas.height);
-        artwork.background(0);
+        artwork.background(0, 0);
     };
 
     _p5.draw = function() {
         _p5.background(0);
         for (let i = 0; i < sketchLines.length; i++) {
             sketchLines[i].update(_p5.mouseX, _p5.mouseY);
-            sketchLines[i].render(artwork);
+            let off = (_p5.mouseY * canvas.width + _p5.mouseX) * 4;
+            sketchLines[i].render(artwork, [img.pixels[off], img.pixels[off + 1], img.pixels[off + 2], img.pixels[off + 3]]);
+        }
+        if (img) {
+            // _p5.image(img, 0, 0);
         }
         _p5.image(artwork, 0, 0, canvas.width, canvas.height);
     };

@@ -12,6 +12,48 @@
 
 <body>
     <div id="neobrush"></div>
+    <div id="ui">
+        <div class="col-sm-2">
+            <p>
+                Number of Lines:
+                <br>
+                <input v-model.number="numberOfLines" type="range" min="10" max="1000">
+            </p>
+            <p>
+                Easing:
+                <br>
+                <input v-model.number="easeFactor" type="range" min="0.01" max="0.99" step="0.01">
+            </p>
+            <p>
+                Easing Jitter:
+                <br>
+                <input v-model.number="easeFactorJitter" type="range" min="0" max="0.3" value="0.1" step="0.01">
+            </p>
+            <p>
+                Speed:
+                <br>
+                <input v-model.number="speedFactor" type="range" min="0.01" max="0.99" value="0.3" step="0.01">
+            </p>
+            <p>
+                Speed Jitter:
+                <br>
+                <input v-model.number="speedFactorJitter" type="range" min="0" max="0.99" value="0.1" step="0.01">
+            </p>
+            <p>
+                Verticies:
+                <br>
+                <input v-model.number="numberOfVertices" type="range" min="1" max="30" value="8" step="1">
+            </p>
+            <p class="margin-bottom">
+                Verticies Jitter:
+                <br>
+                <input v-model.number="numberOfVerticesJitter" type="range" min="0" max="10" value="1" step="1">
+            </p>
+            <button ng-click="sketch.saveme()" class="btn btn-sm btn-primary">Save</button>
+            <button ng-click="sketch.clearme()" class="btn btn-sm btn-warning">Clear</button>
+        </div>
+    </div>
+    <script src="./js/ui.js" charset="utf-8"></script>
     <script src="./js/sketch-line.js" charset="utf-8"></script>
     <script src="./js/main.js" charset="utf-8"></script>
 </body>
